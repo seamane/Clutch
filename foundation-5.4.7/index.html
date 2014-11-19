@@ -25,22 +25,74 @@
       <section class="top-bar-section">
       <!-- Right Nav Section -->
         <ul class="right"> 
+          <li><a href="#" data-dropdown="dropCreateProj">Create New Project</a></li>
+          <li><a href="#" data-dropdown="dropFindProj">Add Exisiting Project</a></li>
           <li class="active"><a href="#">Join Us</a></li> 
           <li class="has-dropdown"> 
-            <a href="#">Right Button Dropdown</a> 
+            <a href="#">Username</a> 
             <ul class="dropdown">
-              <li><a href="#">First link in dropdown</a></li>
+              <li><a href="#">Logout</a></li>
               <li class="active"><a href="#">Active link in dropdown</a></li> 
             </ul> 
           </li> 
         </ul> 
 
         <!-- Left Nav Section -->
-        <ul class="left">
+<!--         <ul class="left">
           <li><a href="#">Left Nav Button</a></li>
-        </ul>
+        </ul> -->
       </section> 
     </nav>
+
+          <!-- Create Project Dropdown -->
+          <div id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
+               <form>
+                  <div class="row">
+                    <div class="">
+                      <label>Project Title</label>
+                      <input type="text" placeholder="" />
+                    </div>
+                  </div>
+                  <!-- password field -->
+                  <div class="row">
+                    <div class="">
+                      <label>Passcode</label>
+                      <input type="password" placeholder="myproject123" />
+                    </div>
+                  </div>
+                  <!-- login button -->
+                   <div class="row">
+                    <div class="">
+                      <a href="#" class="tiny radius button">Create</a><br/>
+                    </div>
+                  </div>
+              </form>
+          </div>
+
+          <!-- Find Project Dropdown -->
+          <div id="dropFindProj" data-dropdown-content class="f-dropdown content" >
+               <form>
+                  <div class="row">
+                    <div class="">
+                      <label>Project Title</label>
+                      <input type="text" placeholder="" />
+                    </div>
+                  </div>
+                  <!-- password field -->
+                  <div class="row">
+                    <div class="">
+                      <label>Passcode</label>
+                      <input type="password" placeholder="theirProject123" />
+                    </div>
+                  </div>
+                  <!-- login button -->
+                   <div class="row">
+                    <div class="">
+                      <a href="#" class="small radius button">Add</a><br/>
+                    </div>
+                  </div>
+              </form>
+          </div>
 
 <!-- END NAVBAR -->
 
