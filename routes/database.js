@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: '20nederland12',
+	password: 'default',
 	//database: 'clutchdb'
 	//database: 'clutch'
 });
