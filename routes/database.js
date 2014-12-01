@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'default',
+	password: '20nederland12',
 	//database: 'clutchdb'
 	//database: 'clutch'
 });
@@ -41,7 +41,8 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'name VARCHAR(50),'
-		+ 'authorid INT'
+		+ 'userid INT,'
+		+ 'passkey VARCHAR(50)'
 		+ ');',function(err){
 		if(err){
 			console.log('query1 error: ' + err);
@@ -84,7 +85,7 @@ createTables = function()
 		+ 'description VARCHAR(500),'
 		+ 'name VARCHAR(20),'
 		+ 'projectid INT'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -97,7 +98,7 @@ createTables = function()
 		+ 'authorid INT,'
 		+ 'message VARCHAR(500),'
 		+ 'time DATETIME'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -110,7 +111,7 @@ createTables = function()
 		+ 'note VARCHAR(500),'
 		+ 'shotid INT,'
 		+ 'type VARCHAR(20)'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -122,7 +123,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'projectid INT,'
 		+ 'userid INT'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -134,7 +135,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'shotid INT,'
 		+ 'userid INT'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -146,7 +147,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'shotid INT,'
 		+ 'userid INT'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -158,7 +159,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'shotid INT,'
 		+ 'userid INT'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -170,7 +171,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'shotid INT,'
 		+ 'userid INT'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -182,7 +183,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'shotid INT,'
 		+ 'userid INT'
-		+ ');',function(err){
+		+ ');',function (err){
 		if(err){
 			throw err;
 		}
@@ -190,6 +191,16 @@ createTables = function()
 	console.log("all tables created");
 }
 
-exports.newUser = function(req,res){
-	
+exports.validateUser = function(req,res){
+	connection.query(
+		'select * from users '
+		+ 'where username=\'' + req.body.username + '\' AND passwords=\'' + req.body.password + '\';',
+		function (err,rows,fields){
+			if(err){
+				console.log('error validatUser query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+		}
+	);
 }

@@ -1,0 +1,189 @@
+<!doctype html>
+<html class="no-js" lang="en" ng-app='clutchApp'>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <!-- Do not change name of this file (app.css) -->
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/vendor/modernizr.js"></script>    
+    <script src="angular/angular.js"></script> 
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script type = 'text/javascript' src="angular/app.js"></script>
+
+  </head>
+  <body ng-controller='homeController'>
+  <nav class="top-bar" data-topbar role="navigation"> 
+      <ul class="title-area">
+        <li class="name">
+          <center><h1><a href="#">Clutch</a></h1></center>
+        </li> 
+    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li> 
+      </ul>
+
+      <section class="top-bar-section">
+      <!-- Right Nav Section -->
+          <ul class="right"> 
+          <li><a href="#" data-dropdown="dropCreateProj">Create New Project</a></li>
+          <li><a href="#" data-dropdown="dropFindProj">Add Exisiting Project</a></li>
+          <li class="active"><a href="#">Join Us</a></li> 
+          <li class="has-dropdown"> 
+            <a href="#">Username</a> 
+            <ul class="dropdown">
+              <li><a href="#">Logout</a></li>
+              <li class="active"><a href="#">Active link in dropdown</a></li> 
+            </ul> 
+          </li> 
+        </ul>  
+
+        <!-- Left Nav Section -->
+      <!--   <ul class="left">
+          <li><a href="#">Left Nav Button</a></li>
+        </ul> -->
+      </section> 
+    </nav>
+
+          <!-- Create Project Dropdown -->
+          <div id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
+               <form>
+                  <div class="row">
+                    <div class="">
+                      <label>Project Title</label>
+                      <input type="text" placeholder="" />
+                    </div>
+                  </div>
+                  <!-- password field -->
+                  <div class="row">
+                    <div class="">
+                      <label>Passcode</label>
+                      <input type="password" placeholder="myproject123" />
+                    </div>
+                  </div>
+                  <!-- login button -->
+                   <div class="row">
+                    <div class="">
+                      <a href="#" class="tiny radius button">Create</a><br/>
+                    </div>
+                  </div>
+              </form>
+          </div>
+
+          Find Project Dropdown
+          <div id="dropFindProj" data-dropdown-content class="f-dropdown content" >
+               <form>
+                  <div class="row">
+                    <div class="">
+                      <label>Project Title</label>
+                      <input type="text" placeholder="" />
+                    </div>
+                  </div>
+                  <!-- password field -->
+                  <div class="row">
+                    <div class="">
+                      <label>Passcode</label>
+                      <input type="password" placeholder="theirProject123" />
+                    </div>
+                  </div>
+                  <!-- login button -->
+                   <div class="row">
+                    <div class="">
+                      <a href="#" class="small radius button">Add</a><br/>
+                    </div>
+                  </div>
+              </form>
+          </div>
+
+
+
+
+
+
+
+
+   <!--  <nav class="top-bar" data-topbar role="navigation"> 
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="#">Stewart's Playhouse</a></h1> 
+        </li>  -->
+    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+        <!-- <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li> 
+      </ul>
+
+      <section class="top-bar-section"> -->
+      <!-- Right Nav Section -->
+        <!-- <ul class="right"> 
+          <li class="active"><a href="#">Join Us</a></li> 
+          <li class="has-dropdown"> 
+            <a href="#">Right Button Dropdown</a> 
+            <ul class="dropdown">
+              <li><a href="#">First link in dropdown</a></li>
+              <li class="active"><a href="#">Active link in dropdown</a></li> 
+            </ul> 
+          </li> 
+        </ul>  -->
+
+        <!-- Left Nav Section -->
+      <!--   <ul class="left">
+          <li><a href="#">Left Nav Button</a></li>
+        </ul>
+      </section> 
+    </nav> -->
+
+
+
+<!-- END NAVBAR -->
+
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Welcome {{getName()}}</h1>
+      </div>
+    </div>
+
+
+ <form>
+      <div class="panel" >
+
+        <!-- Project buttons-->
+	<!-- Button 1 -->
+         <div class="row">
+          <div class="large-6 large-centered columns">
+            <a href="#" class="button large expand black-background">Project 1</a>
+          </div>
+        </div>
+
+	<!-- Button 2 -->
+         <div class="row">
+          <div class="large-6 large-centered columns">
+            <a href="#" class="button large expand black-background ">Project 2</a>
+          </div>
+        </div>
+
+	<!-- Button 3 -->
+         <div class="row">
+          <div class="large-6 large-centered columns">
+            <a href="#" class="button large expand black-background">Project 3</a>
+          </div>
+        </div>
+
+	<!-- Button 4 -->
+         <div class="row">
+          <div class="large-6 large-centered columns">
+            <a href="#" class="button large expand black-background">Project 4</a>
+          </div>
+        </div>
+
+	<!-- Button 5 -->
+         <div class="row">
+          <div class="large-6 large-centered columns">
+            <a href="#" class="button large expand black-background">Project 5</a>
+          </div>
+        </div>
+
+
+      </div>
+    </form>
+
+  </body>
+</html>

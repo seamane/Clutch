@@ -1,0 +1,54 @@
+<!-- <!DOCTYPE html>
+<html>
+    <head>
+        <title>First Angular App</title>
+        <script type='text/javascript' src="angular/angular.js"></script>
+        <script type='text/javascript' src="angular/app.js"></script>
+    </head>
+    <body>
+         <div id= 'test' ng-app="my_ang_app" ng-controller="first_div">
+            {{message}}
+         </div>
+
+             
+        <div id="container">
+                <div id="login" ng-app='my_ang_app' ng-controller='sign_up'>
+                    <input type="text" size="40" ng-model="email"><br>
+                    <input type="password" size="40" ng-model="password"><br>
+                    <button ng-click="check_credentials()">Login</button><br>
+                    <span id="message"></span>
+                </div>
+        </div>
+
+    </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html ng-app="clutchApp">
+
+  <head>
+    <meta charset="utf-8" />
+        <title>First Angular App</title>
+        <script type='text/javascript' src="angular/angular.js"></script>
+        <script type='text/javascript' src="angular/app.js"></script>
+  </head>
+
+  <body ng-controller="MainCtrl">
+    <p>Hello {{name}}!</p>
+    
+    <div style='height:1000px'>
+
+    
+    <input type="text" size="40" ng-model='username' placeholder='username'<br>
+    <input type="password" size="40" ng-model='password' placeholder='password'<br>
+    <button ng-click="testButton()">Login</button><br>
+    
+      
+      <a id='here'></a>
+     
+    </div>
+     <h1>here</h1>
+  </body>
+
+</html>
