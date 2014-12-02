@@ -1,0 +1,37 @@
+﻿Merge remote-tracking branch 'origin/master'
+
+Conflicts:
+	views/angular/app.js
+	views/index.html
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 2 different commits each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	new file:   .DS_Store
+#	new file:   foundation-5.4.7/.DS_Store
+#	modified:   foundation-5.4.7/css/app.css
+#	new file:   foundation-5.4.7/navbar.html
+#	new file:   foundation-5.4.7/test.html
+#	modified:   routes/database.js
+#	new file:   views/.DS_Store
+#	modified:   views/angular/app.js
+#	modified:   views/createUser.html
+#	modified:   views/index.html
+#	new file:   views/navbar.html
+#	modified:   views/shotInfo.html
+#	modified:   views/tasks.html
+#
+
