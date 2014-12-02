@@ -1,0 +1,106 @@
+<!-- This header stuff shouldn't be in final version, should be in a separate file with only <body> changing -->
+<html class="no-js" lang="en" ng-app='clutchApp'>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foundation | Welcome</title>
+    <link rel="stylesheet" href="../css/foundation.css" />
+    <!-- Do not change name of this file (app.css) -->
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="../js/vendor/modernizr.js"></script>    
+    <script src="angular/angular.js"></script>  
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script type = 'text/javascript' src="angular/app.js"></script>
+
+  </head>
+  <body ng-controller="createUserController">
+  <!-- Include Navbar -->
+  <div loadnavbar></div>  
+  <!-- Center everything but navbar -->
+  <div class="">
+  
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Join the Clutch</h1>
+      </div>
+    </div>
+    
+    <form>
+      <div class="panel" >
+
+      <div class="row">
+        <div class="large-12 columns">
+          <h1> </h1>
+        </div>
+      </div>
+      <!-- first name field -->
+        <div class="row">
+          <div class="large-4 medium-4 columns">
+            <label>First Name</label>
+            <input type="text" placeholder="Johny" required />
+          </div>
+        </div>
+
+      <!-- last name field -->
+        <div class="row">
+          <div class="large-4 medium-4 columns">
+            <label>Last Name</label>
+            <input type="text" placeholder="Appleseed" required />
+          </div>
+        </div>
+
+      <!-- username field -->
+        <div class="row">
+          <div class="large-4 medium-4 columns">
+            <label>
+              Username (used to sign in)
+            <input type="text" placeholder="jsqueezy" />
+          </label>
+          </div>
+        </div>
+
+        <!-- email field -->
+        <div class="row">
+          <div class="large-4 medium-4 columns">
+            <label>Email</label>
+            <input type="email" placeholder="youremail@address.com" />
+          </div>
+        </div>
+
+        <!-- password field -->
+        <div class="row">
+          <div class="large-4 medium-4 columns">
+            <label>Password</label>
+            <input type="password" placeholder="Choose a password" />
+          </div>
+        </div>
+
+        <!-- confirm password field -->
+        <div class="row">
+          <div class="large-4 medium-4 columns error">
+            <label>Confirm Password</label>
+            <input type="password" placeholder="Re-enter password"  required/>            
+            <small class="error">Passwords must match.</small>
+          </div>
+        </div>
+
+         <!-- login button -->
+         <div class="row">
+          <div class="large-4 medium-4 columns">
+            <a href="#" class="small radius button">Create</a><br/>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+
+<!-- End centering -->
+   </div> 
+    <script src="../js/vendor/jquery.js"></script>
+    <script src="../js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

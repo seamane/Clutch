@@ -18,6 +18,34 @@ var app = angular.module('clutchApp', ['ngCookies']);
 // 	}
 // });
 
+app.controller('createUserController', function($scope, $http, $cookieStore){
+
+})
+
+app.controller('taskController', function($scope, $http, $cookieStore){
+	$scope.show = false;
+})
+
+.directive('showinfo', function($compile) {
+    return {
+    restrict: 'AE',
+       templateUrl: 'shotInfo.html',
+	compile: function() {
+	  $(document).foundation();
+	}
+    }
+})
+
+.directive('loadnavbar', function($compile) {
+    return {
+    restrict: 'AE',
+       templateUrl: 'navbar.html',
+	compile: function() {
+	  $(document).foundation();
+	}
+    }
+})
+
 app.controller('indexController', function($scope, $http,$cookieStore){//, myService) {
   	$scope.message = '*Invalid username and/or password';
 
