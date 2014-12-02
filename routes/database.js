@@ -204,3 +204,18 @@ exports.validateUser = function(req,res){
 		}
 	);
 }
+
+exports.getProjects = function(req,res){
+	connection.query(
+		'select * from projects '
+		+ 'where userid=' + req.body.userid + ';',
+		function(err,rows,fields){
+			if(err){
+				console.log('errror getProjects query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+			console.log(JSON.stringify(rows));
+		}
+	);
+}

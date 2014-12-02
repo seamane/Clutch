@@ -12,11 +12,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script type = 'text/javascript' src="angular/app.js"></script>
 
-
-    <script type = 'text/javascript'>
-
-    </script>
-
   </head>
   <body ng-controller="indexController">
     <nav class="top-bar" data-topbar role="navigation"> 
@@ -33,6 +28,9 @@
     <form>
       <div class="panel" id='log'>
         <div class="row">
+          <div ng-show="failLogin">
+            <p>{{message}}</p>
+          </div>
           <div class="large-4 medium-centered columns">
             <label>Username</label>
             <input type="text" ng-model='username' placeholder="username" />
