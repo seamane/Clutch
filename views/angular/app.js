@@ -97,11 +97,13 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 	}
 
 	$scope.buttonClicked = function(project){
+		alert(JSON.stringify(project));
 		$http.post('/projectButton',{
 			'projectid': project.id
 		}).
 		success(function(data){
-			//$cookieStore.push('projectInfo':project);
+			alert(JSON.stringify(data));
+			$cookieStore.put('projectInfo',project);
 			window.location.href = '/project';
 		});
 	}

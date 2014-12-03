@@ -84,6 +84,7 @@ createTables = function()
 		+ 'frames INT,'
 		+ 'description VARCHAR(500),'
 		+ 'name VARCHAR(20),'
+		+ 'sequenceid INT,'
 		+ 'projectid INT'
 		+ ');',function (err){
 		if(err){
@@ -99,6 +100,18 @@ createTables = function()
 		+ 'projectid INT,'
 		+ 'message VARCHAR(500),'
 		+ 'time DATETIME'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
+		'CREATE TABLE IF NOT EXISTS sequences('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'name VARCHAR(20),'
+		+ 'projectid INT'
 		+ ');',function (err){
 		if(err){
 			throw err;
@@ -210,7 +223,7 @@ exports.getProjects = function(req,res){
 	connection.query(
 		'select * from projects '
 		+ 'where userid=' + req.body.userid + ';',
-		function(err,rows,fields){
+		function(err,rows){
 			if(err){
 				console.log('error getProjects query');
 				throw err;
@@ -221,16 +234,19 @@ exports.getProjects = function(req,res){
 }
 
 exports.projectButton = function (req,res) {
-	console.log('projectid:'+req.body.projectid);
 	connection.query(
 		'select * from announcements '
 		+ 'where projectid=' + req.body.projectid + ';',
-		function(err,rows,fields){
-			if(err){
-				console.log('error projectButton');
-				throw err;
-			}
-			res.end(JSON.stringify(rows));
+		function(err,announcements){
+			console.log('announcements:' + JSON.stringify(announcements));
+			connection.query(
+				'select * from sequences '
+				+ 'where projectid=' + req.body.projectid + ';',
+				function(err,sequences){
+					console.log('sequences:' + JSON.stringify(sequences));
+					res.end(JSON.stringify(announcements,sequences));
+				}
+			);
 		}
 	);
 }
