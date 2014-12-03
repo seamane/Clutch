@@ -42,6 +42,7 @@ app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/a
 
 app.post('/validateUser', database.validateUser);
 app.post('/createProject', database.createProject);
+app.post('/addProject', database.addProject);
 
 // app.get('/createUser',function(req,res){res.sendFile(__dirname + '/views/createUser.html');});
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
