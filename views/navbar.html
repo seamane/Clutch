@@ -12,7 +12,7 @@
         <ul class="right"> 
           <li><a href="#" data-dropdown="dropCreateProj">Create New Project</a></li>
           <li><a href="#" data-dropdown="dropFindProj">Add Exisiting Project</a></li>
-          <li class="active"><a href="#">Join Us</a></li> 
+          <!-- <li class="active"><a href="#">Join Us</a></li>  -->
           <li class="has-dropdown"> 
             <a href="#">Username</a> 
             <ul class="dropdown">
@@ -30,50 +30,47 @@
     </nav>
 
           <!-- Create Project Dropdown -->
-          <div id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
+          <div ng-controller="navbarController" id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
                <form>
                   <div class="row">
                     <div class="">
-                      <label>Project Title</label>
-                      <input type="text" placeholder="" />
+                      <!-- <label class="login-label">Project Title</label> -->
+                      <input class="blue-input" ng-model="titleC" type="text" placeholder="Project Title" />
                     </div>
                   </div>
-                  <!-- password field -->
                   <div class="row">
                     <div class="">
-                      <label>Passcode</label>
-                      <input type="password" placeholder="myproject123" />
+                      <!-- <label class="login-label">Passcode</label> -->
+                      <input class="blue-input" ng-model="passcodeC" type="password" placeholder="Passkey" />
                     </div>
                   </div>
                   <!-- login button -->
                    <div class="row">
                     <div class="">
-                      <a href="#" class="tiny radius button">Create</a><br/>
+                      <a href="#" ng-click="createProjectButton()" class="tiny expand button navbar-button">Create</a><br/>
                     </div>
                   </div>
               </form>
           </div>
 
           <!-- Find Project Dropdown -->
-          <div id="dropFindProj" data-dropdown-content class="f-dropdown content" >
+          <div ng-controller="navbarController" id="dropFindProj" data-dropdown-content class="f-dropdown content" >
                <form>
                   <div class="row">
                     <div class="">
-                      <label>Project Title</label>
-                      <input type="text" placeholder="" />
+                      <input class="blue-input" ng-model="titleA" type="text" placeholder="Project Title" />
                     </div>
                   </div>
                   <!-- password field -->
                   <div class="row">
                     <div class="">
-                      <label>Passcode</label>
-                      <input type="password" placeholder="theirProject123" />
+                      <input class="blue-input" ng-model="passcodeA" type="password" placeholder="Passkey" />
                     </div>
                   </div>
                   <!-- login button -->
                    <div class="row">
                     <div class="">
-                      <a href="#" class="small radius button">Add</a><br/>
+                      <a href="#" ng-click="addProjectButton()"class="tiny expand button navbar-button">Add</a><br/>
                     </div>
                   </div>
               </form>

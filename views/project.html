@@ -4,94 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Foundation | Welcome</title>
-    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="../css/foundation.css" />
     <!-- Do not change name of this file (app.css) -->
-    <link rel="stylesheet" href="css/app.css">
-    <script src="js/vendor/modernizr.js"></script>    
-    <script src="angular/angular.js"></script> 
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="../js/vendor/modernizr.js"></script>    
+    <script src="angular/angular.js"></script>  
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
-    <script type = 'text/javascript' src="angular/app.js"></script>
+    <script type = 'text/javascript' src="angular/app.js"></script>  
 
   </head>
-  <body ng-controller='homeController'>
-  <nav class="top-bar" data-topbar role="navigation"> 
-      <ul class="title-area">
-        <li class="name">
-          <center><h1><a href="#">Clutch</a></h1></center>
-        </li> 
-    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li> 
-      </ul>
+  <body class="offwhite-background" ng-controller='homeController'>
+    <div loadnavbar></div>
 
-      <section class="top-bar-section">
-      <!-- Right Nav Section -->
-          <ul class="right"> 
-          <li><a href="#" data-dropdown="dropCreateProj">Create New Project</a></li>
-          <li><a href="#" data-dropdown="dropFindProj">Add Exisiting Project</a></li>
-          <li class="active"><a href="#">Join Us</a></li> 
-          <li class="has-dropdown"> 
-            <a href="#">{{getUsername()}}</a> 
-            <ul class="dropdown">
-              <li><a href="#">Logout</a></li>
-              <li class="active"><a href="#">Active link in dropdown</a></li> 
-            </ul> 
-          </li> 
-        </ul>  
-
-      </section> 
-    </nav>
-
-          <!-- Create Project Dropdown -->
-          <div id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
-               <form>
-                  <div class="row">
-                    <div class="">
-                      <label>Project Title</label>
-                      <input type="text" placeholder="" />
-                    </div>
-                  </div>
-                  <!-- password field -->
-                  <div class="row">
-                    <div class="">
-                      <label>Passcode</label>
-                      <input type="password" placeholder="e.g. myproject123" />
-                    </div>
-                  </div>
-                  <!-- login button -->
-                   <div class="row">
-                    <div class="">
-                      <a href="#" ng-click='createProject()' class="tiny radius button">Create</a><br/>
-                    </div>
-                  </div>
-              </form>
-          </div>
-
-          <!-- Find Project Dropdown -->
-          <div id="dropFindProj" data-dropdown-content class="f-dropdown content" >
-               <form>
-                  <div class="row">
-                    <div class="">
-                      <label>Project Title</label>
-                      <input type="text" placeholder="" />
-                    </div>
-                  </div>
-                  <!-- password field -->
-                  <div class="row">
-                    <div class="">
-                      <label>Passcode</label>
-                      <input type="password" placeholder="theirProject123" />
-                    </div>
-                  </div>
-                  <!-- login button -->
-                   <div class="row">
-                    <div class="">
-                      <a href="#" class="small radius button">Add</a><br/>
-                    </div>
-                  </div>
-              </form>
-          </div>
-
-<!-- END NAVBAR -->
 
     <div class="row">
       <div class="large-12 columns">
@@ -112,6 +36,15 @@
         </div>
       </div>
     </form>
+
+    <script src="../js/vendor/jquery.js"></script>
+    <script src="../js/foundation.min.js"></script>
+    <script src="../js/vendor/custom.js"></script>
+
+    <script>
+      $(document).foundation();
+    </script>
+
 
   </body>
 </html>

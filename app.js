@@ -36,8 +36,10 @@ app.get('/js/vendor/jquery.js',function(req,res){res.sendFile(__dirname + '/js/v
 app.get('/js/foundation.min.js',function(req,res){res.sendFile(__dirname + '/js/foundation.min.js');});
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js')});
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js')});
+app.get('/navbar.html',function(req,res){res.sendFile(__dirname+'/views/navbar.html')});
 
-app.post('/validateUser',database.validateUser);
+app.post('/validateUser', database.validateUser);
+app.post('/createProject', database.createProject);
 
 // app.get('/createUser',function(req,res){res.sendFile(__dirname + '/views/createUser.html');});
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});

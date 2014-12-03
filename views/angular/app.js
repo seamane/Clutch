@@ -17,6 +17,25 @@ var app = angular.module('clutchApp', ['ngCookies']);
 // 		return userData[0].username;
 // 	}
 // });
+app.directive('showinfo', function($compile) {
+    return {
+    restrict: 'AE',
+       templateUrl: 'shotInfo.html',
+	compile: function() {
+	  $(document).foundation();
+	}
+    }
+});
+
+app.directive('loadnavbar', function($compile) {
+    return {
+    restrict: 'AE',
+       templateUrl: 'navbar.html',
+	compile: function() {
+	  $(document).foundation();
+	}
+    }
+});
 
 app.controller('createUserController', function($scope, $http, $cookieStore){
 
@@ -26,25 +45,43 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 	$scope.show = false;
 })
 
-.directive('showinfo', function($compile) {
-    return {
-    restrict: 'AE',
-       templateUrl: 'shotInfo.html',
-	compile: function() {
-	  $(document).foundation();
-	}
-    }
-})
+app.controller('navbarController', function($scope, $http, $cookieStore){
 
-.directive('loadnavbar', function($compile) {
-    return {
-    restrict: 'AE',
-       templateUrl: 'navbar.html',
-	compile: function() {
-	  $(document).foundation();
+	  $scope.createProjectButton = function() {
+	    alert("HI");
+	    $http.post("/createProject",{
+		    'name': $scope.titleC,
+		    'userid': $cookieStore.get('userInfo').id,
+		    'passkey': $scope.passcodeC
+		}).
+	    success(function(data){
+	    	alert(JSON.stringify(data));
+	    	// if(JSON.stringify(data) === '[]'){
+	    		
+	    	// }
+	    	// else{
+
+	    	// }
+	    }).
+	    error(function(){
+	    	// alert("error");
+	    });
 	}
-    }
+	  $scope.addProjectButton = function() {
+	    $http.post("/addProject",{
+		    'name': $scope.titleA,
+		    'userid': $cookieStore.get('userInfo').id,
+		    'passkey': $scope.passcodeA
+		}).
+	    success(function(data){
+	    	alert(JSON.stringify(data));
+	    }).
+	    error(function(){
+	    	// alert("error");
+	    });
+	}
 });
+
 app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.message = '*Invalid username and/or password';
   	$scope.failLogin = false;
@@ -109,3 +146,4 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 		});
 	}
 });
+

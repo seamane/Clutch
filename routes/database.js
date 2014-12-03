@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: '',
+	password: 'temproot',
 	//database: 'clutchdb'
 	//database: 'clutch'
 });
@@ -203,6 +203,21 @@ exports.validateUser = function(req,res){
 			res.end(JSON.stringify(rows));
 		}
 	);
+}
+
+exports.createProject = function(req,res){
+	connection.query(
+		'INSERT INTO projects (name, userid, passkey)'
+		+ ' VALUES (\'' + req.body.name + '\', \'' + req.body.userid + '\', \'' + req.body.passkey + '\');',
+		function(err,rows,fields){
+			if(err){
+				console.log('error createProject query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows))
+		}
+	);
+
 }
 
 exports.getProjects = function(req,res){
