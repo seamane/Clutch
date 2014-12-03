@@ -24,23 +24,28 @@ app.controller('createUserController', function($scope, $http, $cookieStore){
 
 app.controller('taskController', function($scope, $http, $cookieStore){
 	$scope.showDropDown = false;
-	$scope.projectid = $cookieStore.get('projectInfo').id
+	// $scope.projectid = $cookieStore.get('projectInfo').id;
+	alert('taskController');
 
-	$http.post('/getAnnouncements',{
-		'projectid': $scope.projectid
-	}).
-	success(function(data){
-		alert(JSON.stringify(data));
-		$scope.announcements = data;
-	});
+	// $scope.getAnnAndSeq = function(){
+	// 	$http.post('/getAnnouncements',{
+	// 	'projectid': $scope.projectid
+	// 	}).
+	// 	success(function(data){
+	// 		alert(JSON.stringify(data));
+	// 		$scope.announcements = data;
+	// 	});
 
-	$http.post('/getSequences',{
-		'projectid': $scope.projectid
-	}).
-	success(function(data){
-		alert(JSON.stringify(data));
-		$scope.getSequences = data;
-	});
+	// 	$http.post('/getSequences',{
+	// 		'projectid': $scope.projectid
+	// 	}).
+	// 	success(function(data){
+	// 		alert(JSON.stringify(data));
+	// 		$scope.getSequences = data;
+	// 	});
+	// }
+
+	// $scope.getAnnAndSeq();
 })
 .directive('showinfo', function($compile) {
     return {
@@ -159,7 +164,7 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 	}
 
 	$scope.buttonClicked = function(project){
-		// alert(JSON.stringify(project));
+		alert(JSON.stringify(project));
 		$cookieStore.put('projectInfo',project);
 		window.location.href = '/project';
 	}
