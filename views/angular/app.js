@@ -17,23 +17,31 @@ var app = angular.module('clutchApp', ['ngCookies']);
 // 		return userData[0].username;
 // 	}
 // });
-app.directive('showinfo', function($compile) {
+
+app.controller('createUserController', function($scope, $http, $cookieStore){
+
+});
+
+app.controller('taskController', function($scope, $http, $cookieStore){
+	$scope.show = false;
+})
+.directive('showinfo', function($compile) {
     return {
-    restrict: 'AE',
-       templateUrl: 'shotInfo.html',
-	compile: function() {
-	  $(document).foundation();
-	}
+	    restrict: 'AE',
+	    templateUrl: 'shotInfo.html',
+		compile: function() {
+			$(document).foundation();
+		}
     }
 });
 
 app.directive('loadnavbar', function($compile) {
     return {
-    restrict: 'AE',
-       templateUrl: 'navbar.html',
-	compile: function() {
-	  $(document).foundation();
-	}
+	    restrict: 'AE',
+	    templateUrl: 'navbar.html',
+		compile: function() {
+			$(document).foundation();
+		}
     }
 });
 
@@ -87,7 +95,7 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
-	    //alert($scope.username + " " + $scope.password);
+	    console.log('login button');
 
 	    $http.post("/validateUser",{
 		    'username': $scope.username,
@@ -95,29 +103,25 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 		}).
 	    success(function(data){
 	    	if(JSON.stringify(data) === '[]'){
-	    		// alert('empty');
 	    		$scope.failLogin = true;
 	    	}
 	    	else{
 	    		window.location.href = '/home';
 	    		$cookieStore.put('userInfo',data[0]);
 	    		$scope.failLogin = false;
-	    		//myService.set(data);
-	    		// $scope.userid = data[0].id;
 	    	}
 	    }).
 	    error(function(){
-	    	// alert("error");
+	    	
 	    });
    	}
 });
 
 app.controller('homeController',function($scope,$http,$cookieStore){
-	// [{'name':'project1'},{'name':'project2'}];
-
 	$scope.getName = function(){
 		return $cookieStore.get('userInfo').fname;
 	}
+
 	$scope.getUsername = function(){
 		return $cookieStore.get('userInfo').username;
 	}
@@ -130,19 +134,31 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 			$scope.userProjects = data;
 		});
 	}
+
 	$scope.getProjects();
-	// $scope.userProjects = $scope.getProjects();
 
 	$scope.createProject = function(){
 
 	}
 
-	$scope.buttonClicked = function(){
-		$http.post('/projectButton',{
-
+	$scope.buttonClicked = function(project){
+		alert(JSON.stringify(project));
+		$http.post('/getAnnouncements',{
+			'projectid': project.id
 		}).
 		success(function(data){
+			alert(JSON.stringify(data));
+			$cookieStore.put('projectInfo',project);
+			$cookieStore.put('announcementsInfo',data);
+		});
 
+		$http.post('/getSequences',{
+			'projectid': project.id
+		}).
+		success(function(data){
+			alert(JSON.stringify(data));
+			$cookieStore.put('sequencesInfo',data);
+			window.location.href = '/project';
 		});
 	}
 });
