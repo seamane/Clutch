@@ -18,6 +18,33 @@ var app = angular.module('clutchApp', ['ngCookies']);
 // 	}
 // });
 
+app.controller('createUserController', function($scope, $http, $cookieStore){
+
+});
+
+app.controller('taskController', function($scope, $http, $cookieStore){
+	$scope.show = false;
+})
+
+.directive('showinfo', function($compile) {
+    return {
+    restrict: 'AE',
+       templateUrl: 'shotInfo.html',
+	compile: function() {
+	  $(document).foundation();
+	}
+    }
+})
+
+.directive('loadnavbar', function($compile) {
+    return {
+    restrict: 'AE',
+       templateUrl: 'navbar.html',
+	compile: function() {
+	  $(document).foundation();
+	}
+    }
+});
 app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.message = '*Invalid username and/or password';
   	$scope.failLogin = false;
@@ -49,6 +76,7 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 });
 
 app.controller('homeController',function($scope,$http,$cookieStore){
+	// [{'name':'project1'},{'name':'project2'}];
 
 	$scope.getName = function(){
 		return $cookieStore.get('userInfo').fname;
@@ -62,12 +90,22 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 			'userid': $cookieStore.get('userInfo').id
 		}).
 		success(function(data){
-			console.log(JSON.stringify(data));
 			$scope.userProjects = data;
 		});
 	}
+	$scope.getProjects();
+	// $scope.userProjects = $scope.getProjects();
 
 	$scope.createProject = function(){
 
+	}
+
+	$scope.buttonClicked = function(){
+		$http.post('/projectButton',{
+
+		}).
+		success(function(data){
+
+		});
 	}
 });
