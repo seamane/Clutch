@@ -221,8 +221,16 @@ exports.getProjects = function(req,res){
 }
 
 exports.projectButton = function (req,res) {
-	// connection.query(
-	// 	'select * from announcements '
-	// 	+ 'where projectid=' + req.body.projectid + ';'
-	// );
+	console.log('projectid:'+req.body.projectid);
+	connection.query(
+		'select * from announcements '
+		+ 'where projectid=' + req.body.projectid + ';',
+		function(err,rows,fields){
+			if(err){
+				console.log('error projectButton');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+		}
+	);
 }

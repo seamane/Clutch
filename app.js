@@ -34,8 +34,8 @@ app.get('/css/app.css',function(req,res){res.sendFile(__dirname + '/css/app.css'
 app.get('/js/vendor/modernizr.js',function(req,res){res.sendFile(__dirname + '/js/vendor/modernizr.js');});
 app.get('/js/vendor/jquery.js',function(req,res){res.sendFile(__dirname + '/js/vendor/jquery.js');});
 app.get('/js/foundation.min.js',function(req,res){res.sendFile(__dirname + '/js/foundation.min.js');});
-app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js')});
-app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js')});
+app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js');});
+app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js');});
 
 app.post('/validateUser',database.validateUser);
 
@@ -44,8 +44,10 @@ app.post('/validateUser',database.validateUser);
 //app.post('/newUser',database.newUser);
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
 app.post('/getProjects',database.getProjects);
-app.get('/project',function(req,res){res.sendFile(__dirname+'/views/task.html')});
 app.post('/projectButton',database.projectButton);
+app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
+app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
+app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
 
 
 //catch 404 and forward error handler
