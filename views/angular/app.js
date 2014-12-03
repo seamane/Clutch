@@ -25,7 +25,6 @@ app.controller('createUserController', function($scope, $http, $cookieStore){
 app.controller('taskController', function($scope, $http, $cookieStore){
 	$scope.show = false;
 })
-
 .directive('showinfo', function($compile) {
     return {
 	    restrict: 'AE',
@@ -98,12 +97,21 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 
 	$scope.buttonClicked = function(project){
 		alert(JSON.stringify(project));
-		$http.post('/projectButton',{
+		$http.post('/getAnnouncements',{
 			'projectid': project.id
 		}).
 		success(function(data){
 			alert(JSON.stringify(data));
 			$cookieStore.put('projectInfo',project);
+			$cookieStore.put('announcementsInfo',data);
+		});
+
+		$http.post('/getSequences',{
+			'projectid': project.id
+		}).
+		success(function(data){
+			alert(JSON.stringify(data));
+			$cookieStore.put('sequencesInfo',data);
 			window.location.href = '/project';
 		});
 	}

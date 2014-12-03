@@ -233,20 +233,29 @@ exports.getProjects = function(req,res){
 	);
 }
 
-exports.projectButton = function (req,res) {
+exports.getAnnouncements = function (req,res) {
 	connection.query(
 		'select * from announcements '
 		+ 'where projectid=' + req.body.projectid + ';',
 		function(err,announcements){
-			console.log('announcements:' + JSON.stringify(announcements));
-			connection.query(
-				'select * from sequences '
-				+ 'where projectid=' + req.body.projectid + ';',
-				function(err,sequences){
-					console.log('sequences:' + JSON.stringify(sequences));
-					res.end(JSON.stringify(announcements,sequences));
-				}
-			);
+			if(err){
+				console.log('error getAnnouncements query');
+				throw err;
+			}
+			res.end(JSON.stringify(announcements));
+		}
+	);
+}
+
+exports.getSequences = function(req,res){
+	connection.query(
+		'select * from sequences '
+		+ 'where projectid=' + req.body.projectid + ';',
+		function(err,sequences){
+			if(err){
+				console.log('error getSequences query');
+			}
+	 		res.end(JSON.stringify(sequences));
 		}
 	);
 }
