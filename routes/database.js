@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: '',
+	password: '20nederland12',
 	//database: 'clutchdb'
 	//database: 'clutch'
 });
@@ -96,6 +96,7 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'authorid INT,'
+		+ 'projectid INT,'
 		+ 'message VARCHAR(500),'
 		+ 'time DATETIME'
 		+ ');',function (err){
@@ -211,11 +212,17 @@ exports.getProjects = function(req,res){
 		+ 'where userid=' + req.body.userid + ';',
 		function(err,rows,fields){
 			if(err){
-				console.log('errror getProjects query');
+				console.log('error getProjects query');
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
-			console.log(JSON.stringify(rows));
 		}
+	);
+}
+
+exports.projectButton = function (req,res) {
+	connection.query(
+		'select * from announcements '
+		+ 'where projectid=' + req.body.projectid + ';';
 	);
 }

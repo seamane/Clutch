@@ -44,6 +44,8 @@ app.post('/validateUser',database.validateUser);
 //app.post('/newUser',database.newUser);
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
 app.post('/getProjects',database.getProjects);
+app.get('/project',function(req,res){res.sendFile(__dirname+'/views/task.html')});
+app.post('/projectButton',database.projectButton);
 
 
 //catch 404 and forward error handler
