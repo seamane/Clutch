@@ -41,7 +41,7 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'name VARCHAR(50),'
-		+ 'userid INT,'
+		+ 'authorid INT,'
 		+ 'passkey VARCHAR(50)'
 		+ ');',function(err){
 		if(err){
@@ -236,8 +236,9 @@ exports.createProject = function(req,res){
 
 exports.getProjects = function(req,res){
 	connection.query(
-		'select * from projects '
-		+ 'where userid=' + req.body.userid + ';',
+		'select projects.id,projects.name '
+		+ 'from projects inner join members '
+		+ 'on members.userid=' + req.body.userid + ' and members.projectid=projects.id;',
 		function(err,rows){
 			if(err){
 				console.log('error getProjects query');

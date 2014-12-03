@@ -57,32 +57,17 @@
 
   <!-- Start Accordian -->
   <dl class="accordion row" data-accordion>
-    <dd class="accordion-navigation">
+    <dd class="accordion-navigation" ng-repeat=>
       <a href="#seqA">Sequence A</a>
-      <div id="seqA" class="content active shots">
-        <ul class="button-group ">
-          <li><a class="button shot-name">Shot 1: </a></li>
-          <li><a class="button shot" data-dropdown="Lighting">Lighting</a></li>
-          <li><a href="#panelTexture" class="button shot"data-dropdown="Lighting" >Texturing</a></li>
-          <li><a class="button shot" data-dropdown="Lighting">Animating</a></li>
-          <li><a id="explosions" ng-click="show=!show" class="button shot" data-options="scrolltop:false">VFX</a></li>
-
-          <li><a class="button shot"> Rigging</a></li>
+      <div id="seqA" class="content shots">
+        <ul class="button-group">
+          <li><a class="button shot-name">Shot 001 </a></li>
+          <li><a class="button shot" data-dropdown="Lighting">Lighter</a></li>
+          <li><a class="button shot" data-dropdown="Lighting">Animator</a></li>
+          <li><a id="vfx" ng-click="showDropDown=!showDropDown" class="button shot" data-options="scrolltop:false">FX</a></li>
+          <li><a class="button shot"> Shot Wrangler</a></li>
         </ul>
-
-      <!-- This div is hidden for now -->
-      <!-- <div class="content " id="panelTexture"> -->
-      <div showinfo>
-      </div> 
-
-        <ul class="button-group ">
-          <li><a class="button shot-name">Shot 2: </a></li>
-          <li><a class="button shot" data-dropdown="Lighting">Lighting</a></li>
-          <li><a href="#panelTexture" class="button shot"data-dropdown="Lighting" >Texturing</a></li>
-          <li><a class="button shot" data-dropdown="Lighting">Other Stuff</a></li>
-          <li><a class="button shot" data-dropdown="Lighting">Explosions</a></li>
-          <li><a class="button shot" data-dropdown="Lighting">Rigging</a></li>
-        </ul>
+        <div showinfo></div> 
       </div>
     </dd>
 <!-- Lighting Dropdown -->

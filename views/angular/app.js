@@ -23,7 +23,24 @@ app.controller('createUserController', function($scope, $http, $cookieStore){
 });
 
 app.controller('taskController', function($scope, $http, $cookieStore){
-	$scope.show = false;
+	$scope.showDropDown = false;
+	$scope.projectid = $cookieStore.get('projectInfo').id
+
+	$http.post('/getAnnouncements',{
+		'projectid': $scope.projectid
+	}).
+	success(function(data){
+		alert(JSON.stringify(data));
+		$scope.announcements = data;
+	});
+
+	$http.post('/getSequences',{
+		'projectid': $scope.projectid
+	}).
+	success(function(data){
+		alert(JSON.stringify(data));
+		$scope.getSequences = data;
+	});
 })
 .directive('showinfo', function($compile) {
     return {
@@ -106,9 +123,9 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    		$scope.failLogin = true;
 	    	}
 	    	else{
-	    		window.location.href = '/home';
 	    		$cookieStore.put('userInfo',data[0]);
 	    		$scope.failLogin = false;
+	    		window.location.href = '/home';
 	    	}
 	    }).
 	    error(function(){
@@ -142,24 +159,8 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 	}
 
 	$scope.buttonClicked = function(project){
-		alert(JSON.stringify(project));
-		$http.post('/getAnnouncements',{
-			'projectid': project.id
-		}).
-		success(function(data){
-			alert(JSON.stringify(data));
-			$cookieStore.put('projectInfo',project);
-			$cookieStore.put('announcementsInfo',data);
-		});
-
-		$http.post('/getSequences',{
-			'projectid': project.id
-		}).
-		success(function(data){
-			alert(JSON.stringify(data));
-			$cookieStore.put('sequencesInfo',data);
-			window.location.href = '/project';
-		});
+		// alert(JSON.stringify(project));
+		$cookieStore.put('projectInfo',project);
+		window.location.href = '/project';
 	}
 });
-
