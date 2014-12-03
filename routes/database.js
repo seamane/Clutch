@@ -249,6 +249,22 @@ exports.getProjects = function(req,res){
 	);
 }
 
+exports.addProject = function(req,res){
+	connection.query(
+		'INSERT INTO members (projectid, userid)'
+		+ ' SELECT id, \'' + req.body.userid + '\' FROM projects WHERE name=\'' 
+		+ req.body.name + '\' AND passkey=\'' + req.body.passkey + '\';',
+
+		function(err,rows,fields){
+			if(err){
+				console.log('error addProject query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows))
+		}
+	);
+}
+
 exports.getAnnouncements = function (req,res) {
 	connection.query(
 		'select * from announcements '

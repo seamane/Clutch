@@ -36,3 +36,47 @@
 .shots{
 	padding:none !important;
 }
+
+.login-label{
+	font-size: 105%;
+}
+
+.login-background{
+	background-color: #f9f9f9;
+	margin-top:10%;
+}
+.offwhite-background{
+	background-color: #f9f9f9;
+}
+.login-button{
+	background-color: #737373;
+	/*color: #737373;*/
+	border-color:#e3e3e3;
+	width: 55%;
+}
+.signUp-button{
+	background-color: #e3e3e3;
+	color: #737373;
+}
+
+.blue-input{
+	border-width: 2px !important;
+	box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.1) !important;
+}
+.blue-input:focus{
+	border-color: #008cba !important;
+	box-shadow: 0 0 0px #008cba !important;
+}
+
+.welcome{
+	color:#323232;
+}
+
+.navbar-button{
+	background-color: #737373;
+	/*color: #737373;*/
+	border-color:#e3e3e3;
+	width: 55%;
+	font-size: 100% !important;
+}
+
