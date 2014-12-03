@@ -221,8 +221,8 @@ exports.getProjects = function(req,res){
 }
 
 exports.projectButton = function (req,res) {
-	connection.query(
-		'select * from announcements '
-		+ 'where projectid=' + req.body.projectid + ';';
-	);
+	// connection.query(
+	// 	'select * from announcements '
+	// 	+ 'where projectid=' + req.body.projectid + ';'
+	// );
 }

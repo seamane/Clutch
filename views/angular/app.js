@@ -101,12 +101,13 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 	}
 
 	$scope.buttonClicked = function(project){
-		$http.post('/projectButton',{
-			'projectid': project.id
-		}).
-		success(function(data){
-			$cookieStore.push('projectInfo':project);
-			window.location.href = '/home';
-		});
+		console.log(JSON.stringify(project));
+		// $http.post('/projectButton',{
+		// 	'projectid': project.id
+		// }).
+		// success(function(data){
+		// 	$cookieStore.push('projectInfo':project);
+		// 	window.location.href = '/home';
+		// });
 	}
 });
