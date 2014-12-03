@@ -95,7 +95,7 @@
 
     <div class="row">
       <div class="large-12 columns">
-        <h1>Welcome {{getName()}}</h1>
+        <h1>Welcome {{getName()}}!</h1>
       </div>
     </div>
 
@@ -106,40 +106,10 @@
         <!-- Project buttons-->
 	<!-- Button 1 -->
          <div class="row">
-          <div class="large-6 large-centered columns">
-            <a href="#" class="button large expand black-background">Project 1</a>
+          <div class="large-6 large-centered columns" ng-repeat='project in userProjects'>
+            <a href="#" class="button large expand black-background">{{project.name}}</a>
           </div>
         </div>
-
-	<!-- Button 2 -->
-         <div class="row">
-          <div class="large-6 large-centered columns">
-            <a href="#" class="button large expand black-background ">Project 2</a>
-          </div>
-        </div>
-
-	<!-- Button 3 -->
-         <div class="row">
-          <div class="large-6 large-centered columns">
-            <a href="#" class="button large expand black-background">Project 3</a>
-          </div>
-        </div>
-
-	<!-- Button 4 -->
-         <div class="row">
-          <div class="large-6 large-centered columns">
-            <a href="#" class="button large expand black-background">Project 4</a>
-          </div>
-        </div>
-
-	<!-- Button 5 -->
-         <div class="row">
-          <div class="large-6 large-centered columns">
-            <a href="#" class="button large expand black-background">Project 5</a>
-          </div>
-        </div>
-
-
       </div>
     </form>
 

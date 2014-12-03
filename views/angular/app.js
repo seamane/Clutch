@@ -18,62 +18,38 @@ var app = angular.module('clutchApp', ['ngCookies']);
 // 	}
 // });
 
-app.controller('createUserController', function($scope, $http, $cookieStore){
-
-})
-
-app.controller('taskController', function($scope, $http, $cookieStore){
-	$scope.show = false;
-})
-
-.directive('showinfo', function($compile) {
-    return {
-    restrict: 'AE',
-       templateUrl: 'shotInfo.html',
-	compile: function() {
-	  $(document).foundation();
-	}
-    }
-})
-
-.directive('loadnavbar', function($compile) {
-    return {
-    restrict: 'AE',
-       templateUrl: 'navbar.html',
-	compile: function() {
-	  $(document).foundation();
-	}
-    }
-})
-
-app.controller('indexController', function($scope, $http,$cookieStore){//, myService) {
+app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.message = '*Invalid username and/or password';
+  	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
-	    alert($scope.username + " " + $scope.password);
-	    
+	    //alert($scope.username + " " + $scope.password);
+
 	    $http.post("/validateUser",{
 		    'username': $scope.username,
 		    'password': $scope.password
 		}).
 	    success(function(data){
 	    	if(JSON.stringify(data) === '[]'){
-	    		alert('empty');
+	    		// alert('empty');
+	    		$scope.failLogin = true;
 	    	}
 	    	else{
 	    		window.location.href = '/home';
 	    		$cookieStore.put('userInfo',data[0]);
+	    		$scope.failLogin = false;
 	    		//myService.set(data);
 	    		// $scope.userid = data[0].id;
 	    	}
 	    }).
 	    error(function(){
-	    	alert("error");
+	    	// alert("error");
 	    });
    	}
 });
 
-app.controller('homeController',function($scope, $http,$cookieStore){//, myService){
+app.controller('homeController',function($scope,$http,$cookieStore){
+
 	$scope.getName = function(){
 		return $cookieStore.get('userInfo').fname;
 	}
@@ -86,7 +62,8 @@ app.controller('homeController',function($scope, $http,$cookieStore){//, myServi
 			'userid': $cookieStore.get('userInfo').id
 		}).
 		success(function(data){
-
+			console.log(JSON.stringify(data));
+			$scope.userProjects = data;
 		});
 	}
 

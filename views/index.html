@@ -11,109 +11,26 @@
     <script src="angular/angular.js"></script>  
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script type = 'text/javascript' src="angular/app.js"></script>
-    <script type = 'text/javascript'></script>
 
   </head>
-  <body ng-controller="indexController" class='login-background'> 
-<!--     <nav class="top-bar" data-topbar role="navigation"> 
+  <body ng-controller="indexController">
+    <nav class="top-bar" data-topbar role="navigation"> 
       <ul class="title-area">
         <li class="name">
           <center><h1><a href="#">Clutch</a></h1></center>
         </li> 
-    Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone
+    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li> 
       </ul>
-<<<<<<< HEAD
-
-      <section class="top-bar-section"> -->
-      <!-- Right Nav Section -->
-<!--         <ul class="right"> 
-          <li><a href="#" data-dropdown="dropCreateProj">Create New Project</a></li>
-          <li><a href="#" data-dropdown="dropFindProj">Add Exisiting Project</a></li>
-          <li class="active"><a href="#">Join Us</a></li> 
-          <li class="has-dropdown"> 
-            <a href="#">Username</a> 
-            <ul class="dropdown">
-              <li><a href="#">Logout</a></li>
-              <li class="active"><a href="#">Active link in dropdown</a></li> 
-            </ul> 
-          </li> 
-        </ul>  -->
-
-        <!-- Left Nav Section -->
-<!--         <ul class="left">
-          <li><a href="#">Left Nav Button</a></li>
-        </ul> -->
-<!--       </section> 
-    </nav> -->
-    <div class=''>
-    <h1 class="text-center ">Welcome to the Clutch </h1>
-  </div>
-
-          <!-- Create Project Dropdown -->
-         <!--  <div id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
-               <form>
-                  <div class="row">
-                    <div class="">
-                      <label>Project Title</label>
-                      <input type="text" placeholder="" />
-                    </div>
-                  </div> -->
-                  <!-- password field -->
-                  <!-- <div class="row">
-                    <div class="">
-                      <label>Passcode</label>
-                      <input type="password" placeholder="myproject123" />
-                    </div>
-                  </div> -->
-                  <!-- login button -->
-                   <!-- <div class="row">
-                    <div class="">
-                      <a href="#" class="tiny radius button">Create</a><br/>
-                    </div>
-                  </div>
-              </form>
-          </div>
-
-          Find Project Dropdown
-          <div id="dropFindProj" data-dropdown-content class="f-dropdown content" >
-               <form>
-                  <div class="row">
-                    <div class="">
-                      <label>Project Title</label>
-                      <input type="text" placeholder="" />
-                    </div>
-                  </div> -->
-                  <!-- password field -->
-                  <!-- <div class="row">
-                    <div class="">
-                      <label>Passcode</label>
-                      <input type="password" placeholder="theirProject123" />
-                    </div>
-                  </div> -->
-                  <!-- login button -->
-                   <!-- <div class="row">
-                    <div class="">
-                      <a href="#" class="small radius button">Add</a><br/>
-                    </div>
-                  </div>
-              </form>
-          </div> -->
-
-<!-- END NAVBAR -->
-<!-- 
-    <div class="row">
-      <div class="large-12 columns">
-        <h1>Welcome to Stewie's Playhouse</h1>
-      </div>
-    </div> -->
-    
-
+    </nav>    
     
     <!-- username field -->
     <form>
       <div class="panel" id='log'>
         <div class="row">
+          <div ng-show="failLogin">
+            <p>{{message}}</p>
+          </div>
           <div class="large-4 medium-centered columns">
             <label>Username</label>
             <input type="text" ng-model='username' placeholder="username" />
