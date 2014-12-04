@@ -36,10 +36,3 @@
 .shots{
 	padding:none !important;
 }
-.login-background{
-	background-color: #343130;
-	display: table-cell;
-	vertical-align: middle;
-	height: 50px;
-	border: 1px solid red;
-}

@@ -20,39 +20,44 @@
   <body ng-controller="indexController" class='login-background'> 
 
     <div class=''>
-    <h1 class="text-center ">Welcome to the Clutch </h1>
-  </div>
-
+      <h1 class="text-center welcome">Welcome to the Clutch </h1>
+    </div>
          
     
     <!-- username field -->
+    <div class="inside-ghost">
     <form>
-      <div class="panel" id='log'>
+      <div class="" id='log'>
         <div class="row">
           <div ng-show="failLogin">
             <p>{{message}}</p>
           </div>
           <div class="large-4 medium-centered columns">
-            <label>Username</label>
-            <input type="text" ng-model='username' placeholder="username" />
+            <label class="login-label">Username</label>
+            <input class="blue-input" type="text" ng-model='username' placeholder="" />
           </div>
         </div>
         <!-- password field -->
         <div class="row">
           <div class="large-4 medium-centered columns">
-            <label>Password</label>
-            <input type="password" ng-model='password' placeholder="password" />
+            <label class="login-label">Password</label>
+            <input class="blue-input" type="password" ng-model='password' placeholder="" />
           </div>
         </div>
         <!-- login button -->
          <div class="row">
           <div class="large-4 medium-centered columns">
-            <a href="#" ng-click='loginButton()' class="small radius button right">Login</a>
+            <a href="#" ng-click='loginButton()' class=" button left login-button">Login</a>
+            <a href="#" ng-click='signUp()' class=" button right signUp-button">Sign Up</a>
           </div>
         </div>
       </div>
     </form>
+    </div>
     
+
+
+
     <script src="../js/vendor/jquery.js"></script>
     <script src="../js/foundation.min.js"></script>
     <script>

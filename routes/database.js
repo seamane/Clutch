@@ -2,7 +2,11 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
+//<<<<<<< HEAD
 	password: 'griffin1',
+//=======
+	password: '20nederland12',
+//>>>>>>> origin/master
 	//database: 'clutchdb'
 	//database: 'clutch'
 });
@@ -42,6 +46,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'name VARCHAR(50),'
 		+ 'userid INT,'
+		+ 'authorid INT,'
 		+ 'passkey VARCHAR(50)'
 		+ ');',function(err){
 		if(err){
@@ -84,6 +89,7 @@ createTables = function()
 		+ 'frames INT,'
 		+ 'description VARCHAR(500),'
 		+ 'name VARCHAR(20),'
+		+ 'sequenceid INT,'
 		+ 'projectid INT'
 		+ ');',function (err){
 		if(err){
@@ -96,8 +102,21 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'authorid INT,'
+		+ 'projectid INT,'
 		+ 'message VARCHAR(500),'
 		+ 'time DATETIME'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
+		'CREATE TABLE IF NOT EXISTS sequences('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'name VARCHAR(20),'
+		+ 'projectid INT'
 		+ ');',function (err){
 		if(err){
 			throw err;
@@ -205,6 +224,7 @@ exports.validateUser = function(req,res){
 	);
 }
 
+//<<<<<<< HEAD
 exports.create = function(req, res){
 
 	/*connection.query(
@@ -235,16 +255,81 @@ exports.create = function(req, res){
 }
 
 exports.getProjects = function(req,res){
+//=======
+exports.createProject = function(req,res){
+//>>>>>>> origin/master
 	connection.query(
 		'select * from projects '
 		+ 'where userid=' + req.body.userid + ';',
+		'INSERT INTO projects (name, userid, passkey)'
+		+ ' VALUES (\'' + req.body.name + '\', \'' + req.body.userid + '\', \'' + req.body.passkey + '\');',
 		function(err,rows,fields){
 			if(err){
 				console.log('errror getProjects query');
+				console.log('error createProject query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows))
+		}
+	);
+
+}
+
+exports.getProjects = function(req,res){
+	connection.query(
+		'select projects.id,projects.name '
+		+ 'from projects inner join members '
+		+ 'on members.userid=' + req.body.userid + ' and members.projectid=projects.id;',
+		function(err,rows){
+			if(err){
+				console.log('error getProjects query');
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
 			console.log(JSON.stringify(rows));
+		}
+	);
+}
+
+exports.addProject = function(req,res){
+	connection.query(
+		'INSERT INTO members (projectid, userid)'
+		+ ' SELECT id, \'' + req.body.userid + '\' FROM projects WHERE name=\'' 
+		+ req.body.name + '\' AND passkey=\'' + req.body.passkey + '\';',
+
+		function(err,rows,fields){
+			if(err){
+				console.log('error addProject query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows))
+		}
+	);
+}
+
+exports.getAnnouncements = function (req,res) {
+	connection.query(
+		'select * from announcements '
+		+ 'where projectid=' + req.body.projectid + ';',
+		function(err,announcements){
+			if(err){
+				console.log('error getAnnouncements query');
+				throw err;
+			}
+			res.end(JSON.stringify(announcements));
+		}
+	);
+}
+
+exports.getSequences = function(req,res){
+	connection.query(
+		'select * from sequences '
+		+ 'where projectid=' + req.body.projectid + ';',
+		function(err,sequences){
+			if(err){
+				console.log('error getSequences query');
+			}
+	 		res.end(JSON.stringify(sequences));
 		}
 	);
 }

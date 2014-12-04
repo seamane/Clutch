@@ -83,33 +83,106 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 
 app.controller('taskController', function($scope, $http, $cookieStore){
 	$scope.show = false;
+	$scope.showDropDown = false;
+	// $scope.projectid = $cookieStore.get('projectInfo').id;
+	alert('taskController');
+
+	// $scope.getAnnAndSeq = function(){
+	// 	$http.post('/getAnnouncements',{
+	// 	'projectid': $scope.projectid
+	// 	}).
+	// 	success(function(data){
+	// 		alert(JSON.stringify(data));
+	// 		$scope.announcements = data;
+	// 	});
+
+	// 	$http.post('/getSequences',{
+	// 		'projectid': $scope.projectid
+	// 	}).
+	// 	success(function(data){
+	// 		alert(JSON.stringify(data));
+	// 		$scope.getSequences = data;
+	// 	});
+	// }
+
+	// $scope.getAnnAndSeq();
 })
 
 .directive('showinfo', function($compile) {
     return {
-    restrict: 'AE',
-       templateUrl: 'shotInfo.html',
-	compile: function() {
-	  $(document).foundation();
-	}
-    }
-})
-
-.directive('loadnavbar', function($compile) {
-    return {
-    restrict: 'AE',
-       templateUrl: 'navbar.html',
-	compile: function() {
-	  $(document).foundation();
-	}
+	    restrict: 'AE',
+	    templateUrl: 'shotInfo.html',
+		compile: function() {
+			$(document).foundation();
+		}
     }
 });
+
+app.directive('loadnavbar', function($compile) {
+    return {
+	    restrict: 'AE',
+	    templateUrl: 'navbar.html',
+		compile: function() {
+			$(document).foundation();
+		}
+    }
+});
+
+app.controller('createUserController', function($scope, $http, $cookieStore){
+
+});
+
+app.controller('taskController', function($scope, $http, $cookieStore){
+	$scope.show = false;
+})
+
+app.controller('navbarController', function($scope, $http, $cookieStore){
+
+	  $scope.createProjectButton = function() {
+	    alert("HI");
+	    $http.post("/createProject",{
+		    'name': $scope.titleC,
+		    'userid': $cookieStore.get('userInfo').id,
+		    'passkey': $scope.passcodeC
+		}).
+	    success(function(data){
+	    	alert(JSON.stringify(data));
+	    	// if(JSON.stringify(data) === '[]'){
+	    		
+	    	// }
+	    	// else{
+
+	    	// }
+	    }).
+	    error(function(){
+	    	// alert("error");
+	    });
+	}
+	  $scope.addProjectButton = function() {
+	    $http.post("/addProject",{
+		    'name': $scope.titleA,
+		    'userid': $cookieStore.get('userInfo').id,
+		    'passkey': $scope.passcodeA
+		}).
+	    success(function(data){
+	    	alert(JSON.stringify(data));
+	    }).
+	    error(function(){
+	    	// alert("error");
+	    });
+	}
+});
+
 app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.message = '*Invalid username and/or password';
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
+<<<<<<< HEAD
 	    alert($scope.username + " " + $scope.password);
+=======
+	    console.log('login button');
+>>>>>>> origin/master
 
 	    $http.post("/validateUser",{
 		    'username': $scope.username,
@@ -117,29 +190,25 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 		}).
 	    success(function(data){
 	    	if(JSON.stringify(data) === '[]'){
-	    		// alert('empty');
 	    		$scope.failLogin = true;
 	    	}
 	    	else{
-	    		window.location.href = '/home';
 	    		$cookieStore.put('userInfo',data[0]);
 	    		$scope.failLogin = false;
-	    		//myService.set(data);
-	    		// $scope.userid = data[0].id;
+	    		window.location.href = '/home';
 	    	}
 	    }).
 	    error(function(){
-	    	// alert("error");
+	    	
 	    });
    	}
 });
 
 app.controller('homeController',function($scope,$http,$cookieStore){
-	// [{'name':'project1'},{'name':'project2'}];
-
 	$scope.getName = function(){
 		return $cookieStore.get('userInfo').fname;
 	}
+
 	$scope.getUsername = function(){
 		return $cookieStore.get('userInfo').username;
 	}
@@ -152,19 +221,16 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 			$scope.userProjects = data;
 		});
 	}
+
 	$scope.getProjects();
-	// $scope.userProjects = $scope.getProjects();
 
 	$scope.createProject = function(){
 
 	}
 
-	$scope.buttonClicked = function(){
-		$http.post('/projectButton',{
-
-		}).
-		success(function(data){
-
-		});
+	$scope.buttonClicked = function(project){
+		alert(JSON.stringify(project));
+		$cookieStore.put('projectInfo',project);
+		window.location.href = '/project';
 	}
 });
