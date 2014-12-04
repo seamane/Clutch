@@ -84,28 +84,28 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 app.controller('taskController', function($scope, $http, $cookieStore){
 	$scope.show = false;
 	$scope.showDropDown = false;
-	// $scope.projectid = $cookieStore.get('projectInfo').id;
+    $scope.projectid = $cookieStore.get('projectInfo').id;
 	alert('taskController');
 
-	// $scope.getAnnAndSeq = function(){
-	// 	$http.post('/getAnnouncements',{
-	// 	'projectid': $scope.projectid
-	// 	}).
-	// 	success(function(data){
-	// 		alert(JSON.stringify(data));
-	// 		$scope.announcements = data;
-	// 	});
+	$scope.getAnnAndSeq = function(){
+		$http.post('/getAnnouncements',{
+		'projectid': $scope.projectid
+		}).
+		success(function(data){
+			alert(JSON.stringify(data));
+			$scope.announcements = data;
+		});
 
-	// 	$http.post('/getSequences',{
-	// 		'projectid': $scope.projectid
-	// 	}).
-	// 	success(function(data){
-	// 		alert(JSON.stringify(data));
-	// 		$scope.getSequences = data;
-	// 	});
-	// }
+		$http.post('/getSequences',{
+			'projectid': $scope.projectid
+		}).
+		success(function(data){
+			alert(JSON.stringify(data));
+			$scope.sequences = data;
+		});
+	}
 
-	// $scope.getAnnAndSeq();
+	$scope.getAnnAndSeq();
 })
 
 .directive('showinfo', function($compile) {
@@ -131,10 +131,6 @@ app.directive('loadnavbar', function($compile) {
 app.controller('createUserController', function($scope, $http, $cookieStore){
 
 });
-
-app.controller('taskController', function($scope, $http, $cookieStore){
-	$scope.show = false;
-})
 
 app.controller('navbarController', function($scope, $http, $cookieStore){
 
@@ -201,6 +197,10 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    error(function(){
 	    	
 	    });
+   	}
+
+   	$scope.signUp = function(){
+		window.location.href = '/createUser';
    	}
 });
 

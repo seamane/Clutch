@@ -25,27 +25,15 @@
 
 
  <div class="row">
-      <div class="large-12 columns">
+      <div class="large-12 columns" ng-repeat='ann in announcements'>
         <div class="panel">
-          <h3>We&rsquo;re stoked you want to work with Stew! </h3>
-         <!--  <p>Here you will be able to view the most recent announcements associated with this project.</p>
-          <p>Once you are tired of reading announcements, you can scroll down to get to work:</p>
-          <div class="row">
-            <div class="large-4 medium-4 columns">
-          <p><a href="http://foundation.zurb.com/docs">I like</a><br />BLAH BLAH BLAH.</p>
-        </div>
-            <div class="large-4 medium-4 columns">
-              <p><a href="http://github.com/zurb/foundation">to Move it</a><br />BLAH BLAH BLAH..</p>
-            </div>      
-          </div> -->
+          <h3>{{ann.message}}</h3>
         </div>
       </div>
     </div>
 
   <div class="row">
       <h4  class="black-background"> Project Name </h4>
-
-              
 
       <div class="right">
         <input id="checkbox1" type="checkbox"><label for="checkbox1">Show only my tasks</label>
@@ -56,10 +44,10 @@
 
 
   <!-- Start Accordian -->
-  <dl class="accordion row" data-accordion>
-    <dd class="accordion-navigation" >
-      <a href="#seqA">Sequence A</a>
-      <div id="seqA" class="content shots">
+  <dl class="accordion row" ng-repeat='seq in sequences' data-accordion>
+    <dd class="accordion-navigation">
+      <a href="#{{seq.id}}">{{seq.name}}</a>
+      <div id="{{seq.id}}" class="content shots">
         <ul class="button-group">
           <li><a class="button shot-name">Shot 001 </a></li>
           <li><a class="button shot" data-dropdown="Lighting">Lighter</a></li>
@@ -98,7 +86,7 @@
 
 
 
-    <dd class="accordion-navigation">
+   <!-- <dd class="accordion-navigation">
       <a href="#seq2">Sequence B</a>
       <div id="seq2" class="content">
 
@@ -133,10 +121,10 @@
       <div id="panel3" class="content">
         
       </div>
-    </dd>
+    </dd> -->
   </dl>
 
-    // <script>
+     <script>
     //   $(document).ready( function() {
     //       $("#explosions").on("click", function() {
     //           $("#panelTexture").removeClass("hide");

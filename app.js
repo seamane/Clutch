@@ -50,7 +50,6 @@ app.post('/createProject', database.createProject);
 app.post('/addProject', database.addProject);
 //>>>>>>> origin/master
 
-// app.get('/createUser',function(req,res){res.sendFile(__dirname + '/views/createUser.html');});
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 //app.post('/newUser',database.newUser);
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
@@ -61,6 +60,7 @@ app.post('/getSequences',database.getSequences);
 app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
 app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
+app.get('/createUser',function(req,res){res.sendFile(__dirname+'/views/createUser.html');});
 
 
 //catch 404 and forward error handler
