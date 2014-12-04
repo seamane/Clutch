@@ -138,28 +138,29 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 
 app.controller('navbarController', function($scope, $http, $cookieStore){
 
-	 $scope.submit = function(valid) {
-	 if(valid)
-	 {	
-	  	alert("hi");
-	    $http.post("/createProject",{
-		    'name': $scope.titleC,
-		    'userid': $cookieStore.get('userInfo').id,
-		    'passkey': $scope.passcodeC
-		}).
-	    success(function(data){
-	    	alert(JSON.stringify(data));
-	    	// if(JSON.stringify(data) === '[]'){
-	    		
-	    	// }
-	    	// else{
+	$scope.attempted = false;
+	$scope.success = false;
+	$scope.createProject = function(valid) {
+		if(valid){	
+		    	$http.post("/createProject",{
+			    'name': $scope.titleC,
+			    'userid': $cookieStore.get('userInfo').id,
+			    'passkey': $scope.passcodeC
+			}).
+		    	success(function(data){
+		    		// alert(JSON.stringify(data));
+		    		$scope.attempted = false;
+		    		// $scope.success = true;
+		    		alert("Success!");
 
-	    	// }
-	    }).
-	    error(function(){
-	    	// alert("error");
-	    });
-	   }
+		    	}).
+		    	error(function(){
+		    	// alert("error");
+		    	});
+		   }
+		else{
+			$scope.attempted = true;
+		}
 	}
 	  $scope.addProjectButton = function() {
 	    $http.post("/addProject",{
@@ -181,11 +182,7 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
-<<<<<<< HEAD
-	    alert($scope.username + " " + $scope.password);
-=======
 	    console.log('login button');
->>>>>>> origin/master
 
 	    $http.post("/validateUser",{
 		    'username': $scope.username,

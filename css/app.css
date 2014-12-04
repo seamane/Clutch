@@ -83,4 +83,7 @@
 	width: 55%;
 	font-size: 100% !important;
 }
+.has-error{
+	border-color: #cc0000 !important;
+}
 

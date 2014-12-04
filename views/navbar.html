@@ -27,26 +27,27 @@
 
           <!-- Create Project Dropdown -->
           <div ng-controller="navbarController"  id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
-               <form name="createForm" ng-submit="submit()" >
+               <form name="createForm" >
                   <div class="row">
                     <div class="">
                       <!-- <label class="login-label">Project Title</label> -->
-                      <input name="title" class="blue-input" ng-model="titleC" required type="text" placeholder="Project Title" />
+                      <input name="title" class="blue-input" ng-model="titleC" required type="text" placeholder="Project Title" ng-class="{'has-error': attempted && createForm.title.$invalid}" />
                       <!-- <span ng-show="createForm.title.$error.required">Please enter something!</span> -->
                     </div>
                   </div>
                   <div class="row">
                     <div class="">
                       <!-- <label class="login-label">Passcode</label> -->
-                      <input name="passkey" class="blue-input" ng-model="passcodeC" type="password" placeholder="Passkey" required/>
+                      <input name="passkey" class="blue-input" ng-model="passcodeC" type="password" placeholder="Passkey" ng-class="{'has-error': attempted && createForm.passkey.$invalid}" required/>
                     </div>
                   </div>
                   <!-- login button -->
                    <div class="row">
                     <div class="">
-                      <a type="submit" ng-click="submit(createForm.$valid)" validate class="tiny expand button navbar-button">Create</a><br/>
+                      <a type="submit" ng-click="createProject(createForm.$valid)" validate class="tiny expand button navbar-button">Create</a><br/>
                     </div>
                   </div>
+                  <span ng-show="success" style="color:green">Success</span>
               </form>
           </div>
 
