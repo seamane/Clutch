@@ -23,6 +23,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 	//alert($scope.username + " " + $scope.lname);
 	$scope.createUser = function() 
 	{
+		alert("create user");
 		if($scope.password == $scope.passwordconfirm)
 		{
 			if($scope.username==undefined || $scope.fname==undefined 		//this all just makes sure all the fields have values
@@ -129,13 +130,13 @@ app.directive('loadnavbar', function($compile) {
     }
 });
 
-app.controller('createUserController', function($scope, $http, $cookieStore){
+//app.controller('createUserController', function($scope, $http, $cookieStore){
 
-});
+//});
 
 app.controller('navbarController', function($scope, $http, $cookieStore){
 
-	$scope.attempted = false;
+		$scope.attempted = false;
 	$scope.success = false;
 	$scope.createProject = function(valid) {
 		if(valid){	
@@ -154,6 +155,10 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 		    	error(function(){
 		    	// alert("error");
 		    	});
+		   }
+		else{
+			$scope.attempted = true;
+		}
 		   }
 		else{
 			$scope.attempted = true;
@@ -179,6 +184,9 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
+
+	    alert($scope.username + " " + $scope.password);
+//=======
 	    console.log('login button');
 
 	    $http.post("/validateUser",{
@@ -200,8 +208,11 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    });
    	}
 
-   	$scope.signUp = function(){
-		window.location.href = '/createUser';
+
+   	$scope.signUp =function() 
+   	{
+   		//alert("IN");
+   		window.location.href = '/createUser';
    	}
 });
 
