@@ -158,10 +158,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 		else{
 			$scope.attempted = true;
 		}
-		   }
-		else{
-			$scope.attempted = true;
-		}
+
 	}
 	  $scope.addProjectButton = function() {
 	    $http.post("/addProject",{

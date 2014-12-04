@@ -9,7 +9,6 @@ var connection = mysql.createConnection({
 	//password: '20nederland12',
 //>>>>>>> origin/master
 
-	password: 'temproot',
 
 	//database: 'clutchdb'
 	//database: 'clutch'
