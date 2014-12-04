@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'temproot',
+	password: '20nederland12',
 	//database: 'clutchdb'
 	//database: 'clutch'
 });
@@ -41,7 +41,6 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'name VARCHAR(50),'
-		+ 'userid INT,'
 		+ 'authorid INT,'
 		+ 'passkey VARCHAR(50)'
 		+ ');',function(err){
@@ -254,8 +253,8 @@ exports.createProject = function(req,res){
 	connection.query(
 		'select * from projects '
 		+ 'where userid=' + req.body.userid + ';',
-		'INSERT INTO projects (name, userid, passkey)'
-		+ ' VALUES (\'' + req.body.name + '\', \'' + req.body.userid + '\', \'' + req.body.passkey + '\');',
+		'INSERT INTO projects (name, authorid, passkey)'
+		+ ' VALUES (\'' + req.body.name + '\', ' + req.body.userid + ', \'' + req.body.passkey + '\');',
 		function(err,rows,fields){
 			if(err){
 				console.log('errror getProjects query');

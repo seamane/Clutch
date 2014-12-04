@@ -46,8 +46,8 @@
   <!-- Start Accordian -->
   <dl class="accordion row" ng-repeat='seq in sequences' data-accordion>
     <dd class="accordion-navigation">
-      <a href="#{{seq.id}}">{{seq.name}}</a>
-      <div id="{{seq.id}}" class="content shots">
+      <a href="#seqA">{{seq.name}}</a>
+      <div id="seqA" class="content shots" ng-click='showSeq=!showSeq'>
         <ul class="button-group">
           <li><a class="button shot-name">Shot 001 </a></li>
           <li><a class="button shot" data-dropdown="Lighting">Lighter</a></li>
@@ -58,6 +58,7 @@
         <div showinfo></div> 
       </div>
     </dd>
+    </dl>
 <!-- Lighting Dropdown -->
           <div id="Lighting" data-dropdown-content class="f-dropdown content large" >
                <form>
