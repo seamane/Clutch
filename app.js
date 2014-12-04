@@ -37,17 +37,24 @@ app.get('/js/foundation.min.js',function(req,res){res.sendFile(__dirname + '/js/
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js')});
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js')});
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname+'/views/navbar.html')});
+//<<<<<<< HEAD
+
+app.post('/validateUser',database.validateUser);
+app.post('/create',database.create);
+//=======
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js');});
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js');});
 
 app.post('/validateUser', database.validateUser);
 app.post('/createProject', database.createProject);
 app.post('/addProject', database.addProject);
+//>>>>>>> origin/master
 
 // app.get('/createUser',function(req,res){res.sendFile(__dirname + '/views/createUser.html');});
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 //app.post('/newUser',database.newUser);
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
+app.get('/loginpage',function(req,res){res.sendFile(__dirname + '/views/index.html');});
 app.post('/getProjects',database.getProjects);
 app.post('/getAnnouncements',database.getAnnouncements);
 app.post('/getSequences',database.getSequences);

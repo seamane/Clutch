@@ -38,7 +38,7 @@
         <div class="row">
           <div class="large-4 medium-4 columns">
             <label>First Name</label>
-            <input type="text" placeholder="Johny" required />
+            <input type="text" ng-model='fname' placeholder="Johny" required />
           </div>
         </div>
 
@@ -46,17 +46,15 @@
         <div class="row">
           <div class="large-4 medium-4 columns">
             <label>Last Name</label>
-            <input type="text" placeholder="Appleseed" required />
+            <input type="text" ng-model='lname' placeholder="Appleseed" required />
           </div>
         </div>
 
       <!-- username field -->
         <div class="row">
           <div class="large-4 medium-4 columns">
-            <label>
-              Username (used to sign in)
-            <input type="text" placeholder="jsqueezy" />
-          </label>
+            <label>Username (used to sign in)</label>
+            <input type="text" ng-model='username' placeholder="jsqueezy" />
           </div>
         </div>
 
@@ -64,7 +62,7 @@
         <div class="row">
           <div class="large-4 medium-4 columns">
             <label>Email</label>
-            <input type="email" placeholder="youremail@address.com" />
+            <input type="email" ng-model='email' placeholder="youremail@address.com" />
           </div>
         </div>
 
@@ -72,7 +70,7 @@
         <div class="row">
           <div class="large-4 medium-4 columns">
             <label>Password</label>
-            <input type="password" placeholder="Choose a password" />
+            <input type="password" ng-model='password' placeholder="Choose a password" />
           </div>
         </div>
 
@@ -80,7 +78,7 @@
         <div class="row">
           <div class="large-4 medium-4 columns error">
             <label>Confirm Password</label>
-            <input type="password" placeholder="Re-enter password"  required/>            
+            <input type="password" ng-model='passwordconfirm' placeholder="Re-enter password"  required/>            
             <small class="error">Passwords must match.</small>
           </div>
         </div>
@@ -88,7 +86,7 @@
          <!-- login button -->
          <div class="row">
           <div class="large-4 medium-4 columns">
-            <a href="#" class="small radius button">Create</a><br/>
+            <a href="#" ng-click='createUser()' class="small radius button">Create</a><br/>
           </div>
         </div>
 

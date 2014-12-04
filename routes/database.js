@@ -41,6 +41,7 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'name VARCHAR(50),'
+		+ 'userid INT,'
 		+ 'authorid INT,'
 		+ 'passkey VARCHAR(50)'
 		+ ');',function(err){
@@ -219,12 +220,45 @@ exports.validateUser = function(req,res){
 	);
 }
 
+
+exports.create = function(req, res){
+
+	/*connection.query(
+		'select from users '
+		+ 'where username=\'' + req.body.username + '\';',
+		function (err,rows,fields){
+			if(err){
+				console.log('error validatUser query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+			console.log(JSON.stringify(rows));
+		}
+	);*/
+	connection.query
+	(
+		'INSERT INTO users (fname, lname, username, passwords, email)' +
+		'VALUES (\''+req.body.fname+'\', \''+req.body.lname+'\', \''+req.body.username+'\', \''+req.body.password+'\', \''+req.body.email+'\');',
+		function (err,rows,fields){
+			if(err){
+				console.log('error createuser query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+			console.log(JSON.stringify(rows));
+		}
+	);
+}
+
 exports.createProject = function(req,res){
 	connection.query(
+		'select * from projects '
+		+ 'where userid=' + req.body.userid + ';',
 		'INSERT INTO projects (name, userid, passkey)'
 		+ ' VALUES (\'' + req.body.name + '\', \'' + req.body.userid + '\', \'' + req.body.passkey + '\');',
 		function(err,rows,fields){
 			if(err){
+				console.log('errror getProjects query');
 				console.log('error createProject query');
 				throw err;
 			}
@@ -245,6 +279,7 @@ exports.getProjects = function(req,res){
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
+			console.log(JSON.stringify(rows));
 		}
 	);
 }
