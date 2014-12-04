@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: '',
+	password: 'griffin1',
 	//database: 'clutchdb'
 	//database: 'clutch'
 });
@@ -201,6 +201,35 @@ exports.validateUser = function(req,res){
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
+		}
+	);
+}
+
+exports.create = function(req, res){
+
+	/*connection.query(
+		'select from users '
+		+ 'where username=\'' + req.body.username + '\';',
+		function (err,rows,fields){
+			if(err){
+				console.log('error validatUser query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+			console.log(JSON.stringify(rows));
+		}
+	);*/
+	connection.query
+	(
+		'INSERT INTO users (fname, lname, username, passwords, email)' +
+		'VALUES (\''+req.body.fname+'\', \''+req.body.lname+'\', \''+req.body.username+'\', \''+req.body.password+'\', \''+req.body.email+'\');',
+		function (err,rows,fields){
+			if(err){
+				console.log('error createuser query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+			console.log(JSON.stringify(rows));
 		}
 	);
 }

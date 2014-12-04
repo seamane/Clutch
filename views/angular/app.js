@@ -18,8 +18,67 @@ var app = angular.module('clutchApp', ['ngCookies']);
 // 	}
 // });
 
-app.controller('createUserController', function($scope, $http, $cookieStore){
+app.controller('createUserController', function($scope, $http, $cookieStore)
+{
+	//alert($scope.username + " " + $scope.lname);
+	$scope.createUser = function() 
+	{
+		if($scope.password == $scope.passwordconfirm)
+		{
+			if($scope.username==undefined || $scope.fname==undefined 		//this all just makes sure all the fields have values
+			|| $scope.lname==undefined || $scope.password==undefined 		//
+			|| $scope.email==undefined || $scope.passwordconfirm==undefined)//
+			{
+				alert("Please fill in all the fields");
+			}
+			else
+			{
+				$http.post("/validateUser",{		//send a validate user request first to make sure that user isn't already there
+			    'username': $scope.username,
+			    'password': $scope.password
+				}).
+			    success(function(data){
+			    	if(JSON.stringify(data) === '[]'){		//if that user doesn't exist, make a new user
+			    		
+			    		$http.post("/create",				
+						{
+							'username': $scope.username,
+							'password': $scope.password,
+							'fname': $scope.fname,
+							'lname': $scope.lname,
+							'email': $scope.email,
+							'passwordconfirm': $scope.passwordconfirm
+						}).
+						success(function(data){
+							if(JSON.stringify(data) === '[]')
+							{
+							    // alert('empty');
+							    $scope.failLogin = true;
+							}
+					    	else
+					    	{
+					    		window.location.href = '/loginpage';
+					    	}
+					    }).
+					    error(function(){
+					    	// alert("error");
+					    });
 
+			    	}
+			    	else{
+			    		alert("that user already exists")
+			    	}
+			    }).
+			    error(function(){
+			    	 alert("error");
+			    });
+			}
+		}
+		else
+		{
+				    alert("Make sure your password is the same in both fields and that you fill out all the fields");
+		}
+   	}
 });
 
 app.controller('taskController', function($scope, $http, $cookieStore){
@@ -50,7 +109,7 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
-	    //alert($scope.username + " " + $scope.password);
+	    alert($scope.username + " " + $scope.password);
 
 	    $http.post("/validateUser",{
 		    'username': $scope.username,
