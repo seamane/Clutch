@@ -2,11 +2,15 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
+
 //<<<<<<< HEAD
 	password: 'griffin1',
 //=======
 	//password: '20nederland12',
 //>>>>>>> origin/master
+
+	password: 'temproot',
+
 	//database: 'clutchdb'
 	//database: 'clutch'
 });
@@ -224,21 +228,9 @@ exports.validateUser = function(req,res){
 	);
 }
 
-//<<<<<<< HEAD
 exports.create = function(req, res){
 
-	/*connection.query(
-		'select from users '
-		+ 'where username=\'' + req.body.username + '\';',
-		function (err,rows,fields){
-			if(err){
-				console.log('error validatUser query');
-				throw err;
-			}
-			res.end(JSON.stringify(rows));
-			console.log(JSON.stringify(rows));
-		}
-	);*/
+
 	connection.query
 	(
 		'INSERT INTO users (fname, lname, username, passwords, email)' +
@@ -257,7 +249,6 @@ exports.create = function(req, res){
 exports.getProjects = function(req,res){}
 //=======
 exports.createProject = function(req,res){
-//>>>>>>> origin/master
 	connection.query(
 		'select * from projects '
 		+ 'where userid=' + req.body.userid + ';',

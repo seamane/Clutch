@@ -71,6 +71,10 @@
 .welcome{
 	color:#323232;
 }
+.center{
+	display:block;
+    	margin:auto;
+}
 
 .navbar-button{
 	background-color: #737373;
@@ -78,5 +82,8 @@
 	border-color:#e3e3e3;
 	width: 55%;
 	font-size: 100% !important;
+}
+.has-error{
+	border-color: #cc0000 !important;
 }
 
