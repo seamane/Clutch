@@ -71,6 +71,10 @@
 .welcome{
 	color:#323232;
 }
+.center{
+	display:block;
+    	margin:auto;
+}
 
 .navbar-button{
 	background-color: #737373;

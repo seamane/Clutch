@@ -1,4 +1,4 @@
-<nav class="top-bar" data-topbar role="navigation"> 
+<nav ng-controller="navbarController"  class="top-bar" data-topbar role="navigation"> 
       <ul class="title-area">
         <li class="name">
           <h1><a href="#">Clutch</a></h1> 
@@ -26,24 +26,25 @@
     </nav>
 
           <!-- Create Project Dropdown -->
-          <div ng-controller="navbarController" id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
-               <form>
+          <div ng-controller="navbarController"  id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
+               <form name="createForm" ng-submit="submit()" >
                   <div class="row">
                     <div class="">
                       <!-- <label class="login-label">Project Title</label> -->
-                      <input class="blue-input" ng-model="titleC" type="text" placeholder="Project Title" />
+                      <input name="title" class="blue-input" ng-model="titleC" required type="text" placeholder="Project Title" />
+                      <!-- <span ng-show="createForm.title.$error.required">Please enter something!</span> -->
                     </div>
                   </div>
                   <div class="row">
                     <div class="">
                       <!-- <label class="login-label">Passcode</label> -->
-                      <input class="blue-input" ng-model="passcodeC" type="password" placeholder="Passkey" />
+                      <input name="passkey" class="blue-input" ng-model="passcodeC" type="password" placeholder="Passkey" required/>
                     </div>
                   </div>
                   <!-- login button -->
                    <div class="row">
                     <div class="">
-                      <a href="#" ng-click="createProjectButton()" class="tiny expand button navbar-button">Create</a><br/>
+                      <a type="submit" ng-click="submit(createForm.$valid)" validate class="tiny expand button navbar-button">Create</a><br/>
                     </div>
                   </div>
               </form>

@@ -77,8 +77,10 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 
 app.controller('navbarController', function($scope, $http, $cookieStore){
 
-	  $scope.createProjectButton = function() {
-	    alert("HI");
+	 $scope.submit = function(valid) {
+	 if(valid)
+	 {	
+	  	alert("hi");
 	    $http.post("/createProject",{
 		    'name': $scope.titleC,
 		    'userid': $cookieStore.get('userInfo').id,
@@ -96,6 +98,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 	    error(function(){
 	    	// alert("error");
 	    });
+	   }
 	}
 	  $scope.addProjectButton = function() {
 	    $http.post("/addProject",{
