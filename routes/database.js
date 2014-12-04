@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
 //<<<<<<< HEAD
 	password: 'griffin1',
 //=======
-	password: '20nederland12',
+	//password: '20nederland12',
 //>>>>>>> origin/master
 	//database: 'clutchdb'
 	//database: 'clutch'
@@ -254,7 +254,7 @@ exports.create = function(req, res){
 	);
 }
 
-exports.getProjects = function(req,res){
+exports.getProjects = function(req,res){}
 //=======
 exports.createProject = function(req,res){
 //>>>>>>> origin/master
@@ -269,7 +269,7 @@ exports.createProject = function(req,res){
 				console.log('error createProject query');
 				throw err;
 			}
-			res.end(JSON.stringify(rows))
+			res.end(JSON.stringify(rows));
 		}
 	);
 
@@ -302,7 +302,7 @@ exports.addProject = function(req,res){
 				console.log('error addProject query');
 				throw err;
 			}
-			res.end(JSON.stringify(rows))
+			res.end(JSON.stringify(rows));
 		}
 	);
 }
@@ -321,7 +321,7 @@ exports.getAnnouncements = function (req,res) {
 	);
 }
 
-exports.getSequences = function(req,res){
+exports.getSequences = function (req,res) {
 	connection.query(
 		'select * from sequences '
 		+ 'where projectid=' + req.body.projectid + ';',

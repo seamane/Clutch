@@ -23,6 +23,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 	//alert($scope.username + " " + $scope.lname);
 	$scope.createUser = function() 
 	{
+		alert("create user");
 		if($scope.password == $scope.passwordconfirm)
 		{
 			if($scope.username==undefined || $scope.fname==undefined 		//this all just makes sure all the fields have values
@@ -128,9 +129,9 @@ app.directive('loadnavbar', function($compile) {
     }
 });
 
-app.controller('createUserController', function($scope, $http, $cookieStore){
+//app.controller('createUserController', function($scope, $http, $cookieStore){
 
-});
+//});
 
 app.controller('taskController', function($scope, $http, $cookieStore){
 	$scope.show = false;
@@ -178,11 +179,11 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	    alert($scope.username + " " + $scope.password);
-=======
+//=======
 	    console.log('login button');
->>>>>>> origin/master
+//>>>>>>> origin/master
 
 	    $http.post("/validateUser",{
 		    'username': $scope.username,
@@ -201,6 +202,14 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    error(function(){
 	    	
 	    });
+   	}
+
+
+
+   	$scope.signUp =function() 
+   	{
+   		//alert("IN");
+   		window.location.href = '/createUser';
    	}
 });
 
