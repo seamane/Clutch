@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/app.css">
     <script src="../js/vendor/modernizr.js"></script>    
     <script src="angular/angular.js"></script>  
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script type = 'text/javascript' src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script type = 'text/javascript' src="angular/app.js"></script>  
 
   </head>
@@ -33,7 +33,7 @@
     </div>
 
   <div class="row">
-      <h4  class="black-background"> Project Name </h4>
+      <h1  class="large-12 columns"> {{getProjectName()}} </h1>
 
       <div class="right">
         <input id="checkbox1" type="checkbox"><label for="checkbox1">Show only my tasks</label>
@@ -42,34 +42,31 @@
   </div>
 
 
-        <div class="row">
-          <div class="large-6 large-centered columns" ng-repeat='seq in sequences'>
-            <a href="" ng-click='accordion=seq.name' class="button large expand black-background">{{project.name}}</a>
-            <ul class="button-group" ng-show='accordion==seq.name'>
-              <li><a class="button shot-name">Shot 001 </a></li>
-              <li><a class="button shot" data-dropdown="Lighting">Lighter</a></li>
-              <li><a class="button shot" data-dropdown="Lighting">Animator</a></li>
-              <li><a id="vfx" ng-click="showDropDown=!showDropDown" class="button shot" data-options="scrolltop:false">FX</a></li>
-              <li><a class="button shot"> Shot Wrangler</a></li>
-            </ul>
-          </div>
-        </div>
+<div class='row'>
+    <a class='accordion row' ng-repeat="seq in sequences" ng-click="accordion.current = seq.name">{{seq.name}}
+      <ul ng-show="accordion.current == seq.name">
+        <div>{{seq.id}}</div>
+      </ul>
+    </a>
+</div>
+
 
 
   <!-- Start Accordian -->
   <dl class="accordion row" ng-repeat='seq in sequences' data-accordion>
     <dd class="accordion-navigation">
-      <a href="#seqA">{{seq.name}}</a>
-      <div id="seqA" class="content shots" ng-click='showSeq=!showSeq'>
-        <ul class="button-group">
-          <li><a class="button shot-name">Shot 001 </a></li>
-          <li><a class="button shot" data-dropdown="Lighting">Lighter</a></li>
-          <li><a class="button shot" data-dropdown="Lighting">Animator</a></li>
-          <li><a id="vfx" ng-click="showDropDown=!showDropDown" class="button shot" data-options="scrolltop:false">FX</a></li>
-          <li><a class="button shot"> Shot Wrangler</a></li>
-        </ul>
-        <div showinfo></div> 
-      </div>
+      <a href="#seqA">{{seq.name}}
+        <div id="seqA" class="content shots" ng-click='showSeq=!showSeq'>
+          <ul class="button-group">
+            <li><a class="button shot-name">Shot 001 </a></li>
+            <li><a class="button shot" data-dropdown="Lighting">Lighter</a></li>
+            <li><a class="button shot" data-dropdown="Lighting">Animator</a></li>
+            <li><a id="vfx" ng-click="showDropDown=!showDropDown" class="button shot" data-options="scrolltop:false">FX</a></li>
+            <li><a class="button shot"> Shot Wrangler</a></li>
+          </ul>
+          <div showinfo></div> 
+        </div>
+      </a>
     </dd>
     </dl>
 <!-- Lighting Dropdown -->

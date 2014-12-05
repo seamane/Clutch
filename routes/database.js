@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'temproot',
+	password: '20nederland12',
 
 });
 
@@ -219,8 +219,6 @@ exports.validateUser = function(req,res){
 }
 
 exports.create = function(req, res){
-
-
 	connection.query
 	(
 		'INSERT INTO users (fname, lname, username, passwords, email)' +
