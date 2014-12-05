@@ -85,7 +85,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 app.controller('taskController', function($scope, $http, $cookieStore){
 	$scope.show = false;
 	$scope.showDropDown = false;
-	$scope.showSeq = false;
+	$scope.accordion = undefined;
     $scope.projectid = $cookieStore.get('projectInfo').id;
 	//alert('taskController');
 
