@@ -42,6 +42,19 @@
   </div>
 
 
+        <div class="row">
+          <div class="large-6 large-centered columns" ng-repeat='seq in sequences'>
+            <a href="" ng-click='accordion=seq.name' class="button large expand black-background">{{project.name}}</a>
+            <ul class="button-group" ng-show='accordion==seq.name'>
+              <li><a class="button shot-name">Shot 001 </a></li>
+              <li><a class="button shot" data-dropdown="Lighting">Lighter</a></li>
+              <li><a class="button shot" data-dropdown="Lighting">Animator</a></li>
+              <li><a id="vfx" ng-click="showDropDown=!showDropDown" class="button shot" data-options="scrolltop:false">FX</a></li>
+              <li><a class="button shot"> Shot Wrangler</a></li>
+            </ul>
+          </div>
+        </div>
+
 
   <!-- Start Accordian -->
   <dl class="accordion row" ng-repeat='seq in sequences' data-accordion>
@@ -83,46 +96,6 @@
                   </div>
               </form>
           </div>
-
-
-
-
-   <!-- <dd class="accordion-navigation">
-      <a href="#seq2">Sequence B</a>
-      <div id="seq2" class="content">
-
-       <dl class="tabs" data-tab>
-        <dd class="shot-name"><a href="#panel1">Shot 1 (The Kiss):</a></dd>
-         <dd><a href="#panel2" class="shot">Lighting (Stewie)</a></dd> 
-         <dd><a href="#panel3" class="shot">Texturing</a></dd> 
-         <dd><a href="#panel4" class="shot">Other Stuff</a></dd> 
-         <dd><a href="#panel4" class="shot">Explosions</a></dd> 
-         <dd><a href="#panel4" class="shot">Rigging</a></dd> 
-       </dl> 
-        <div class="tabs-content"> 
-          <div class="content active" id="panel1">
-            <p>This is the first panel of the basic tab example. This is the first panel of the basic tab example.</p> 
-          </div> 
-          <div class="content" id="panel2"> 
-            <p>This is the second panel of the basic tab example. This is the second panel of the basic tab example.</p> 
-          </div> 
-          <div class="content" id="panel3"> 
-            <p>This is the third panel of the basic tab example. This is the third panel of the basic tab example.</p> 
-          </div> 
-          <div class="content" id="panel4">
-           <p>This is the fourth panel of the basic tab example. This is the fourth panel of the basic tab example.</p> 
-          </div> 
-        </div>
-      </div>
-    </dd>
-
-
-    <dd class="accordion-navigation">
-      <a href="#panel3">Sequence C</a>
-      <div id="panel3" class="content">
-        
-      </div>
-    </dd> -->
   </dl>
 
      <script>
