@@ -83,7 +83,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 });
 
 app.controller('taskController', function($scope, $http, $cookieStore){
-	$scope.show = false;
+	//$scope.show = false;
 	$scope.showDropDown = false;
 	$scope.accordion = {
 		current: null
@@ -114,24 +114,39 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 		});
 	}
 
-	$scope.makeBools = function(seq){
-		//alert('makebools'+JSON.stringify($scope.sequences));
+	$scope.makeBools = function(){
+		//alert('makebools:'+$scope.sequences.length+'\n'+JSON.stringify($scope.sequences));
 		$scope.clicks = [];
-		loop:{
-			// for(var i=0; i < seq.length; i++){
-			// 	// $scope.clicks=$scope.clicks.concat([{
-   //  // 				'name':seq[i].name,
-   //  // 				'bool':false
-   //  // 			}]);
-			// }
-			// alert('end of bool loop');
+		
+		for(var i=0; i < $scope.sequences.length; i++){
+			$scope.clicks=$scope.clicks.concat([{
+				'name':$scope.sequences[i].name,
+				'bool':false
+			}]);
 		}
 	}
-		$scope.getAnnAndSeq();
+	$scope.getAnnAndSeq();
 
-	$scope.makeBools($scope.sequences);
+	$scope.toggleBool = function(seq){
+		for(var i=0; i < $scope.sequences.length; i++){
+			if($scope.sequences[i].name == seq.name)
+			{
+				$scope.sequences[i].bool = !$scope.sequences[i].bool;
+				break;
+			}
+		}
+	}
+
+	$scope.show = function(seq){
+		for(var i=0; i < $scope.sequences.length; i++){
+			if($scope.sequences[i].name == seq.name)
+			{
+				return $scope.sequences[i].bool;
+			}
+		}
+		return false;
+	}
 })
-
 .directive('showinfo', function($compile) {
     return {
 	    restrict: 'AE',
@@ -160,6 +175,10 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 	$scope.attemptAdd = false;
 	$scope.addProjectFail = false;
 	$scope.addProjectSuccess = false;
+
+	$scope.getUsername = function(){
+		return $cookieStore.get('userInfo').username;
+	}
 
 	$scope.createProject = function(valid) {
 		if(valid){
