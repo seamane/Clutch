@@ -108,25 +108,28 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 			'projectid': $scope.projectid
 		}).
 		success(function(data){
-			//alert(JSON.stringify(data));
+			//alert('getAnnAndSeq'+JSON.stringify(data));
 			$scope.sequences = data;
+			$scope.makeBools();
 		});
 	}
 
-	$scope.getAnnAndSeq();
-    // $scope.clicks = [];
+	$scope.makeBools = function(seq){
+		//alert('makebools'+JSON.stringify($scope.sequences));
+		$scope.clicks = [];
+		loop:{
+			// for(var i=0; i < seq.length; i++){
+			// 	// $scope.clicks=$scope.clicks.concat([{
+   //  // 				'name':seq[i].name,
+   //  // 				'bool':false
+   //  // 			}]);
+			// }
+			// alert('end of bool loop');
+		}
+	}
+		$scope.getAnnAndSeq();
 
-    // $scope.sequences.forEach(function(seq){
-    // 	$scope.clicks.push({
-    // 		seq.name:false
-    // 	});
-    // });
-
-	// for(index = 0; index < $scope.sequences.length; ++index){
-	// 	$scope.clicks.push({
-	// 		$scope.sequences[index].name: false
-	// 	});
-	// }
+	$scope.makeBools($scope.sequences);
 })
 
 .directive('showinfo', function($compile) {
