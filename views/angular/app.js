@@ -85,15 +85,16 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 app.controller('taskController', function($scope, $http, $cookieStore){
 	$scope.show = false;
 	$scope.showDropDown = false;
+	$scope.showSeq = false;
     $scope.projectid = $cookieStore.get('projectInfo').id;
-	alert('taskController');
+	//alert('taskController');
 
 	$scope.getAnnAndSeq = function(){
 		$http.post('/getAnnouncements',{
 		'projectid': $scope.projectid
 		}).
 		success(function(data){
-			alert(JSON.stringify(data));
+			//alert(JSON.stringify(data));
 			$scope.announcements = data;
 		});
 
@@ -101,7 +102,7 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 			'projectid': $scope.projectid
 		}).
 		success(function(data){
-			alert(JSON.stringify(data));
+			//alert(JSON.stringify(data));
 			$scope.sequences = data;
 		});
 	}
