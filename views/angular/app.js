@@ -174,6 +174,11 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 	    	// alert("error");
 	    });
 	}
+
+    $scope.logout = function() {
+    	window.location.href = '/loginpage';
+    }
+
 });
 
 app.controller('indexController', function($scope, $http,$cookieStore){
@@ -183,7 +188,6 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.loginButton = function() {
 
 	    alert($scope.username + " " + $scope.password);
-//=======
 	    console.log('login button');
 
 	    $http.post("/validateUser",{

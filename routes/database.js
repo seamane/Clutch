@@ -3,11 +3,10 @@ var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 
+	password: 'griffin1',
 
 
-
-//=======
-	password: '20nederland12'
+	//password: '20nederland12'
 
 
 	//database: 'clutchdb'
@@ -245,7 +244,7 @@ exports.create = function(req, res){
 }
 
 exports.getProjects = function(req,res){}
-//=======
+
 exports.createProject = function(req,res){
 	connection.query(
 		'select * from projects '
