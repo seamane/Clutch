@@ -4,6 +4,7 @@ var connection = mysql.createConnection({
 	user: 'root',
 	password: 'temproot',
 
+
 });
 
 exports.initDatabase = function(req,res)
