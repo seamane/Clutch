@@ -48,6 +48,7 @@ app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angul
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js');});
 
 app.post('/validateUser', database.validateUser);
+app.post('/validateProject', database.validateProject);
 app.post('/createProject', database.createProject);
 app.post('/addProject', database.addProject);
 
