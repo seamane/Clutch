@@ -35,8 +35,8 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 			else
 			{
 				$http.post("/validateUser",{		//send a validate user request first to make sure that user isn't already there
-			    'username': $scope.username,
-			    'password': $scope.password
+			   	 'username': $scope.username,
+			   	 'password': $scope.password
 				}).
 			    success(function(data){
 			    	if(JSON.stringify(data) === '[]'){		//if that user doesn't exist, make a new user
@@ -136,42 +136,91 @@ app.directive('loadnavbar', function($compile) {
 
 app.controller('navbarController', function($scope, $http, $cookieStore){
 
-		$scope.attempted = false;
+	$scope.attempted = false;
 	$scope.success = false;
-	$scope.createProject = function(valid) {
-		if(valid){	
-		    	$http.post("/createProject",{
-			    'name': $scope.titleC,
-			    'userid': $cookieStore.get('userInfo').id,
-			    'passkey': $scope.passcodeC
-			}).
-		    	success(function(data){
-		    		alert(JSON.stringify(data));
-		    		$scope.attempted = false;
-		    		// $scope.success = true;
-		    		alert("Success!");
+	$scope.fail = false;
+	$scope.attemptAdd = false;
+	$scope.addProjectFail = false;
+	$scope.addProjectSuccess = false;
 
-		    	}).
-		    	error(function(){
-		    		alert("error");
-		    	});
+	$scope.createProject = function(valid) {
+		if(valid){
+			$http.post("/validateProject",{	
+			   	 'name': $scope.titleC
+			}).
+			success(function(data){
+				// if project title is unique
+			    	if(JSON.stringify(data) === '[]'){
+				    	$http.post("/createProject",{
+					    'name': $scope.titleC,
+					    'userid': $cookieStore.get('userInfo').id,
+					    'passkey': $scope.passcodeC
+					}).
+				    	success(function(data){
+				    		$scope.attempted = false;
+				    		if(data.affectedRows == 0){
+				    			$scope.fail = true;
+							$scope.success = false;
+				    		}
+				    		else{
+							$scope.fail = false;
+							$scope.success = true;
+				    		}
+
+				    	}).
+				    	error(function(){
+				    		alert("error");
+				    	});
+				}
+				// project title taken
+				else {
+					$scope.fail = true;
+					$scope.success = false;
+				}
+			}).
+			error(function(){
+				alert("error");
+			});
 		}
-		else{
+		else {
 			$scope.attempted = true;
 		}
 	}
-	  $scope.addProjectButton = function() {
-	    $http.post("/addProject",{
-		    'name': $scope.titleA,
-		    'userid': $cookieStore.get('userInfo').id,
-		    'passkey': $scope.passcodeA
-		}).
-	    success(function(data){
-	    	alert(JSON.stringify(data));
-	    }).
-	    error(function(){
-	    	// alert("error");
-	    });
+	$scope.addProjectButton = function(valid) {
+		if(valid){
+		    	$http.post("/addProject",{
+			    'name': $scope.titleA,
+			    'userid': $cookieStore.get('userInfo').id,
+			    'passkey': $scope.passcodeA
+			}).
+		    	success(function(data){
+		    		$scope.attemptAdd = false;
+		    		//check if project was found
+		    		if(data.affectedRows == 0){
+		    			$scope.addProjectFail = true;
+					$scope.addProjectSuccess = false;
+		    		}
+		    		else{
+					$scope.addProjectFail = false;
+					$scope.addProjectSuccess = true;
+		    		}
+		    	}).
+		    	error(function(){
+		    		// alert("error");
+		   	});
+		}
+		else{
+			$scope.attemptAdd = true;
+		}
+	}
+	$scope.reset = function(){
+		$scope.attempted = false;
+		$scope.fail = false;
+		$scope.success = false;
+		$scope.attemptAdd = false;
+		$scope.addProjectFail = false;
+		$scope.addProjectSuccess = false;
+		$scope.titleC = null; $scope.titleA = null; $scope.passcodeA = null; $scope.passcodeC = null;
 	}
 });
 
@@ -182,7 +231,6 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.loginButton = function() {
 
 	    alert($scope.username + " " + $scope.password);
-//=======
 	    console.log('login button');
 
 	    $http.post("/validateUser",{

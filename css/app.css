@@ -86,4 +86,12 @@
 .has-error{
 	border-color: #cc0000 !important;
 }
+.has-error-background{
+
+	background-color: #cc0000 !important;
+}
+.has-success-background{
+	
+	background-color: #55AE3A !important;
+}
 

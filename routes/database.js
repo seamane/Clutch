@@ -8,16 +8,6 @@ var connection = mysql.createConnection({
 
 exports.initDatabase = function(req,res)
 {
-	// connection.connect(function(err){
-	// 	if(err != null){
-	// 		console.log('Error connecting to mysql\n' + err + '\n');
-	// 		throw err;
-	// 	}
-	// 	else{
-	// 		console.log('mySQL connected\n');
-	// 	}
-	// });
-
 	connection.query('CREATE DATABASE IF NOT EXISTS clutch', function(err){
 		if(err){//} && err.number != client.ERROR_DB_CREATE_EXISTS){
 			console.log("ERROR: " + err.message);
@@ -207,10 +197,23 @@ createTables = function()
 exports.validateUser = function(req,res){
 	connection.query(
 		'select * from users '
-		+ 'where username=\'' + req.body.username + '\' AND passwords=\'' + req.body.password + '\';',
+		+ 'where username=\'' + req.body.username + '\';',
 		function (err,rows,fields){
 			if(err){
 				console.log('error validatUser query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+		}
+	);
+}
+exports.validateProject = function(req,res){
+	connection.query(
+		'select * from projects '
+		+ 'where name=\'' + req.body.name + '\';',
+		function (err,rows,fields){
+			if(err){
+				console.log('error validateProject query');
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
@@ -237,6 +240,7 @@ exports.create = function(req, res){
 }
 
 exports.createProject = function(req,res){
+	console.log(req.body);
 	connection.query(
 		'INSERT INTO projects (name, authorid, passkey)'
 		+ ' VALUES (\'' + req.body.name + '\', ' + req.body.userid + ', \'' + req.body.passkey + '\');',
@@ -244,6 +248,18 @@ exports.createProject = function(req,res){
 			if(err){
 				console.log('error createProject query');
 				throw err;
+			}
+			else{
+				//Second query to add author to member table
+				connection.query(
+					'INSERT INTO members (projectid, userid) SELECT id, \'' 
+					+ req.body.userid + '\' FROM projects WHERE name=\'' + req.body.name + '\';',
+					function(err,rows,fields){
+						if(err){
+							throw err;
+						}
+					}
+				)
 			}
 			res.end(JSON.stringify(rows));
 		}
