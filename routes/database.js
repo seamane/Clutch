@@ -2,16 +2,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
+	password: 'temproot',
 
-//<<<<<<< HEAD
-	password: 'griffin1',
-//=======
-	//password: '20nederland12',
-//>>>>>>> origin/master
-
-
-	//database: 'clutchdb'
-	//database: 'clutch'
 });
 
 exports.initDatabase = function(req,res)
@@ -245,17 +237,12 @@ exports.create = function(req, res){
 	);
 }
 
-exports.getProjects = function(req,res){}
-//=======
 exports.createProject = function(req,res){
 	connection.query(
-		'select * from projects '
-		+ 'where userid=' + req.body.userid + ';',
 		'INSERT INTO projects (name, userid, passkey)'
 		+ ' VALUES (\'' + req.body.name + '\', \'' + req.body.userid + '\', \'' + req.body.passkey + '\');',
 		function(err,rows,fields){
 			if(err){
-				console.log('errror getProjects query');
 				console.log('error createProject query');
 				throw err;
 			}

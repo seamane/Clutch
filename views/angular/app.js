@@ -145,20 +145,19 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 			    'passkey': $scope.passcodeC
 			}).
 		    	success(function(data){
-		    		// alert(JSON.stringify(data));
+		    		alert(JSON.stringify(data));
 		    		$scope.attempted = false;
 		    		// $scope.success = true;
 		    		alert("Success!");
 
 		    	}).
 		    	error(function(){
-		    	// alert("error");
+		    		alert("error");
 		    	});
-		   }
+		}
 		else{
 			$scope.attempted = true;
 		}
-
 	}
 	  $scope.addProjectButton = function() {
 	    $http.post("/addProject",{
