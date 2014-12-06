@@ -77,7 +77,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 		}
 		else
 		{
-				    alert("Make sure your password is the same in both fields and that you fill out all the fields");
+			alert("Make sure your password is the same in both fields and that you fill out all the fields");
 		}
    	}
 });

@@ -39,6 +39,7 @@ app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angul
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js');});
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname+'/views/navbar.html');});
 app.get('/chicken.jpg',function(req,res){res.sendFile(__dirname+'/views/chicken.jpg');});
+app.get('/chickens.png',function(req,res){res.sendFile(__dirname+'/views/chickens.png');});
 
 
 

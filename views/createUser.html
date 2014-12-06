@@ -14,7 +14,7 @@
     <script type = 'text/javascript' src="angular/app.js"></script>
 
   </head>
-  <body ng-controller="createUserController">
+  <body ng-controller="createUserController" class="offwhite-background">
   <!-- Include Navbar -->
   <!-- <div loadnavbar></div>   -->
   <!-- Center everything but navbar -->
@@ -26,73 +26,61 @@
       </div>
     </div>
     
-    <form>
-      <div class="panel" >
+    <div class="row ">
+      <div class="large-4 columns">
 
-      <div class="row">
-        <div class="large-12 columns">
-          <h1> </h1>
-        </div>
+        <form style="margin-top:4%">
+          <!-- first name field -->
+            <div class="row">
+                <label class="login-label">First Name</label>
+                <input class="blue-input" type="text" ng-model='fname' placeholder="Johny" required />
+            </div>
+
+          <!-- last name field -->
+            <div class="row">
+                <label class="login-label">Last Name</label>
+                <input class="blue-input" type="text" ng-model='lname' placeholder="Appleseed" required />
+            </div>
+
+          <!-- username field -->
+            <div class="row">
+                <label class="login-label">Username (used to sign in)</label>
+                <input class="blue-input" type="text" ng-model='username' placeholder="jsqueezy" />
+            </div>
+
+            <!-- email field -->
+            <div class="row">
+                <label class="login-label">Email</label>
+                <input class="blue-input" type="email" ng-model='email' placeholder="youremail@address.com" />
+            </div>
+
+            <!-- password field -->
+            <div class="row">
+                <label class="login-label">Password</label>
+                <input class="blue-input" type="password" ng-model='password' placeholder="Choose a password" />
+            </div>
+
+            <!-- confirm password field -->
+            <div class="row">
+                <label class="login-label">Confirm Password</label>
+                <input class="blue-input" type="password" ng-model='passwordconfirm' placeholder="Re-enter password"  required/>
+            </div>
+
+             <!-- login button -->
+             <div class="row ">
+                <a href="#" ng-click='createUser()' class="button right login-button ">Create</a><br/>
+            </div>
+        <!-- <div class="right"> -->
+          
+        <!-- </div> -->
+
+          <!-- </div> -->
+        </form>
       </div>
-      <!-- first name field -->
-        <div class="row">
-          <div class="large-4 medium-4 columns">
-            <label>First Name</label>
-            <input type="text" ng-model='fname' placeholder="Johny" required />
-          </div>
-        </div>
-
-      <!-- last name field -->
-        <div class="row">
-          <div class="large-4 medium-4 columns">
-            <label>Last Name</label>
-            <input type="text" ng-model='lname' placeholder="Appleseed" required />
-          </div>
-        </div>
-
-      <!-- username field -->
-        <div class="row">
-          <div class="large-4 medium-4 columns">
-            <label>Username (used to sign in)</label>
-            <input type="text" ng-model='username' placeholder="jsqueezy" />
-          </div>
-        </div>
-
-        <!-- email field -->
-        <div class="row">
-          <div class="large-4 medium-4 columns">
-            <label>Email</label>
-            <input type="email" ng-model='email' placeholder="youremail@address.com" />
-          </div>
-        </div>
-
-        <!-- password field -->
-        <div class="row">
-          <div class="large-4 medium-4 columns">
-            <label>Password</label>
-            <input type="password" ng-model='password' placeholder="Choose a password" />
-          </div>
-        </div>
-
-        <!-- confirm password field -->
-        <div class="row">
-          <div class="large-4 medium-4 columns error">
-            <label>Confirm Password</label>
-            <input type="password" ng-model='passwordconfirm' placeholder="Re-enter password"  required/>            
-            <small class="error">Passwords must match.</small>
-          </div>
-        </div>
-
-         <!-- login button -->
-         <div class="row">
-          <div class="large-4 medium-4 columns">
-            <a href="#" ng-click='createUser()' class="small radius button">Create</a><br/>
-          </div>
-        </div>
-
+      <div class="large-8 columns">
+            <img class='right' src="chickens.png" style="width:450px;height:300px"></img>
       </div>
-    </form>
-
+    </div>
 
 <!-- End centering -->
    </div> 
