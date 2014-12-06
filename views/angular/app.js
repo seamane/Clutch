@@ -83,11 +83,17 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 });
 
 app.controller('taskController', function($scope, $http, $cookieStore){
-	$scope.show = false;
+	//$scope.show = false;
 	$scope.showDropDown = false;
-	$scope.accordion = undefined;
+	$scope.accordion = {
+		current: null
+	};
     $scope.projectid = $cookieStore.get('projectInfo').id;
 	//alert('taskController');
+
+	$scope.getProjectName = function(){
+		return $cookieStore.get('projectInfo').name;
+	}
 
 	$scope.getAnnAndSeq = function(){
 		$http.post('/getAnnouncements',{
@@ -102,14 +108,45 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 			'projectid': $scope.projectid
 		}).
 		success(function(data){
-			//alert(JSON.stringify(data));
+			//alert('getAnnAndSeq'+JSON.stringify(data));
 			$scope.sequences = data;
+			$scope.makeBools();
 		});
 	}
 
+	$scope.makeBools = function(){
+		//alert('makebools:'+$scope.sequences.length+'\n'+JSON.stringify($scope.sequences));
+		$scope.clicks = [];
+		
+		for(var i=0; i < $scope.sequences.length; i++){
+			$scope.clicks=$scope.clicks.concat([{
+				'name':$scope.sequences[i].name,
+				'bool':false
+			}]);
+		}
+	}
 	$scope.getAnnAndSeq();
-})
 
+	$scope.toggleBool = function(seq){
+		for(var i=0; i < $scope.sequences.length; i++){
+			if($scope.sequences[i].name == seq.name)
+			{
+				$scope.sequences[i].bool = !$scope.sequences[i].bool;
+				break;
+			}
+		}
+	}
+
+	$scope.show = function(seq){
+		for(var i=0; i < $scope.sequences.length; i++){
+			if($scope.sequences[i].name == seq.name)
+			{
+				return $scope.sequences[i].bool;
+			}
+		}
+		return false;
+	}
+})
 .directive('showinfo', function($compile) {
     return {
 	    restrict: 'AE',
@@ -130,10 +167,6 @@ app.directive('loadnavbar', function($compile) {
     }
 });
 
-//app.controller('createUserController', function($scope, $http, $cookieStore){
-
-//});
-
 app.controller('navbarController', function($scope, $http, $cookieStore){
 
 	$scope.attempted = false;
@@ -142,6 +175,10 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 	$scope.attemptAdd = false;
 	$scope.addProjectFail = false;
 	$scope.addProjectSuccess = false;
+
+	$scope.getUsername = function(){
+		return $cookieStore.get('userInfo').username;
+	}
 
 	$scope.createProject = function(valid) {
 		if(valid){
@@ -230,6 +267,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 });
 
 app.controller('indexController', function($scope, $http,$cookieStore){
+	alert('indexController');
   	$scope.message = '*Invalid username and/or password';
   	$scope.failLogin = false;
 
@@ -279,6 +317,7 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 			'userid': $cookieStore.get('userInfo').id
 		}).
 		success(function(data){
+			alert(JSON.stringify(data));
 			$scope.userProjects = data;
 		});
 	}
