@@ -324,3 +324,16 @@ exports.getSequences = function (req,res) {
 		}
 	);
 }
+
+exports.getShots = function(req,res){
+	connection.query(
+		'select * from shots '
+		+ 'where projectid='+req.body.projectid+';',
+		function(err,shots){
+			if(err){
+				console.log('error getShots query');
+			}
+			res.end(JSON.stringify(shots));
+		}
+	);
+}

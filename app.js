@@ -52,6 +52,7 @@ app.post('/validateUser', database.validateUser);
 app.post('/validateProject', database.validateProject);
 app.post('/createProject', database.createProject);
 app.post('/addProject', database.addProject);
+app.post('/getShots',database.getShots);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 //app.post('/newUser',database.newUser);

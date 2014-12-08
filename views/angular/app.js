@@ -82,7 +82,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
    	}
 });
 
-app.controller('taskController', function($scope, $http, $cookieStore){
+app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	//$scope.show = false;
 	$scope.showDropDown = false;
 	$scope.accordion = {
@@ -95,7 +95,7 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 		return $cookieStore.get('projectInfo').name;
 	}
 
-	$scope.getAnnAndSeq = function(){
+	$scope.getInfo = function(){
 		$http.post('/getAnnouncements',{
 		'projectid': $scope.projectid
 		}).
@@ -112,6 +112,13 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 			$scope.sequences = data;
 			$scope.makeBools();
 		});
+
+		$http.post('/getShots',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.shots = orderBy(data,'name',false);
+		});
 	}
 
 	$scope.makeBools = function(){
@@ -125,14 +132,15 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 			}]);
 		}
 	}
-	$scope.getAnnAndSeq();
+
+	$scope.getInfo();
 
 	$scope.toggleBool = function(seq){
 		for(var i=0; i < $scope.sequences.length; i++){
 			if($scope.sequences[i].name == seq.name)
 			{
 				$scope.sequences[i].bool = !$scope.sequences[i].bool;
-				break;
+				return $scope.sequences[i].bool;
 			}
 		}
 	}
@@ -145,6 +153,26 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 			}
 		}
 		return false;
+	}
+
+	var orderBy = $filter('orderBy');
+
+	$scope.getShots = function(seq){
+		if($scope.show(seq)){
+			$scope.seqShots = [];
+			for(var i = 0; i < $scope.shots.length; ++i){
+				if($scope.shots[i].sequenceid == seq.id){
+					$scope.seqShots = $scope.seqShots.concat([
+						$scope.shots[i]
+					]);
+				}
+			}
+			return $scope.seqShots;
+		}
+	}
+
+	$scope.here = function(){
+		alert('here');
 	}
 })
 .directive('showinfo', function($compile) {
@@ -192,7 +220,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 					    'name': $scope.titleC,
 					    'userid': $cookieStore.get('userInfo').id,
 					    'passkey': $scope.passcodeC
-					}).
+						}).
 				    	success(function(data){
 				    		$scope.attempted = false;
 				    		if(data.affectedRows == 0){
@@ -200,10 +228,9 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 							$scope.success = false;
 				    		}
 				    		else{
-							$scope.fail = false;
-							$scope.success = true;
+								$scope.fail = false;
+								$scope.success = true;
 				    		}
-
 				    	}).
 				    	error(function(){
 				    		alert("error");
@@ -267,14 +294,14 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 });
 
 app.controller('indexController', function($scope, $http,$cookieStore){
-	alert('indexController');
+	//alert('indexController');
   	$scope.message = '*Invalid username and/or password';
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
 
 	    alert($scope.username + " " + $scope.password);
-	    console.log('login button');
+	    //console.log('login button');
 
 	    $http.post("/validateUser",{
 		    'username': $scope.username,
@@ -317,7 +344,7 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 			'userid': $cookieStore.get('userInfo').id
 		}).
 		success(function(data){
-			alert(JSON.stringify(data));
+			//alert(JSON.stringify(data));
 			$scope.userProjects = data;
 		});
 	}
@@ -329,7 +356,7 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 	}
 
 	$scope.buttonClicked = function(project){
-		alert(JSON.stringify(project));
+		//alert(JSON.stringify(project));
 		$cookieStore.put('projectInfo',project);
 		window.location.href = '/project';
 	}

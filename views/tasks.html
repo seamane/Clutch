@@ -43,9 +43,9 @@
 
 
 <div class='row'>
-    <a class='accordion row' ng-repeat="seq in sequences" ng-click="toggleBool(seq)">{{seq.name}}
+    <a class='accordion row' ng-repeat="seq in sequences" ng-click="toggleBool(seq)">Sequence {{seq.name}}
       <ul ng-show="show(seq)">
-        <div>{{seq.id}}</div>
+        <div ng-repeat='shot in getShots(seq)' ng-click='here();toggleBool(seq);'>Shot {{shot.name}}</div>
       </ul>
     </a>
 </div>
