@@ -171,8 +171,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}
 	}
 
-	$scope.here = function(){
-		alert('here');
+	$scope.getAnimator = function(shot){
+		$http.post('/getAnimator',{
+			'shotid':shot.id
+		}).
+		success(function(data){
+			alert(JSON.stringify(data));
+		});
 	}
 })
 .directive('showinfo', function($compile) {

@@ -239,7 +239,6 @@ exports.create = function(req, res){
 }
 
 exports.createProject = function(req,res){
-	console.log(req.body);
 	connection.query(
 		'INSERT INTO projects (name, authorid, passkey)'
 		+ ' VALUES (\'' + req.body.name + '\', ' + req.body.userid + ', \'' + req.body.passkey + '\');',
@@ -334,6 +333,19 @@ exports.getShots = function(req,res){
 				console.log('error getShots query');
 			}
 			res.end(JSON.stringify(shots));
+		}
+	);
+}
+
+exports.getAnimator = function(req,res){
+	connection.query(
+		'select users.fname,users.lname from users inner join animators '
+		+ 'on animators.shotid='+req.body.shotid+ ' and users.id=animators.userid;',
+		function(err,animators){
+			if(err){
+				console.log('error getAnimator query:'+JSON.stringify(animators));
+			}
+			res.end(JSON.stringify(animators));
 		}
 	);
 }

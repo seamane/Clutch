@@ -45,7 +45,13 @@
 <div class='row'>
     <a class='accordion row' ng-repeat="seq in sequences" ng-click="toggleBool(seq)">Sequence {{seq.name}}
       <ul ng-show="show(seq)">
-        <div ng-repeat='shot in getShots(seq)' ng-click='here();toggleBool(seq);'>Shot {{shot.name}}</div>
+        <div ng-repeat='shot in getShots(seq)' ng-click='here();toggleBool(seq);'>
+          <button>Shot {{shot.name}}</button>
+          <button>Animator</button>
+          <button>Lighter</button>
+          <button>Render Wrangler</button>
+          <button>FX</button>
+        </div>
       </ul>
     </a>
 </div>
