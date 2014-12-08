@@ -13,7 +13,7 @@
     <script type = 'text/javascript' src="angular/app.js"></script>  
 
   </head>
-  <body ng-controller="taskController">
+  <body ng-controller="taskController" class='offwhite-background'>
     <!-- Include Navbar -->
     <div loadnavbar></div>  
 
@@ -33,12 +33,32 @@
     </div>
 
   <div class="row">
-      <h1  class="large-12 columns"> {{getProjectName()}} </h1>
+      <h5  class="large-12 columns black-background"> {{getProjectName()}} </h5>
 
       <div class="right">
         <input id="checkbox1" type="checkbox"><label for="checkbox1">Show only my tasks</label>
       </div> 
 
+  </div>
+
+
+
+  <div class="row">    
+      <div class="large-2 columns right">
+        <div class="row collapse">
+          <a ng-click="showForm()" class="tiny expand button navbar-button">Add Sequence</a><br/>
+        </div>
+      </div>
+      <div class="large-2 columns right" ng-class="{'fadein':visible , 'fadeout':!visible}">
+        <div class="row collapse">
+          <div class="small-9 columns">
+            <input class="blue-input" type="text" placeholder="Title" ng-model="title" ng-class="{'has-error' : attempted}">
+          </div>
+          <div class="small-3 columns">
+            <a href="#" class="button postfix signUp-button" ng-click="addSequence()" >+</a>
+          </div>
+        </div>
+      </div>
   </div>
 
 

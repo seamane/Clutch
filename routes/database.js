@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: '20nederland12',
+	password: 'temproot',
 
 
 });
@@ -234,6 +234,21 @@ exports.create = function(req, res){
 			}
 			res.end(JSON.stringify(rows));
 			console.log(JSON.stringify(rows));
+		}
+	);
+}
+
+exports.createSequence = function(req, res){
+	connection.query
+	(
+		'INSERT INTO sequences (name, projectid)' +
+		'VALUES (\''+req.body.name+'\', \''+req.body.projectid+'\');',
+		function (err,rows,fields){
+			if(err){
+				console.log('error addSequence query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
 		}
 	);
 }

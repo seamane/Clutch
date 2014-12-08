@@ -88,16 +88,40 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.accordion = {
 		current: null
 	};
-    $scope.projectid = $cookieStore.get('projectInfo').id;
-	//alert('taskController');
+    	$scope.projectid = $cookieStore.get('projectInfo').id;
+    	$scope.visible = false;
+    	$scope.attempted = false;
+    	$scope.title = null;
 
+	$scope.addSequence  = function(){
+		if($scope.title === null){
+			$scope.attempted = true;
+		}
+		else{
+			$scope.attempted = false;
+			$http.post('createSequence',{
+				'name': $scope.title,
+				'projectid' : $scope.projectid
+			}).
+			success(function(data){
+				alert("Success");
+				$scope.title = null;
+			});
+		}
+
+	}
+	$scope.showForm = function(){
+		$scope.visible = !$scope.visible;
+		$scope.attempted = false;
+		$scope.title = null;
+	}
 	$scope.getProjectName = function(){
 		return $cookieStore.get('projectInfo').name;
 	}
 
 	$scope.getInfo = function(){
 		$http.post('/getAnnouncements',{
-		'projectid': $scope.projectid
+			'projectid': $scope.projectid
 		}).
 		success(function(data){
 			//alert(JSON.stringify(data));
@@ -299,15 +323,10 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 });
 
 app.controller('indexController', function($scope, $http,$cookieStore){
-	//alert('indexController');
-  	$scope.message = '*Invalid username and/or password';
+  	$scope.message = 'Incorrect username or password';
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
-
-	    alert($scope.username + " " + $scope.password);
-	    //console.log('login button');
-
 	    $http.post("/validateUser",{
 		    'username': $scope.username,
 		    'password': $scope.password
