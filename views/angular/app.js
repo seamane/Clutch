@@ -21,10 +21,8 @@ var app = angular.module('clutchApp', ['ngCookies']);
 
 app.controller('createUserController', function($scope, $http, $cookieStore)
 {
-	//alert($scope.username + " " + $scope.lname);
 	$scope.createUser = function() 
 	{
-		alert("create user");
 		if($scope.password == $scope.passwordconfirm)
 		{
 			if($scope.username==undefined || $scope.fname==undefined 		//this all just makes sure all the fields have values
@@ -36,12 +34,11 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 			else
 			{
 				$http.post("/validateUser",{		//send a validate user request first to make sure that user isn't already there
-			    'username': $scope.username,
-			    'password': $scope.password
+			   	 'username': $scope.username,
+			   	 'password': $scope.password
 				}).
 			    success(function(data){
 			    	if(JSON.stringify(data) === '[]'){		//if that user doesn't exist, make a new user
-			    		
 			    		$http.post("/create",				
 						{
 							'username': $scope.username,
@@ -65,7 +62,6 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 					    error(function(){
 					    	// alert("error");
 					    });
-
 			    	}
 			    	else{
 			    		alert("that user already exists")
@@ -78,24 +74,53 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 		}
 		else
 		{
-				    alert("Make sure your password is the same in both fields and that you fill out all the fields");
+			alert("Make sure your password is the same in both fields and that you fill out all the fields");
 		}
    	}
 });
 
-app.controller('taskController', function($scope, $http, $cookieStore){
-	$scope.show = false;
+app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.showDropDown = false;
-	$scope.accordion = undefined;
-    $scope.projectid = $cookieStore.get('projectInfo').id;
-	//alert('taskController');
+    $scope.projectName = $cookieStore.get('projectInfo').name;
+	var orderBy = $filter('orderBy');
+	$scope.shots = [];
+	$scope.projectid = $cookieStore.get('projectInfo').id;
+	$scope.visible = false;
+	$scope.attempted = false;
+	$scope.title = null;
 
-	$scope.getAnnAndSeq = function(){
+	$scope.addSequence  = function(){
+		if($scope.title === null){
+			$scope.attempted = true;
+		}
+		else{
+			$scope.attempted = false;
+			$http.post('createSequence',{
+				'name': $scope.title,
+				'projectid' : $scope.projectid
+			}).
+			success(function(data){
+				alert("Success");
+				$scope.title = null;
+			});
+		}
+
+	}
+
+	$scope.showForm = function(){
+		$scope.visible = !$scope.visible;
+		$scope.attempted = false;
+		$scope.title = null;
+	}
+	$scope.getProjectName = function(){
+		return $cookieStore.get('projectInfo').name;
+	}
+
+	$scope.getInfo = function(){
 		$http.post('/getAnnouncements',{
-		'projectid': $scope.projectid
+			'projectid': $scope.projectid
 		}).
 		success(function(data){
-			//alert(JSON.stringify(data));
 			$scope.announcements = data;
 		});
 
@@ -103,14 +128,137 @@ app.controller('taskController', function($scope, $http, $cookieStore){
 			'projectid': $scope.projectid
 		}).
 		success(function(data){
-			//alert(JSON.stringify(data));
-			$scope.sequences = data;
+			$scope.sequences = orderBy(data,'name',false);
+			$scope.makeBools();
+		});
+
+		$http.post('/getShots',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.shots = orderBy(data,'name',false);
+		});
+
+		$http.post('/getAnimators',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.animators = data;
+		});
+
+		$http.post('/getLighters',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.lighters = data;
+		});
+
+		$http.post('/getWranglers',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.wranglers = data;
+		});
+
+		$http.post('/getFX',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.fx = data;
 		});
 	}
 
-	$scope.getAnnAndSeq();
-})
+	$scope.makeBools = function(){
+		$scope.clicks = [];
+		
+		for(var i=0; i < $scope.sequences.length; i++){
+			$scope.clicks=$scope.clicks.concat([{
+				'name':$scope.sequences[i].name,
+				'bool':false
+			}]);
+		}
+	}
 
+	$scope.getInfo();
+
+	$scope.toggleBool = function(seq){
+		for(var i=0; i < $scope.sequences.length; i++){
+			if($scope.sequences[i].name == seq.name)
+			{
+				$scope.sequences[i].bool = !$scope.sequences[i].bool;
+				return $scope.sequences[i].bool;
+			}
+		}
+	}
+
+	$scope.show = function(seq){
+		for(var i=0; i < $scope.sequences.length; i++){
+			if($scope.sequences[i].name == seq.name)
+			{
+				return $scope.sequences[i].bool;
+			}
+		}
+		return false;
+	}
+
+	$scope.getShots = function(seq){
+		if($scope.show(seq)){
+			$scope.seqShots = [];
+			for(var i = 0; i < $scope.shots.length; ++i){
+				if($scope.shots[i].sequenceid == seq.id){
+					$scope.seqShots = $scope.seqShots.concat([
+						$scope.shots[i]
+					]);
+				}
+			}
+			return $scope.seqShots;
+		}
+	}
+
+	$scope.getAnimator = function(shotid){
+		var label = '+assign';
+		for(var i = 0; i < $scope.animators.length; ++i){
+			if($scope.animators[i].shotid == shotid){
+				label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getLighter = function(shotid){
+		var label = '+assign';
+		for(var i = 0; i < $scope.lighters.length; ++i){
+			if($scope.lighters[i].shotid == shotid){
+				label = $scope.lighters[i].fname + ' ' + $scope.lighters[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getFX = function(shotid){
+		var label = '+assign';
+		for(var i = 0; i < $scope.fx.length; ++i){
+			if($scope.fx[i].shotid == shotid){
+				label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getWrangler = function(shotid){
+		var label = '+assign';
+		for(var i = 0; i < $scope.wranglers.length; ++i){
+			if($scope.wranglers[i].shotid == shotid){
+				label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+})
 .directive('showinfo', function($compile) {
     return {
 	    restrict: 'AE',
@@ -131,55 +279,102 @@ app.directive('loadnavbar', function($compile) {
     }
 });
 
-//app.controller('createUserController', function($scope, $http, $cookieStore){
-
-//});
-
 app.controller('navbarController', function($scope, $http, $cookieStore){
-
-		$scope.attempted = false;
+	$scope.attempted = false;
 	$scope.success = false;
-	$scope.createProject = function(valid) {
-		if(valid){	
-		    	$http.post("/createProject",{
-			    'name': $scope.titleC,
-			    'userid': $cookieStore.get('userInfo').id,
-			    'passkey': $scope.passcodeC
-			}).
-		    	success(function(data){
-		    		alert(JSON.stringify(data));
-		    		$scope.attempted = false;
-		    		// $scope.success = true;
-		    		alert("Success!");
+	$scope.fail = false;
+	$scope.attemptAdd = false;
+	$scope.addProjectFail = false;
+	$scope.addProjectSuccess = false;
 
-		    	}).
-		    	error(function(){
-		    		alert("error");
-		    	});
+	$scope.getUsername = function(){
+		return $cookieStore.get('userInfo').username;
+	}
+
+	$scope.createProject = function(valid) {
+		if(valid){
+			$http.post("/validateProject",{	
+			   	 'name': $scope.titleC
+			}).
+			success(function(data){
+				// if project title is unique
+			    	if(JSON.stringify(data) === '[]'){
+				    	$http.post("/createProject",{
+					    'name': $scope.titleC,
+					    'userid': $cookieStore.get('userInfo').id,
+					    'passkey': $scope.passcodeC
+						}).
+				    	success(function(data){
+				    		$scope.attempted = false;
+				    		if(data.affectedRows == 0){
+				    			$scope.fail = true;
+							$scope.success = false;
+				    		}
+				    		else{
+								$scope.fail = false;
+								$scope.success = true;
+				    		}
+				    	}).
+				    	error(function(){
+				    		alert("error");
+				    	});
+				}
+				// project title taken
+				else {
+					$scope.fail = true;
+					$scope.success = false;
+				}
+			}).
+			error(function(){
+				alert("error");
+			});
 		}
-		else{
+		else {
 			$scope.attempted = true;
 		}
 	}
-	  $scope.addProjectButton = function() {
-	    $http.post("/addProject",{
-		    'name': $scope.titleA,
-		    'userid': $cookieStore.get('userInfo').id,
-		    'passkey': $scope.passcodeA
-		}).
-	    success(function(data){
-	    	alert(JSON.stringify(data));
-	    }).
-	    error(function(){
-	    	// alert("error");
-	    });
+	$scope.addProjectButton = function(valid) {
+		if(valid){
+		    	$http.post("/addProject",{
+			    'name': $scope.titleA,
+			    'userid': $cookieStore.get('userInfo').id,
+			    'passkey': $scope.passcodeA
+			}).
+		    	success(function(data){
+		    		$scope.attemptAdd = false;
+		    		//check if project was found
+		    		if(data.affectedRows == 0){
+		    			$scope.addProjectFail = true;
+					$scope.addProjectSuccess = false;
+		    		}
+		    		else{
+					$scope.addProjectFail = false;
+					$scope.addProjectSuccess = true;
+		    		}
+		    	}).
+		    	error(function(){
+		    		// alert("error");
+		   	});
+		}
+		else{
+			$scope.attemptAdd = true;
+		}
+	}
+
+	$scope.reset = function(){
+		$scope.attempted = false;
+		$scope.fail = false;
+		$scope.success = false;
+		$scope.attemptAdd = false;
+		$scope.addProjectFail = false;
+		$scope.addProjectSuccess = false;
+		$scope.titleC = null; $scope.titleA = null; $scope.passcodeA = null; $scope.passcodeC = null;
 	}
 
     $scope.logout = function() {
     	window.location.href = '/loginpage';
     	//$cookieStore.remove('userInfo');
     }
-
 });
 
 app.controller('indexController', function($scope, $http,$cookieStore){
@@ -187,11 +382,6 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
-
-
-	    alert($scope.username + " " + $scope.password);
-	    console.log('login button');
-
 	    $http.post("/validateUser",{
 		    'username': $scope.username,
 		    'password': $scope.password
@@ -210,7 +400,6 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    	
 	    });
    	}
-
 
    	$scope.signUp =function() 
    	{
@@ -233,6 +422,7 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 			'userid': $cookieStore.get('userInfo').id
 		}).
 		success(function(data){
+			//alert(JSON.stringify(data));
 			$scope.userProjects = data;
 		});
 	}
@@ -244,7 +434,7 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 	}
 
 	$scope.buttonClicked = function(project){
-		alert(JSON.stringify(project));
+		//alert(JSON.stringify(project));
 		$cookieStore.put('projectInfo',project);
 		window.location.href = '/project';
 	}

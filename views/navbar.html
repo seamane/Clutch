@@ -1,7 +1,9 @@
-<nav ng-controller="navbarController"  class="top-bar" data-topbar role="navigation"> 
+<div ng-controller="navbarController">
+  <nav ng-click="reset()" class="top-bar" data-topbar role="navigation"> 
       <ul class="title-area">
         <li class="name">
-          <h1><a href="#">Clutch</a></h1> 
+          <h1><a href="/home">Clutch</a></h1> 
+
         </li> 
     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li> 
@@ -10,11 +12,11 @@
       <section class="top-bar-section">
       <!-- Right Nav Section -->
         <ul class="right"> 
-          <li><a href="#" data-dropdown="dropCreateProj">Create New Project</a></li>
-          <li><a href="#" data-dropdown="dropFindProj">Add Exisiting Project</a></li>
+          <li><a href="#" data-dropdown="dropCreateProj">Create Project</a></li>
+          <li><a href="#" data-dropdown="dropFindProj">Add Yourself</a></li>
           <!-- <li class="active"><a href="#">Join Us</a></li>  -->
           <li class="has-dropdown"> 
-            <a href="#">Username</a> 
+            <a href="#">{{getUsername()}}</a> 
             <ul class="dropdown">
               <li><a href="#" ng-click='logout()'>Logout</a></li>
               <li class="active"><a href="#">Active link in dropdown</a></li> 
@@ -26,7 +28,7 @@
     </nav>
 
           <!-- Create Project Dropdown -->
-          <div ng-controller="navbarController"  id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
+          <div  id="dropCreateProj" data-dropdown-content class="f-dropdown content" >
                <form name="createForm" >
                   <div class="row">
                     <div class="">
@@ -39,37 +41,48 @@
                     <div class="">
                       <!-- <label class="login-label">Passcode</label> -->
                       <input name="passkey" class="blue-input" ng-model="passcodeC" type="password" placeholder="Passkey" ng-class="{'has-error': attempted && createForm.passkey.$invalid}" required/>
+                      <small ng-show="fail"  class="error has-error-background">Title already taken</small>
+                      <small ng-show="success" class="error has-success-background">Success</small>
+
                     </div>
                   </div>
                   <!-- login button -->
                    <div class="row">
                     <div class="">
-                      <a type="submit" ng-click="createProject(createForm.$valid)" validate class="tiny expand button navbar-button">Create</a><br/>
+                      <a type="submit" ng-click="createProject(createForm.$valid)" class="tiny expand button navbar-button">Create</a><br/>
                     </div>
                   </div>
-                  <span ng-show="success" style="color:green">Success</span>
               </form>
           </div>
 
           <!-- Find Project Dropdown -->
-          <div ng-controller="navbarController" id="dropFindProj" data-dropdown-content class="f-dropdown content" >
-               <form>
+          <div  id="dropFindProj" data-dropdown-content class="f-dropdown content" >
+               <form name='addForm'>
                   <div class="row">
-                    <div class="">
-                      <input class="blue-input" ng-model="titleA" type="text" placeholder="Project Title" />
+                    <div class=>
+                      <input name="title" class="blue-input" ng-model="titleA" type="text" placeholder="Project Title" required ng-class="{'has-error': attemptAdd && addForm.title.$invalid}"/>
                     </div>
                   </div>
                   <!-- password field -->
                   <div class="row">
-                    <div class="">
-                      <input class="blue-input" ng-model="passcodeA" type="password" placeholder="Passkey" />
-                    </div>
+                      <input name="passkey" class="blue-input" ng-model="passcodeA" type="password" placeholder="Passkey" required ng-class="{'has-error': attemptAdd && addForm.passkey.$invalid}"/>
+                      <small ng-show="addProjectFail"  class="error has-error-background">Invalid Title or Passkey</small>
+                      <small ng-show="addProjectSuccess" class="error has-success-background">Success</small>
+   <!--                     <div data-alert ng-show="addProjectFail" class="alert-box alert radius">
+                        Invalid Title or Passkey
+                        <a href="#" class="">&times;</a>
+                      </div>
+                      <div data-alert ng-show="addProjectSuccess" class="alert-box success radius">
+                        Success
+                        <a href="#" class="">&times;</a>
+                      </div> -->
                   </div>
                   <!-- login button -->
                    <div class="row">
                     <div class="">
-                      <a href="#" ng-click="addProjectButton()"class="tiny expand button navbar-button">Add</a><br/>
+                      <a ng-click="addProjectButton(addForm.$valid)"class="tiny expand button navbar-button">Add</a>
                     </div>
                   </div>
               </form>
           </div>
+</div>
