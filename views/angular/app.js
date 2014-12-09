@@ -1,4 +1,5 @@
 var app = angular.module('clutchApp', ['ngCookies']);
+//var randomstring = require("randomstring");
 
 // app.service('myService', function() {
 // 	alert('myService');
@@ -176,6 +177,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 
     $scope.logout = function() {
     	window.location.href = '/loginpage';
+    	//$cookieStore.remove('userInfo');
     }
 
 });
@@ -185,6 +187,7 @@ app.controller('indexController', function($scope, $http,$cookieStore){
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
+
 
 	    alert($scope.username + " " + $scope.password);
 	    console.log('login button');

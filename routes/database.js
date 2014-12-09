@@ -1,8 +1,10 @@
 var mysql = require('mysql');
+var randomstring = require("randomstring");
+var sha1 = require('sha1');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'temproot',
+	password: 'griffin1',
 
 
 });
@@ -57,7 +59,9 @@ createTables = function()
 		+ 'fname VARCHAR(50),'
 		+ 'lname VARCHAR(50),'
 		+ 'username VARCHAR(50),'
-		+ 'passwords VARCHAR(50),'
+		//+ 'passwords VARCHAR(50),'       //new column		//new column, password was taken out.
+		+ 'salt VARCHAR(50),'
+		+ 'hashe VARCHAR(50),'
 		+ 'email VARCHAR(50)'
 		+ ');',function(err){
 		if(err){
@@ -206,26 +210,57 @@ createTables = function()
 }
 
 exports.validateUser = function(req,res){
+		var p=req.body.password;
+		console.log(p);
+
 	connection.query(
 		'select * from users '
-		+ 'where username=\'' + req.body.username + '\' AND passwords=\'' + req.body.password + '\';',
+		+ 'where username=\'' + req.body.username + '\';',
+		//+ 'where username=\'' + req.body.username + '\' AND passwords=\'' + req.body.password + '\';',
 		function (err,rows,fields){
 			if(err){
 				console.log('error validatUser query');
 				throw err;
 			}
-			res.end(JSON.stringify(rows));
+			if(JSON.stringify(rows) === '[]')
+			{
+				console.log("EMPTY");
+				res.end(JSON.stringify(rows));
+			}
+			else
+			{
+				//console.log(JSON.stringify(rows));
+					//console.log(rows[0].username);
+					var salt = rows[0].salt;
+					var h = rows[0].hashe;
+					var compare = sha1(req.body.password + salt);
+					if(compare == h)
+					{
+						console.log("SUCCESS");
+						res.end(JSON.stringify(rows));
+					}
+					else
+					{
+						res.end('[]');
+					}
+
+			}
+			//console.log("AFTER ROWS");
+			//res.end(JSON.stringify(rows));
 		}
 	);
 }
 
 exports.create = function(req, res){
+	var salt=randomstring.generate(4);
+	var newstring = req.body.password + salt;
+	var hash = sha1(newstring);
 
 
 	connection.query
 	(
-		'INSERT INTO users (fname, lname, username, passwords, email)' +
-		'VALUES (\''+req.body.fname+'\', \''+req.body.lname+'\', \''+req.body.username+'\', \''+req.body.password+'\', \''+req.body.email+'\');',
+		'INSERT INTO users (fname, lname, username, salt, hashe, email)' +
+		'VALUES (\''+req.body.fname+'\', \''+req.body.lname+'\', \''+req.body.username+'\', \''+salt+'\', \''+hash+'\', \''+req.body.email+'\');',
 		function (err,rows,fields){
 			if(err){
 				console.log('error createuser query');
@@ -238,6 +273,7 @@ exports.create = function(req, res){
 }
 
 exports.createProject = function(req,res){
+
 	connection.query(
 		'INSERT INTO projects (name, authorid, passkey)'
 		+ ' VALUES (\'' + req.body.name + '\', ' + req.body.userid + ', \'' + req.body.passkey + '\');',
