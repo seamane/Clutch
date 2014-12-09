@@ -52,15 +52,18 @@ app.post('/addProject', database.addProject);
 app.post('/getShots',database.getShots);
 app.post('/getAnimators',database.getAnimators);
 app.post('/createSequence', database.createSequence);
+app.post('/getProjects',database.getProjects);
+app.post('/getAnnouncements',database.getAnnouncements);
+app.post('/getSequences',database.getSequences);
+app.post('/getFX',database.getFX);
+app.post('/getLighters',database.getLighters);
+app.post('/getWranglers',database.getWranglers);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 //app.post('/newUser',database.newUser);
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
 app.get('/loginpage',function(req,res){res.sendFile(__dirname + '/views/index.html');});
 
-app.post('/getProjects',database.getProjects);
-app.post('/getAnnouncements',database.getAnnouncements);
-app.post('/getSequences',database.getSequences);
 
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js');});
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js');});

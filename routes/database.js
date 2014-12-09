@@ -359,13 +359,52 @@ exports.getShots = function(req,res){
 
 exports.getAnimators = function(req,res){
 	connection.query(
-		'select animators.shotid,users.fname,users.lname from users inner join animators '
+		'select animators.shotid,users.fname,users.lname,users.id from users inner join animators '
 		+ 'on animators.projectid='+req.body.projectid+ ' and users.id=animators.userid;',
 		function(err,animators){
 			if(err){
 				console.log('error getAnimator query:'+JSON.stringify(animators));
 			}
 			res.end(JSON.stringify(animators));
+		}
+	);
+}
+
+exports.getLighters = function(req,res){
+	connection.query(
+		'select lighters.shotid,users.fname,users.lname,users.id from users inner join lighters '
+		+ 'on lighters.projectid='+req.body.projectid+ ' and users.id=lighters.userid;',
+		function(err,lighters){
+			if(err){
+				console.log('error getLighters query:'+JSON.stringify(lighters));
+			}
+			res.end(JSON.stringify(lighters));
+		}
+	);
+}
+
+exports.getWranglers = function(req,res){
+	connection.query(
+		'select renderwranglers.shotid,users.fname,users.lname,users.id from users inner join renderwranglers '
+		+ 'on renderwranglers.projectid='+req.body.projectid+ ' and users.id=renderwranglers.userid;',
+		function(err,renderwranglers){
+			if(err){
+				console.log('error getWranglers query:'+JSON.stringify(renderwranglers));
+			}
+			res.end(JSON.stringify(renderwranglers));
+		}
+	);
+}
+
+exports.getFX = function(req,res){
+	connection.query(
+		'select vfx.shotid,users.fname,users.lname,users.id from users inner join vfx '
+		+ 'on vfx.projectid='+req.body.projectid+ ' and users.id=vfx.userid;',
+		function(err,vfx){
+			if(err){
+				console.log('error getFX query:'+JSON.stringify(vfx));
+			}
+			res.end(JSON.stringify(vfx));
 		}
 	);
 }

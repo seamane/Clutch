@@ -144,6 +144,27 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		success(function(data){
 			$scope.animators = data;
 		});
+
+		$http.post('/getLighters',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.lighters = data;
+		});
+
+		$http.post('/getWranglers',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.wranglers = data;
+		});
+
+		$http.post('/getFX',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.fx = data;
+		});
 	}
 
 	$scope.makeBools = function(){
@@ -198,6 +219,39 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		for(var i = 0; i < $scope.animators.length; ++i){
 			if($scope.animators[i].shotid == shotid){
 				label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getLighter = function(shotid){
+		var label = '+assign';
+		for(var i = 0; i < $scope.lighters.length; ++i){
+			if($scope.lighters[i].shotid == shotid){
+				label = $scope.lighters[i].fname + ' ' + $scope.lighters[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getFX = function(shotid){
+		var label = '+assign';
+		for(var i = 0; i < $scope.fx.length; ++i){
+			if($scope.fx[i].shotid == shotid){
+				label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getWrangler = function(shotid){
+		var label = '+assign';
+		for(var i = 0; i < $scope.wranglers.length; ++i){
+			if($scope.wranglers[i].shotid == shotid){
+				label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
 				break;
 			}
 		}

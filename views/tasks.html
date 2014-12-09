@@ -70,9 +70,9 @@
         <div ng-repeat='shot in getShots(seq)' ng-click='toggleBool(seq)'>
           <button>Shot {{shot.name}}</button>
           <button>{{getAnimator(shot.id)}}</button>
-          <button>Lighter</button>
-          <button>Render Wrangler</button>
-          <button>FX</button>
+          <button>{{getLighter(shot.id)}}</button>
+          <button>{{getWrangler(shot.id)}}</button>
+          <button>{{getFX(shot.id)}}</button>
           <button>Notes</button>
         </div>
       </ul>
