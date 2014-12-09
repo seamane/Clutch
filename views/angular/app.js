@@ -322,11 +322,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 });
 
 app.controller('indexController', function($scope, $http,$cookieStore){
-<<<<<<< HEAD
   	$scope.message = '*Invalid username and/or password';
-=======
-  	$scope.message = 'Incorrect username or password';
->>>>>>> origin/master
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
