@@ -33,11 +33,11 @@
     </div>
 
   <div class="row">
-      <h1  class="large-12 columns"> {{getProjectName()}} </h1>
+      <h1  class="large-12 columns"> {{projectName}} </h1>
 
-      <div class="right">
+      <!-- <div class="right">
         <input id="checkbox1" type="checkbox"><label for="checkbox1">Show only my tasks</label>
-      </div> 
+      </div>  -->
 
   </div>
 
@@ -45,12 +45,13 @@
 <div class='row'>
     <a class='accordion row' ng-repeat="seq in sequences" ng-click="toggleBool(seq)">Sequence {{seq.name}}
       <ul ng-show="show(seq)">
-        <div ng-repeat='shot in getShots(seq)' ng-click='here();toggleBool(seq);'>
+        <div ng-repeat='shot in getShots(seq)' ng-click='toggleBool(seq)'>
           <button>Shot {{shot.name}}</button>
-          <button>Animator</button>
+          <button>{{getAnimator(shot.id)}}</button>
           <button>Lighter</button>
           <button>Render Wrangler</button>
           <button>FX</button>
+          <button>Notes</button>
         </div>
       </ul>
     </a>

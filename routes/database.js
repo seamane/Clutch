@@ -137,6 +137,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS lighters('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
+		+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -149,6 +150,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS renderwranglers('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
+		+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -161,6 +163,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS vfx('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
+		+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -173,6 +176,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS shotdressers('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
+		+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -185,6 +189,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS animators('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
+		+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -337,10 +342,10 @@ exports.getShots = function(req,res){
 	);
 }
 
-exports.getAnimator = function(req,res){
+exports.getAnimators = function(req,res){
 	connection.query(
-		'select users.fname,users.lname from users inner join animators '
-		+ 'on animators.shotid='+req.body.shotid+ ' and users.id=animators.userid;',
+		'select animators.shotid,users.fname,users.lname from users inner join animators '
+		+ 'on animators.projectid='+req.body.projectid+ ' and users.id=animators.userid;',
 		function(err,animators){
 			if(err){
 				console.log('error getAnimator query:'+JSON.stringify(animators));
