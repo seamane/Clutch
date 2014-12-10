@@ -25,16 +25,20 @@
 
 
  <div class="row">
-      <div class="large-12 columns" ng-repeat='ann in announcements'>
-        <div class="panel">
-          <h3>{{ann.message}}</h3>
-        </div>
+    <div class="large-12 columns" ng-repeat='ann in announcements|limitTo:announcementsLimit'>
+      <div class="panel">
+        <h6>{{ann.message}}</h6>
+        <h6>{{ann.time}}</h6>
       </div>
     </div>
+    <div ng-if='announcements.length > 5'>
+      <a>See more...</a>
+    </div>
+  </div>
 
   <div class="row">
 
-      <h5  class="large-12 columns black-background"> {{projectName}} </h5>
+      <h5  class="large-12 columns black-background">{{projectName}}</h5>
 
 
       <!-- <div class="right">
@@ -68,7 +72,7 @@
     <a class='accordion row' ng-repeat="seq in sequences" ng-click="toggleBool(seq)">Sequence {{seq.name}}
       <ul ng-show="show(seq)">
         <div ng-repeat='shot in getShots(seq)' ng-click='toggleBool(seq)'>
-          <button>Shot {{shot.name}}</button>
+          <button class="small round button">Shot {{shot.name}}</button>
           <button>{{getAnimator(shot.id)}}</button>
           <button>{{getLighter(shot.id)}}</button>
           <button>{{getWrangler(shot.id)}}</button>
@@ -80,7 +84,13 @@
 </div>
 
 
-
+<!-- <button data-dropdown="drop" aria-controls="drop", aria-expanded="false" class="small round button dropdown">Dropdown Button</button><br>
+<ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" tabindex="-1">
+  <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
+  <li><a href="#">This is another</a></li>
+  <li><a href="#">Yet another</a></li>
+</ul> -->
+          <!-- <div id='Lighting'data-dropdown-content class="f-dropdown content large"showinfo></div> -->
   <!-- Start Accordian -->
  <!--  <dl class="accordion row" ng-repeat='seq in sequences' data-accordion>
     <dd class="accordion-navigation">
@@ -106,23 +116,21 @@
                       <label>Assign to:</label>
                       <input type="text" placeholder="" />
                     </div>
-                  </div> -->
-                  <!-- password field -->
-                 <!--  <div class="row">
+                  </div>
+                  <div class="row">
                     <div class="">
                       <label>Info</label>
                       <textarea placeholder="small-12.columns"></textarea>
                     </div>
-                  </div> -->
-                  <!-- login button -->
-                   <!-- <div class="row">
+                  </div>
+                   <div class="row">
                     <div class="">
                       <a href="#" class="small radius button">Add</a><br/>
                     </div>
                   </div>
               </form>
-          </div>
-  </dl> -->
+          </div> -->
+  <!-- </dl> -->
 
      <script>
     //   $(document).ready( function() {

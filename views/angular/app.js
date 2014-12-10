@@ -88,6 +88,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.visible = false;
 	$scope.attempted = false;
 	$scope.title = null;
+	$scope.announcementsLimit = 5;
 
 	$scope.addSequence  = function(){
 		if($scope.title === null){
@@ -100,7 +101,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 				'projectid' : $scope.projectid
 			}).
 			success(function(data){
-				alert("Success");
 				$scope.title = null;
 			});
 		}
@@ -216,7 +216,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	}
 
 	$scope.getAnimator = function(shotid){
-		var label = '+assign';
+		var label = '+ Assign';
 		for(var i = 0; i < $scope.animators.length; ++i){
 			if($scope.animators[i].shotid == shotid){
 				label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname;
@@ -227,7 +227,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	}
 
 	$scope.getLighter = function(shotid){
-		var label = '+assign';
+		var label = '+ Assign';
 		for(var i = 0; i < $scope.lighters.length; ++i){
 			if($scope.lighters[i].shotid == shotid){
 				label = $scope.lighters[i].fname + ' ' + $scope.lighters[i].lname;
@@ -238,7 +238,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	}
 
 	$scope.getFX = function(shotid){
-		var label = '+assign';
+		var label = '+ Assign';
 		for(var i = 0; i < $scope.fx.length; ++i){
 			if($scope.fx[i].shotid == shotid){
 				label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
@@ -249,7 +249,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	}
 
 	$scope.getWrangler = function(shotid){
-		var label = '+assign';
+		var label = '+ Assign';
 		for(var i = 0; i < $scope.wranglers.length; ++i){
 			if($scope.wranglers[i].shotid == shotid){
 				label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
@@ -257,6 +257,10 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			}
 		}
 		return label;
+	}
+
+	$scope.here = function(){
+		alert('here');
 	}
 })
 .directive('showinfo', function($compile) {
