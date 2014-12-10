@@ -205,8 +205,6 @@ createTables = function()
 }
 
 exports.validateUser = function(req,res){
-		var p=req.body.password;
-		console.log(p);
 
 	connection.query(
 		'select * from users '
@@ -218,7 +216,6 @@ exports.validateUser = function(req,res){
 			}
 			if(JSON.stringify(rows) === '[]')
 			{
-				console.log("EMPTY");
 				res.end(JSON.stringify(rows));
 			}
 			else
@@ -230,7 +227,6 @@ exports.validateUser = function(req,res){
 					var compare = sha1(req.body.password + salt);
 					if(compare == h)
 					{
-						console.log("SUCCESS");
 						res.end(JSON.stringify(rows));
 					}
 					else
@@ -273,7 +269,7 @@ exports.create = function(req, res){
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
-			console.log(JSON.stringify(rows));
+			//console.log(JSON.stringify(rows));
 		}
 	);
 }
