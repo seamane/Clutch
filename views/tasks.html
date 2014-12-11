@@ -21,9 +21,10 @@
       <div class="large-12 columns">
         <h1>Announcements</h1>
       </div>
-      <a class="left">+ New Announcement</a>
-        <textarea rows="2" placeholder="New Announcement..." class="large-4 columns left"></textarea>
-        <button class="small button">Post</button>
+      <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == false'>+ New Announcement</a>
+      <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == true'>- Hide</a>
+        <textarea rows="2" placeholder="New Announcement..." class="large-4 columns left" ng-model='message' ng-show='postAnnTextBox'></textarea>
+        <button class="small button" ng-click="postAnnouncement();postAnnTextBox = !postAnnTextBox;" ng-show='postAnnTextBox'>Post</button>
     </div>
 
 
@@ -34,8 +35,11 @@
         <h6 class="right">{{ann.time | date:'MM/dd/yyyy HH:mm:ss'}}</h6>
       </div>
     </div>
-    <div ng-if='announcements.length > 5'>
-      <a ng-click=''>See more...</a>
+    <div ng-if='announcementsLimit > 5'>
+      <a ng-click='seeLess()'>See fewer announcements...</a>
+    </div>
+    <div ng-show='announcements.length > 5 && announcements.length != annoucementsLimit'>
+      <a ng-click='seeMore()'>See older announcements...</a>
     </div>
   </div>
 

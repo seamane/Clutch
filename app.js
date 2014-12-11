@@ -60,7 +60,7 @@ app.post('/getFX',database.getFX);
 app.post('/getLighters',database.getLighters);
 app.post('/getWranglers',database.getWranglers);
 app.post('/getNotes',database.getNotes);
-
+app.post('/postAnnouncement',database.postAnnouncement);
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 //app.post('/newUser',database.newUser);
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});

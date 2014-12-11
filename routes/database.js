@@ -4,7 +4,7 @@ var sha1 = require('sha1');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'griffin1'
+	password: '20nederland12'
 
 
 });
@@ -371,6 +371,7 @@ exports.getSequences = function (req,res) {
 		function(err,sequences){
 			if(err){
 				console.log('error getSequences query');
+				throw err;
 			}
 	 		res.end(JSON.stringify(sequences));
 		}
@@ -384,6 +385,7 @@ exports.getShots = function(req,res){
 		function(err,shots){
 			if(err){
 				console.log('error getShots query');
+				throw err;
 			}
 			res.end(JSON.stringify(shots));
 		}
@@ -397,6 +399,7 @@ exports.getAnimators = function(req,res){
 		function(err,animators){
 			if(err){
 				console.log('error getAnimator query:'+JSON.stringify(animators));
+				throw err;
 			}
 			res.end(JSON.stringify(animators));
 		}
@@ -410,6 +413,7 @@ exports.getLighters = function(req,res){
 		function(err,lighters){
 			if(err){
 				console.log('error getLighters query:'+JSON.stringify(lighters));
+				throw err;
 			}
 			res.end(JSON.stringify(lighters));
 		}
@@ -423,6 +427,7 @@ exports.getWranglers = function(req,res){
 		function(err,renderwranglers){
 			if(err){
 				console.log('error getWranglers query:'+JSON.stringify(renderwranglers));
+				throw err;
 			}
 			res.end(JSON.stringify(renderwranglers));
 		}
@@ -436,6 +441,7 @@ exports.getFX = function(req,res){
 		function(err,vfx){
 			if(err){
 				console.log('error getFX query:'+JSON.stringify(vfx));
+				throw err;
 			}
 			res.end(JSON.stringify(vfx));
 		}
@@ -449,8 +455,33 @@ exports.getNotes = function(req,res){
 		function(err,notes){
 			if(err){
 				console.log('error getNotes query');
+				throw err;
 			}
 			res.end(JSON.stringify(notes));
+		}
+	);
+}
+
+exports.postAnnouncement = function(req,res){
+	connection.query(
+		'INSERT INTO announcements(authorid,projectid,message,time) '
+		+ 'VALUES(' + req.body.authorid + ',' + req.body.projectid + ',\'' + req.body.message + '\',NOW());',
+		function(err){
+			if(err){
+				console.log('error postAnnouncement query');
+				throw err;
+			}
+			connection.query(
+				'select * from announcements '
+				+ 'where projectid=' + req.body.projectid + ';',
+				function(err,announcements){
+					if(err){
+						console.log('error getAnnouncements query');
+						throw err;
+					}
+					res.end(JSON.stringify(announcements));
+				}
+			);
 		}
 	);
 }

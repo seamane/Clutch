@@ -93,7 +93,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.attempted = false;
 	$scope.title = null;
 	$scope.announcementsLimit = 5;
-	$scope.createAnnouncement = false;
+	$scope.postAnnTextBox = false;
 
 	$scope.addSequence  = function(){
 		if($scope.title === null){
@@ -126,7 +126,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			'projectid': $scope.projectid
 		}).
 		success(function(data){
-			$scope.announcements = data;
+			$scope.announcements = orderBy(data,'time',true);
 		});
 
 		$http.post('/getSequences',{
@@ -171,6 +171,31 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		success(function(data){
 			$scope.fx = data;
 		});
+	}
+
+	$scope.postAnnouncement = function(){
+		$http.post('/postAnnouncement',{
+			'authorid':$cookieStore.get('userInfo').id,
+			'projectid':$scope.projectid,
+			'message':$scope.message
+		}).
+		success(function(data){
+			$scope.announcements = orderBy(data,'time',true);
+		});
+	}
+
+	$scope.seeMore = function(){
+		$scope.announcementsLimit += 5;
+		if($scope.announcementsLimit > $scope.announcements.length){
+			$scope.announcementsLimit = $scope.announcements.length;
+		}
+	}
+
+	$scope.seeLess = function(){
+		$scope.announcementsLimit -= 5;
+		if($scope.announcementsLimit < 5){
+			$scope.announcementsLimit = 5;
+		}
 	}
 
 	// $scope.makeBools = function(){
