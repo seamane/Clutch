@@ -59,6 +59,7 @@ app.post('/getSequences',database.getSequences);
 app.post('/getFX',database.getFX);
 app.post('/getLighters',database.getLighters);
 app.post('/getWranglers',database.getWranglers);
+app.post('/getNotes',database.getNotes);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 //app.post('/newUser',database.newUser);

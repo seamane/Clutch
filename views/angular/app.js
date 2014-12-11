@@ -80,6 +80,10 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 });
 
 app.controller('taskController', function($filter, $scope, $http, $cookieStore){
+	if($cookieStore.get('userInfo') == undefined){
+		window.location.href = '/';
+	}
+
 	$scope.showDropDown = false;
     $scope.projectName = $cookieStore.get('projectInfo').name;
 	var orderBy = $filter('orderBy');
@@ -89,6 +93,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.attempted = false;
 	$scope.title = null;
 	$scope.announcementsLimit = 5;
+	$scope.createAnnouncement = false;
 
 	$scope.addSequence  = function(){
 		if($scope.title === null){
@@ -129,7 +134,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.sequences = orderBy(data,'name',false);
-			$scope.makeBools();
+			// $scope.makeBools();
 		});
 
 		$http.post('/getShots',{
@@ -168,20 +173,21 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		});
 	}
 
-	$scope.makeBools = function(){
-		$scope.clicks = [];
+	// $scope.makeBools = function(){
+	// 	$scope.clicks = [];
 		
-		for(var i=0; i < $scope.sequences.length; i++){
-			$scope.clicks=$scope.clicks.concat([{
-				'name':$scope.sequences[i].name,
-				'bool':false
-			}]);
-		}
-	}
+	// 	for(var i=0; i < $scope.sequences.length; i++){
+	// 		$scope.clicks=$scope.clicks.concat([{
+	// 			'name':$scope.sequences[i].name,
+	// 			'bool':false
+	// 		}]);
+	// 	}
+	// }
 
 	$scope.getInfo();
 
 	$scope.toggleBool = function(seq){
+		// alert(JSON.stringify($scope.sequences));
 		for(var i=0; i < $scope.sequences.length; i++){
 			if($scope.sequences[i].name == seq.name)
 			{
@@ -259,8 +265,14 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		return label;
 	}
 
-	$scope.here = function(){
-		alert('here');
+	$scope.getNotes = function(shot,type){
+		$http.post('/getNotes',{
+			'shotid':shot.id,
+			'type':type
+		}).
+		success(function(data){
+			$scope.notes = data;
+		});
 	}
 })
 .directive('showinfo', function($compile) {
@@ -376,13 +388,15 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 	}
 
     $scope.logout = function() {
+    	$cookieStore.remove('userInfo');
+    	$cookieStore.remove('projectInfo');
     	window.location.href = '/loginpage';
-    	//$cookieStore.remove('userInfo');
+    	alert(JSON.stringify($cookieStore));
     }
 });
 
 app.controller('indexController', function($scope, $http,$cookieStore){
-  	$scope.message = '*Invalid username and/or password';
+  	$scope.message = '*Invalid username/password';
   	$scope.failLogin = false;
 
   	$scope.loginButton = function() {
@@ -413,6 +427,10 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 });
 
 app.controller('homeController',function($scope,$http,$cookieStore){
+	if($cookieStore.get('userInfo') == undefined){
+		window.location.href = '/';
+	}
+
 	$scope.getName = function(){
 		return $cookieStore.get('userInfo').fname;
 	}

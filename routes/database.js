@@ -4,7 +4,7 @@ var sha1 = require('sha1');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'griffin1',
+	password: '20nederland12',
 
 
 });
@@ -118,7 +118,8 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'note VARCHAR(500),'
 		+ 'shotid INT,'
-		+ 'type VARCHAR(20)'
+		+ 'type VARCHAR(20),'
+		+ 'userid INT'
 		+ ');',function (err){
 		if(err){
 			throw err;
@@ -437,6 +438,19 @@ exports.getFX = function(req,res){
 				console.log('error getFX query:'+JSON.stringify(vfx));
 			}
 			res.end(JSON.stringify(vfx));
+		}
+	);
+}
+
+exports.getNotes = function(req,res){
+	connection.query(
+		'select users.fname,users.lname,notes.note from notes inner join users '
+		+ 'on notes.userid=users.id and notes.type=\'' + req.body.type +'\' and shotid=' + req.body.shotid + ';',
+		function(err,notes){
+			if(err){
+				console.log('error getNotes query');
+			}
+			res.end(JSON.stringify(notes));
 		}
 	);
 }
