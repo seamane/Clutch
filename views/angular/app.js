@@ -181,6 +181,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.announcements = orderBy(data,'time',true);
+			$scope.message = "";
 		});
 	}
 
