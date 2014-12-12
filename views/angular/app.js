@@ -265,7 +265,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		var label = '+ Assign';
 		for(var i = 0; i < $scope.animators.length; ++i){
 			if($scope.animators[i].shotid == shotid){
-				label = $scope.animators[i].fname + ' ' + $scope.animators[i].name;
+				label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname[0] + '.';
 				break;
 			}
 		}

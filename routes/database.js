@@ -4,7 +4,7 @@ var sha1 = require('sha1');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'griffin1'
+	password: '20nederland12'
 
 
 });
