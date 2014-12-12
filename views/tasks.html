@@ -38,7 +38,7 @@
     <div ng-if='announcementsLimit > 5'>
       <a ng-click='seeLess()'>See fewer announcements...</a>
     </div>
-    <div ng-show='announcements.length > 5 && announcements.length != annoucementsLimit'>
+    <div ng-show='announcementsLimit != announcements.length'>
       <a ng-click='seeMore()'>See older announcements...</a>
     </div>
   </div>
@@ -80,7 +80,7 @@
       <ul ng-show="show(seq)">
         <div ng-repeat='shot in getShots(seq)' ng-click='toggleBool(seq)'>
           <button class="small round button">Shot {{shot.name}}</button>
-          <button>{{getAnimator(shot.id)}}</button>
+          <button data-dropdown="drop" aria-controls="drop", aria-expanded="false" class="small button dropdown" ng-click='currentDropDown(seq,shot,1)'>{{getAnimator(shot.id)}}</button>
           <button>{{getLighter(shot.id)}}</button>
           <button>{{getWrangler(shot.id)}}</button>
           <button>{{getFX(shot.id)}}</button>
@@ -91,12 +91,20 @@
 </div>
 
 
-<!-- <button data-dropdown="drop" aria-controls="drop", aria-expanded="false" class="small round button dropdown">Dropdown Button</button><br>
-<ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" tabindex="-1">
+<button data-dropdown="drop" aria-controls="drop", aria-expanded="false" class="small round button dropdown">Dropdown Button</button><br>
+<ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
   <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
-  <li><a href="#">This is another</a></li>
-  <li><a href="#">Yet another</a></li>
-</ul> -->
+  <div class='panel' ng-repeat="note in notes">
+    <p>{{note.note}}</p>
+    <p class="right">~{{note.fname}} {{note.lname}}</p>
+    <p class="right">{{note.time}}</p>
+  </div>
+</ul>
+
+
+
+
+
           <!-- <div id='Lighting'data-dropdown-content class="f-dropdown content large"showinfo></div> -->
   <!-- Start Accordian -->
  <!--  <dl class="accordion row" ng-repeat='seq in sequences' data-accordion>
