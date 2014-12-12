@@ -59,17 +59,17 @@ createTables = function()
 		}
 	});
 
-	connection.query(
-		'CREATE TABLE IF NOT EXISTS tasks('
-		+ 'id INT NOT NULL AUTO_INCREMENT,'
-		+ 'PRIMARY KEY(id),'
-		+ 'userid INT,'
-		+ 'shotid INT'
-		+ ');',function(err){
-		if(err){
-			throw err;
-		}
-	});
+	// connection.query(
+	// 	'CREATE TABLE IF NOT EXISTS tasks('
+	// 	+ 'id INT NOT NULL AUTO_INCREMENT,'
+	// 	+ 'PRIMARY KEY(id),'
+	// 	+ 'userid INT,'
+	// 	+ 'shotid INT'
+	// 	+ ');',function(err){
+	// 	if(err){
+	// 		throw err;
+	// 	}
+	// });
 
 	connection.query(
 		'CREATE TABLE IF NOT EXISTS shots('
@@ -177,7 +177,7 @@ createTables = function()
 		}
 	});
 
-	connection.query(
+	/*connection.query(
 		'CREATE TABLE IF NOT EXISTS shotdressers('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
@@ -188,7 +188,7 @@ createTables = function()
 		if(err){
 			throw err;
 		}
-	});
+	});*/
 
 	connection.query(
 		'CREATE TABLE IF NOT EXISTS animators('

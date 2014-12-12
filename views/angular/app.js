@@ -92,8 +92,17 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.visible = false;
 	$scope.attempted = false;
 	$scope.title = null;
-	$scope.announcementsLimit = 5;
+	// $scope.announcementsLimit = 5;
 	$scope.postAnnTextBox = false;
+	$scope.types = {0:'shot','1':'animator',2:'lighter',3:'wrangler',4:'fx',5:'note'};
+	$scope.announcements = [];
+
+	// $scope.showOlderAnnouncements = function(){
+	// 	if($scope.announcements.length > 5 && $scope.announcements.length != $scope.announcementsLimit){
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
 	$scope.addSequence  = function(){
 		if($scope.title === null){
@@ -109,7 +118,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 				$scope.title = null;
 			});
 		}
-
 	}
 
 	$scope.showForm = function(){
@@ -127,6 +135,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.announcements = orderBy(data,'time',true);
+			if($scope.announcements.length < 5){
+				$scope.announcementsLimit = $scope.announcements.length;
+			}
+			else{
+				$scope.announcementsLimit = 5;
+			}
 		});
 
 		$http.post('/getSequences',{
@@ -251,7 +265,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		var label = '+ Assign';
 		for(var i = 0; i < $scope.animators.length; ++i){
 			if($scope.animators[i].shotid == shotid){
-				label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname;
+				label = $scope.animators[i].fname + ' ' + $scope.animators[i].name;
 				break;
 			}
 		}
@@ -299,6 +313,22 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		success(function(data){
 			$scope.notes = data;
 		});
+	}
+
+	$scope.currentDropDown = function(seq,shot,type){
+		if(type == 0){
+			$http.post('/getShotInfo',{
+				'sequenceid': seq.id,
+				'projectid' : $scope.projectid,
+				'shotid' : shot.id
+			}).
+			success(function(data){
+				$scope.currentButtonDropDown = data[0];
+			});
+		}
+		else{
+			$scope.getNotes(shot,$scope.types.type);
+		}
 	}
 })
 .directive('showinfo', function($compile) {
