@@ -58,12 +58,6 @@
 	background-color: #e3e3e3;
 	color: #737373;
 }
-.signUp-button-withBorder{
-	background-color: #e3e3e3;
-	color: #737373;
-	border-color: #cccccc !important;
-	border-width: 2px !important;
-}
 
 .blue-input{
 	border-width: 2px !important;
@@ -116,4 +110,35 @@
 .fadeout {
   visibility: hidden;
   opacity: 0;
+}
+.shot-button{
+	background-color: #e3e3e3;
+	width:125px !important;
+}
+.shot-button-others{
+	width:170px !important;
+}
+.sequence-bar{
+	float:left; 
+	margin-right:125px;
+}
+.table, .table th{
+    height: 50px;
+    font-size: 16px;
+    border-width: 2px;
+    border-left: 2px solid black;
+}
+.table{
+	 border-collapse: collapse;
+	 border:2px solid black;
+}
+th:first-child{
+	width:282px !important;
+}
+th{
+	border-collapse: collapse;
+	width:170px;
+}
+.notes-button{
+	width:145px !important;
 }
