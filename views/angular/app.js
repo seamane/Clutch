@@ -117,6 +117,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			success(function(data){
 				$scope.title = null;
 			});
+			$http.post('/getSequences',{
+				'projectid': $scope.projectid
+			}).
+			success(function(data){
+				$scope.sequences = orderBy(data,'name',false);
+			// $scope.makeBools();
+			});
 		}
 	}
 
@@ -265,7 +272,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		var label = '+ Assign';
 		for(var i = 0; i < $scope.animators.length; ++i){
 			if($scope.animators[i].shotid == shotid){
-				label = $scope.animators[i].fname + ' ' + $scope.animators[i].name;
+				label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname[0] + '.';
 				break;
 			}
 		}
@@ -385,6 +392,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 				    		else{
 								$scope.fail = false;
 								$scope.success = true;
+								window.location.href='/home';
 				    		}
 				    	}).
 				    	error(function(){
@@ -400,10 +408,12 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 			error(function(){
 				alert("error");
 			});
+
 		}
 		else {
 			$scope.attempted = true;
 		}
+
 	}
 	$scope.addProjectButton = function(valid) {
 		if(valid){
@@ -422,6 +432,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 		    		else{
 					$scope.addProjectFail = false;
 					$scope.addProjectSuccess = true;
+					window.location.href='/home';
 		    		}
 		    	}).
 		    	error(function(){

@@ -90,7 +90,7 @@
           <button class="small round button shot-button">Shot {{shot.name}}</button>
           <button class="notes-button">Notes</button>
           <button  class="shot-button-others  button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,1)'>{{getAnimator(shot.id)}}</button>
-          <button class="shot-button-others"> class="shot-button-others"{{getLighter(shot.id)}}</button>
+          <button class="shot-button-others"> {{getLighter(shot.id)}}</button>
           <button class="shot-button-others">{{getWrangler(shot.id)}}</button>
           <button class="shot-button-others">{{getFX(shot.id)}}</button>
         </div>
