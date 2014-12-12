@@ -202,6 +202,7 @@ createTables = function()
 			throw err;
 		}
 	});
+
 	console.log("all tables created");
 }
 
