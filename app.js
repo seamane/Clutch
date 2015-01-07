@@ -3,7 +3,8 @@ var database = require('./routes/database');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var index = require('./routes/index');
+// var index = require('./routes/index');
+var email = require('./routes/email');
 
 var app = express();
 
@@ -45,7 +46,7 @@ app.get('/chickens.png',function(req,res){res.sendFile(__dirname+'/views/chicken
 
 
 app.post('/validateUser',database.validateUser);
-app.post('/create',database.create);
+app.post('/createUser',database.createUser);
 app.post('/validateUser', database.validateUser);
 app.post('/validateProject', database.validateProject);
 app.post('/createProject', database.createProject);
@@ -62,7 +63,6 @@ app.post('/getWranglers',database.getWranglers);
 app.post('/getNotes',database.getNotes);
 app.post('/postAnnouncement',database.postAnnouncement);
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
-//app.post('/newUser',database.newUser);
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
 app.get('/loginpage',function(req,res){res.sendFile(__dirname + '/views/index.html');});
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js');});
@@ -73,11 +73,11 @@ app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
 app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
 app.get('/createUser',function(req,res){res.sendFile(__dirname+'/views/createUser.html');});
+app.get('/sendEmail',email.sendEmail);
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
-//app.post('/newUser',database.newUser);
 
 
-//catch 404 and forward error handler
+// // catch 404 and forward error handler
 // app.use(function(req,res,next){
 // 	var err = new Error("Not Found");
 // 	err.status = 404;

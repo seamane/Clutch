@@ -4,15 +4,13 @@ var sha1 = require('sha1');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'griffin1'
-
-
+	password: 'default'
 });
 
 exports.initDatabase = function(req,res)
 {
 	connection.query('CREATE DATABASE IF NOT EXISTS clutch', function(err){
-		if(err){//} && err.number != client.ERROR_DB_CREATE_EXISTS){
+		if(err){
 			console.log("ERROR: " + err.message);
 			throw err;
 		}
@@ -49,6 +47,7 @@ createTables = function()
 		+ 'fname VARCHAR(50),'
 		+ 'lname VARCHAR(50),'
 		+ 'username VARCHAR(50),'
+		+ 'phone VARCHAR(15),'
 		//+ 'passwords VARCHAR(50),'       //new column		//new column, password was taken out.
 		+ 'salt VARCHAR(50),'
 		+ 'hashe VARCHAR(50),'
@@ -78,8 +77,8 @@ createTables = function()
 		+ 'frames INT,'
 		+ 'description VARCHAR(500),'
 		+ 'name VARCHAR(20),'
-		+ 'sequenceid INT,'
-		+ 'projectid INT'
+		+ 'sequenceid INT'//,'
+		//+ 'projectid INT'
 		+ ');',function (err){
 		if(err){
 			throw err;
@@ -142,7 +141,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS lighters('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		+ 'projectid INT,'
+		//+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -155,7 +154,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS renderwranglers('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		+ 'projectid INT,'
+		//+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -168,7 +167,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS vfx('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		+ 'projectid INT,'
+		//+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -194,7 +193,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS animators('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		+ 'projectid INT,'
+		//+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -256,22 +255,21 @@ exports.validateProject = function(req,res){
 	);
 }
 
-exports.create = function(req, res){
+exports.createUser = function(req, res){
 	var salt=randomstring.generate(4);
 	var newstring = req.body.password + salt;
 	var hash = sha1(newstring);
 
 	connection.query
 	(
-		'INSERT INTO users (fname, lname, username, salt, hashe, email)' +
-		'VALUES (\''+req.body.fname+'\', \''+req.body.lname+'\', \''+req.body.username+'\', \''+salt+'\', \''+hash+'\', \''+req.body.email+'\');',
+		'INSERT INTO users (fname, lname, username, salt, hashe, email, phone)' +
+		'VALUES (\''+req.body.fname+'\', \''+req.body.lname+'\', \''+req.body.username+'\', \''+salt+'\', \''+hash+'\', \''+req.body.email+'\',\''+req.body.phone+'\');',
 		function (err,rows,fields){
 			if(err){
 				console.log('error createuser query');
 				throw err;
 			}
-			res.end(JSON.stringify(rows));
-			//console.log(JSON.stringify(rows));
+			// res.end(JSON.stringify(rows));
 		}
 	);
 }
@@ -330,7 +328,6 @@ exports.getProjects = function(req,res){
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
-			console.log(JSON.stringify(rows));
 		}
 	);
 }
@@ -381,8 +378,8 @@ exports.getSequences = function (req,res) {
 
 exports.getShots = function(req,res){
 	connection.query(
-		'select * from shots '
-		+ 'where projectid='+req.body.projectid+';',
+		'select shots.* from shots inner join sequences '
+		+ 'on sequences.projectid='+req.body.projectid+' and shots.sequenceid=sequences.id;',
 		function(err,shots){
 			if(err){
 				console.log('error getShots query');
@@ -395,8 +392,8 @@ exports.getShots = function(req,res){
 
 exports.getAnimators = function(req,res){
 	connection.query(
-		'select animators.shotid,users.fname,users.lname,users.id from users inner join animators '
-		+ 'on animators.projectid='+req.body.projectid+ ' and users.id=animators.userid;',
+		'select animators.shotid,users.fname,users.lname,users.id from users inner join animators inner join shots inner join sequences '
+		+ 'on animators.shotid=shots.id and users.id=animators.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,animators){
 			if(err){
 				console.log('error getAnimator query:'+JSON.stringify(animators));
@@ -409,8 +406,10 @@ exports.getAnimators = function(req,res){
 
 exports.getLighters = function(req,res){
 	connection.query(
-		'select lighters.shotid,users.fname,users.lname,users.id from users inner join lighters '
-		+ 'on lighters.projectid='+req.body.projectid+ ' and users.id=lighters.userid;',
+		// 'select lighters.shotid,users.fname,users.lname,users.id from users inner join lighters '
+		// + 'on lighters.projectid='+req.body.projectid+ ' and users.id=lighters.userid;',
+		'select lighters.shotid,users.fname,users.lname,users.id from users inner join lighters inner join shots inner join sequences '
+		+ 'on lighters.shotid=shots.id and users.id=lighters.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,lighters){
 			if(err){
 				console.log('error getLighters query:'+JSON.stringify(lighters));
@@ -423,8 +422,8 @@ exports.getLighters = function(req,res){
 
 exports.getWranglers = function(req,res){
 	connection.query(
-		'select renderwranglers.shotid,users.fname,users.lname,users.id from users inner join renderwranglers '
-		+ 'on renderwranglers.projectid='+req.body.projectid+ ' and users.id=renderwranglers.userid;',
+		'select renderwranglers.shotid,users.fname,users.lname,users.id from users inner join renderwranglers inner join shots inner join sequences '
+		+ 'on renderwranglers.shotid=shots.id and users.id=renderwranglers.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,renderwranglers){
 			if(err){
 				console.log('error getWranglers query:'+JSON.stringify(renderwranglers));
@@ -437,8 +436,8 @@ exports.getWranglers = function(req,res){
 
 exports.getFX = function(req,res){
 	connection.query(
-		'select vfx.shotid,users.fname,users.lname,users.id from users inner join vfx '
-		+ 'on vfx.projectid='+req.body.projectid+ ' and users.id=vfx.userid;',
+		'select vfx.shotid,users.fname,users.lname,users.id from users inner join vfx inner join shots inner join sequences '
+		+ 'on vfx.shotid=shots.id and users.id=vfx.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,vfx){
 			if(err){
 				console.log('error getFX query:'+JSON.stringify(vfx));

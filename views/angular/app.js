@@ -1,23 +1,4 @@
 var app = angular.module('clutchApp', ['ngCookies']);
-//var randomstring = require("randomstring");
-
-// app.service('myService', function() {
-// 	alert('myService');
-// 	var userData = [];
-// 	this.set = function(data) {
-// 		alert('myService set(data):'+JSON.stringify(data));
-// 		userData = data;
-// 		alert('myService userData[0]:'+JSON.stringify(userData[0].username));
-// 	}
-// 	this.get = function() {
-// 	 	return userData;
-// 	}
-
-// 	this.getUsername = function(){
-// 		alert('getUsername:'+JSON.stringify(userData));
-// 		return userData[0].username;
-// 	}
-// });
 
 app.controller('createUserController', function($scope, $http, $cookieStore)
 {
@@ -27,7 +8,8 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 		{
 			if($scope.username==undefined || $scope.fname==undefined 		//this all just makes sure all the fields have values
 			|| $scope.lname==undefined || $scope.password==undefined 		//
-			|| $scope.email==undefined || $scope.passwordconfirm==undefined)//
+			|| $scope.email==undefined || $scope.passwordconfirm==undefined
+			|| $scope.phoneNum==undefined)
 			{
 				alert("Please fill in all the fields");
 			}
@@ -39,25 +21,25 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 				}).
 			    success(function(data){
 			    	if(JSON.stringify(data) === '[]'){		//if that user doesn't exist, make a new user
-			    		$http.post("/create",				
+			    		$http.post("/createUser",				
 						{
 							'username': $scope.username,
 							'password': $scope.password,
 							'fname': $scope.fname,
 							'lname': $scope.lname,
 							'email': $scope.email,
-							'passwordconfirm': $scope.passwordconfirm
+							'passwordconfirm': $scope.passwordconfirm,
+							'phone':$scope.phone
 						}).
 						success(function(data){
-							if(JSON.stringify(data) === '[]')
-							{
-							    // alert('empty');
-							    $scope.failLogin = true;
-							}
-					    	else
-					    	{
+							// if(JSON.stringify(data) === '[]')
+							// {
+							//     $scope.failLogin = true;
+							// }
+					  //   	else
+					  //   	{
 					    		window.location.href = '/loginpage';
-					    	}
+					    	// }
 					    }).
 					    error(function(){
 					    	// alert("error");
@@ -71,10 +53,6 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 			    	 alert("error");
 			    });
 			}
-		}
-		else
-		{
-			alert("Make sure your password is the same in both fields and that you fill out all the fields");
 		}
    	}
 });
@@ -94,15 +72,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.title = null;
 	// $scope.announcementsLimit = 5;
 	$scope.postAnnTextBox = false;
-	$scope.types = {0:'shot','1':'animator',2:'lighter',3:'wrangler',4:'fx',5:'note'};
 	$scope.announcements = [];
-
-	// $scope.showOlderAnnouncements = function(){
-	// 	if($scope.announcements.length > 5 && $scope.announcements.length != $scope.announcementsLimit){
-	// 		return true;
-	// 	}
-	// 	return false;
-	// }
+	$scope.animator = 'animator';
+	$scope.lighter = 'lighter';
+	$scope.fx = 'fx';
+	$scope.wrangler = 'wrangler';
 
 	$scope.addSequence  = function(){
 		if($scope.title === null){
@@ -163,6 +137,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.shots = orderBy(data,'name',false);
+			// alert(JSON.stringify(data));
 		});
 
 		$http.post('/getAnimators',{
@@ -331,6 +306,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			}).
 			success(function(data){
 				$scope.currentButtonDropDown = data[0];
+				// alert(json.stringify(data));
 			});
 		}
 		else{
@@ -458,7 +434,7 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
     	$cookieStore.remove('userInfo');
     	$cookieStore.remove('projectInfo');
     	window.location.href = '/loginpage';
-    	alert(JSON.stringify($cookieStore));
+    	// alert(JSON.stringify($cookieStore));
     }
 });
 
@@ -511,7 +487,6 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 			'userid': $cookieStore.get('userInfo').id
 		}).
 		success(function(data){
-			//alert(JSON.stringify(data));
 			$scope.userProjects = data;
 		});
 	}

@@ -87,12 +87,12 @@
       <ul ng-show="show(seq)" >
         <div ng-repeat='shot in getShots(seq)' ng-click='toggleBool(seq)'>
 
-          <button class="small round button shot-button">Shot {{shot.name}}</button>
-          <button class="notes-button">Notes</button>
-          <button  class="shot-button-others  button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,1)'>{{getAnimator(shot.id)}}</button>
-          <button class="shot-button-others">{{getLighter(shot.id)}}</button>
-          <button class="shot-button-others">{{getWrangler(shot.id)}}</button>
-          <button class="shot-button-others">{{getFX(shot.id)}}</button>
+          <button class="small round button shot-button dropdown" data-dropdown="shotinfo">Shot {{shot.name}}</button>
+          <button class="notes-button dropdown">Notes</button>
+          <button class="shot-button-others  button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
+          <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
+          <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
+          <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
         </div>
       </ul>
     </a>
@@ -154,15 +154,6 @@
               </form>
           </div> -->
   <!-- </dl> -->
-
-     <script>
-    //   $(document).ready( function() {
-    //       $("#explosions").on("click", function() {
-    //           $("#panelTexture").removeClass("hide");
-    //           $("#panelTexture").load("test.html");
-    //       });
-    //   });
-    // </script>
 
     <script src="../js/vendor/jquery.js"></script>
     <script src="../js/foundation.min.js"></script>
