@@ -215,27 +215,27 @@ exports.validateUser = function(req,res){
 				console.log('error validatUser query');
 				throw err;
 			}
-			if(JSON.stringify(rows) === '[]')
-			{
+			// if(JSON.stringify(rows) === '[]')
+			// {
 				res.end(JSON.stringify(rows));
-			}
-			else
-			{
-				//console.log(JSON.stringify(rows));
-					//console.log(rows[0].username);
-					var salt = rows[0].salt;
-					var h = rows[0].hashe;
-					var compare = sha1(req.body.password + salt);
-					if(compare == h)
-					{
-						res.end(JSON.stringify(rows));
-					}
-					else
-					{
-						res.end('[]');
-					}
+			// }
+			// else
+			// {
+			// 	//console.log(JSON.stringify(rows));
+			// 		//console.log(rows[0].username);
+			// 		var salt = rows[0].salt;
+			// 		var h = rows[0].hashe;
+			// 		var compare = sha1(req.body.password + salt);
+			// 		if(compare == h)
+			// 		{
+			// 			res.end(JSON.stringify(rows));
+			// 		}
+			// 		else
+			// 		{
+			// 			res.end('[]');
+			// 		}
 
-			}
+			//}
 			//console.log("AFTER ROWS");
 			//res.end(JSON.stringify(rows));
 		}
@@ -269,7 +269,7 @@ exports.createUser = function(req, res){
 				console.log('error createuser query');
 				throw err;
 			}
-			// res.end(JSON.stringify(rows));
+			res.end('created');
 		}
 	);
 }

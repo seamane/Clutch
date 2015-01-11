@@ -73,7 +73,7 @@ app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
 app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
 app.get('/createUser',function(req,res){res.sendFile(__dirname+'/views/createUser.html');});
-app.get('/sendEmail',email.sendEmail);
+app.post('/sendEmail',email.sendEmail);
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 
 

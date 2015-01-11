@@ -11,7 +11,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 			|| $scope.email==undefined || $scope.passwordconfirm==undefined
 			|| $scope.phoneNum==undefined)
 			{
-				alert("Please fill in all the fields");
+				alert("One or more fields are blank. Please check to make sure that all of the provided fields are filled out.");
 			}
 			else
 			{
@@ -20,33 +20,43 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 			   	 'password': $scope.password
 				}).
 			    success(function(data){
-			    	if(JSON.stringify(data) === '[]'){		//if that user doesn't exist, make a new user
-			    		$http.post("/createUser",				
-						{
-							'username': $scope.username,
-							'password': $scope.password,
-							'fname': $scope.fname,
-							'lname': $scope.lname,
-							'email': $scope.email,
-							'passwordconfirm': $scope.passwordconfirm,
-							'phone':$scope.phone
-						}).
-						success(function(data){
-							// if(JSON.stringify(data) === '[]')
-							// {
-							//     $scope.failLogin = true;
-							// }
-					  //   	else
-					  //   	{
-					    		window.location.href = '/loginpage';
-					    	// }
-					    }).
-					    error(function(){
-					    	// alert("error");
-					    });
+			    	if(JSON.stringify(data) === '[]'){		//if that username doesn't exist, make a new user
+			    		$http.post('/sendEmail',
+				  		{
+				  			'to': $scope.email,
+				  			'subject': 'Welcome to the Clutch!',
+				  			'text': 'Welcome ' + $scope.fname + '!\n\nWe are happy for you to be a part '
+				  			+ 'of BYU\'s film production.\n\nSincerely,\n\nThe Clutch'  
+				  		}).
+				  		success(function(data){
+				  			if(data == "sent"){
+				  				$http.post("/createUser",				
+								{
+									'username': $scope.username,
+									'password': $scope.password,
+									'fname': $scope.fname,
+									'lname': $scope.lname,
+									'email': $scope.email,
+									'passwordconfirm': $scope.passwordconfirm,
+									'phone':$scope.phoneNum
+								}).
+								success(function(data){
+					    			window.location.href = '/loginpage';
+							    }).
+							    error(function(){
+							    	alert("error");
+							    });
+				  			}
+				  			else{
+				  				alert('Your confirmation email failed to send.');
+				  			}
+				  		}).
+				  		error(function(){
+				  			alert("Email confirmation error");
+				  		});	
 			    	}
 			    	else{
-			    		alert("that user already exists")
+			    		alert("That username already exists. Please choose a different one.")
 			    	}
 			    }).
 			    error(function(){
