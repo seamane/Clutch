@@ -150,6 +150,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			// alert(JSON.stringify(data));
 		});
 
+		$http.post('/getPrevis',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.previs = data;
+		});
+
 		$http.post('/getAnimators',{
 			'projectid':$scope.projectid
 		}).
@@ -251,6 +258,17 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			}
 			return $scope.seqShots;
 		}
+	}
+
+	$scope.getPrevis = function(shotid){
+		var label = '+ Assign';
+		for(var i = 0; i < $scope.previs.length; ++i){
+			if($scope.previs[i].shotid == shotid){
+				label = $scope.previs[i].fname + ' ' + $scope.previs[i].lname[0] + '.';
+				break;
+			}
+		}
+		return label;
 	}
 
 	$scope.getAnimator = function(shotid){
@@ -437,13 +455,16 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 		$scope.attemptAdd = false;
 		$scope.addProjectFail = false;
 		$scope.addProjectSuccess = false;
-		$scope.titleC = null; $scope.titleA = null; $scope.passcodeA = null; $scope.passcodeC = null;
+		$scope.titleC = null; 
+		$scope.titleA = null; 
+		$scope.passcodeA = null; 
+		$scope.passcodeC = null;
 	}
 
     $scope.logout = function() {
     	$cookieStore.remove('userInfo');
     	$cookieStore.remove('projectInfo');
-    	window.location.href = '/loginpage';
+    	window.location.href = '/';
     	// alert(JSON.stringify($cookieStore));
     }
 });

@@ -190,10 +190,21 @@ createTables = function()
 	});*/
 
 	connection.query(
+		'CREATE TABLE IF NOT EXISTS previs('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'shotid INT,'
+		+ 'userid INT'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
 		'CREATE TABLE IF NOT EXISTS animators('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		//+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -386,6 +397,20 @@ exports.getShots = function(req,res){
 				throw err;
 			}
 			res.end(JSON.stringify(shots));
+		}
+	);
+}
+
+exports.getPrevis = function(req,res){
+	connection.query(
+		'select previs.shotid,users.fname,users.lname,users.id from users inner join previs inner join shots inner join sequences '
+		+ 'on previs.shotid=shots.id and users.id=previs.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
+		function(err,animators){
+			if(err){
+				console.log('error getAnimator query:'+JSON.stringify(animators));
+				throw err;
+			}
+			res.end(JSON.stringify(animators));
 		}
 	);
 }

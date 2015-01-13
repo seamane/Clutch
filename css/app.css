@@ -113,10 +113,12 @@
 }
 .shot-button{
 	background-color: #e3e3e3;
-	width:125px !important;
+	width:105px !important;
+	height:45px;
 }
 .shot-button-others{
-	width:170px !important;
+	width:145px !important;
+	font-size: 80%;
 }
 .sequence-bar{
 	float:left; 
@@ -137,8 +139,9 @@ th:first-child{
 }
 th{
 	border-collapse: collapse;
-	width:170px;
+	width:160px;
 }
 .notes-button{
-	width:145px !important;
+	width:125px !important;
+	font-size:80%;
 }

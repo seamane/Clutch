@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foundation | Welcome</title>
+    <title>Clutch</title>
     <link rel="stylesheet" href="../css/foundation.css" />
     <!-- Do not change name of this file (app.css) -->
     <link rel="stylesheet" href="../css/app.css">
@@ -45,7 +45,7 @@
 
   <div class="row">
 
-      <h5  class="large-12 columns black-background">{{projectName}}</h5>
+      <h1  class="large-12 columns black-background">{{projectName}}</h1>
 
 
       <!-- <div class="right">
@@ -79,6 +79,7 @@
     <a class='accordion row' ng-repeat="seq in sequences" ng-click="toggleBool(seq)">
         <table class="table large-12 columns" >
         <th> Sequence {{seq.name}}: </th>
+        <th> Previs</th>
         <th> Animator</th>
         <th> Lighter</th>
         <th> Wrangler</th>
@@ -86,10 +87,10 @@
       </table>
       <ul ng-show="show(seq)" >
         <div ng-repeat='shot in getShots(seq)' ng-click='toggleBool(seq)'>
-
           <button class="small round button shot-button dropdown" data-dropdown="shotinfo">Shot {{shot.name}}</button>
           <button class="notes-button dropdown">Notes</button>
-          <button class="shot-button-others  button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
+          <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,previs)'>{{getPrevis(shot.id)}}</button>
+          <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
           <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
           <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
           <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>

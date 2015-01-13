@@ -57,6 +57,7 @@ app.post('/createSequence', database.createSequence);
 app.post('/getProjects',database.getProjects);
 app.post('/getAnnouncements',database.getAnnouncements);
 app.post('/getSequences',database.getSequences);
+app.post('/getPrevis',database.getPrevis);
 app.post('/getFX',database.getFX);
 app.post('/getLighters',database.getLighters);
 app.post('/getWranglers',database.getWranglers);
