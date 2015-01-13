@@ -45,7 +45,7 @@
           <!-- username field -->
             <div class="row">
                 <label class="login-label">Username (used to sign in)</label>
-                <input class="blue-input" type="text" ng-model='username' placeholder="jsqueezy" />
+                <input class="blue-input" type="text" ng-minlength='8' name='uname' ng-model='username' placeholder="jsqueezy" /><span ng-show='myForm.uname.$error.minlength' style='color:red;font-size:10pt'>* Username must be at least 8 characters in length</span>
             </div>
 
             <!-- email field -->
