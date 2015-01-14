@@ -53,6 +53,7 @@ app.post('/addProject', database.addProject);
 app.post('/getShots',database.getShots);
 app.post('/getAnimators',database.getAnimators);
 app.post('/createSequence', database.createSequence);
+app.post('/createShot', database.createShot);
 app.post('/getProjects',database.getProjects);
 app.post('/getAnnouncements',database.getAnnouncements);
 app.post('/getSequences',database.getSequences);
