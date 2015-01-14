@@ -48,7 +48,6 @@ createTables = function()
 		+ 'lname VARCHAR(50),'
 		+ 'username VARCHAR(50),'
 		+ 'phone VARCHAR(15),'
-		//+ 'passwords VARCHAR(50),'       //new column		//new column, password was taken out.
 		+ 'salt VARCHAR(50),'
 		+ 'hashe VARCHAR(50),'
 		+ 'email VARCHAR(50)'
@@ -57,18 +56,6 @@ createTables = function()
 			throw err;
 		}
 	});
-
-	// connection.query(
-	// 	'CREATE TABLE IF NOT EXISTS tasks('
-	// 	+ 'id INT NOT NULL AUTO_INCREMENT,'
-	// 	+ 'PRIMARY KEY(id),'
-	// 	+ 'userid INT,'
-	// 	+ 'shotid INT'
-	// 	+ ');',function(err){
-	// 	if(err){
-	// 		throw err;
-	// 	}
-	// });
 
 	connection.query(
 		'CREATE TABLE IF NOT EXISTS shots('
@@ -112,6 +99,18 @@ createTables = function()
 	});
 
 	connection.query(
+		'CREATE TABLE IF NOT EXISTS assets('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'name VARCHAR(20),'
+		+ 'projectid INT'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
 		'CREATE TABLE IF NOT EXISTS notes('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
@@ -141,7 +140,6 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS lighters('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		//+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -154,7 +152,6 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS renderwranglers('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		//+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -167,7 +164,6 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS vfx('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		//+ 'projectid INT,'
 		+ 'shotid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
@@ -175,19 +171,6 @@ createTables = function()
 			throw err;
 		}
 	});
-
-	/*connection.query(
-		'CREATE TABLE IF NOT EXISTS shotdressers('
-		+ 'id INT NOT NULL AUTO_INCREMENT,'
-		+ 'PRIMARY KEY(id),'
-		+ 'projectid INT,'
-		+ 'shotid INT,'
-		+ 'userid INT'
-		+ ');',function (err){
-		if(err){
-			throw err;
-		}
-	});*/
 
 	connection.query(
 		'CREATE TABLE IF NOT EXISTS previs('
@@ -206,6 +189,42 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'shotid INT,'
+		+ 'userid INT'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
+		'CREATE TABLE IF NOT EXISTS concept('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'assetid INT,'
+		+ 'userid INT'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
+		'CREATE TABLE IF NOT EXISTS modeling('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'assetid INT,'
+		+ 'userid INT'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
+		'CREATE TABLE IF NOT EXISTS shading('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'assetid INT,'
 		+ 'userid INT'
 		+ ');',function (err){
 		if(err){
@@ -401,6 +420,20 @@ exports.getShots = function(req,res){
 	);
 }
 
+exports.getAssets = function(req,res){
+	connection.query(
+		'select * from assets '
+		+ 'where assets.projectid='+req.body.projectid+';',
+		function(err,assets){
+			if(err){
+				console.log('error getAssets query');
+				throw err;
+			}
+			res.end(JSON.stringify(assets));
+		}
+	);
+}
+
 exports.getPrevis = function(req,res){
 	connection.query(
 		'select previs.shotid,users.fname,users.lname,users.id from users inner join previs inner join shots inner join sequences '
@@ -431,8 +464,6 @@ exports.getAnimators = function(req,res){
 
 exports.getLighters = function(req,res){
 	connection.query(
-		// 'select lighters.shotid,users.fname,users.lname,users.id from users inner join lighters '
-		// + 'on lighters.projectid='+req.body.projectid+ ' and users.id=lighters.userid;',
 		'select lighters.shotid,users.fname,users.lname,users.id from users inner join lighters inner join shots inner join sequences '
 		+ 'on lighters.shotid=shots.id and users.id=lighters.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,lighters){
@@ -469,6 +500,48 @@ exports.getFX = function(req,res){
 				throw err;
 			}
 			res.end(JSON.stringify(vfx));
+		}
+	);
+}
+
+exports.getConcept = function(req,res){
+	connection.query(
+		'select concept.assetid,users.fname,users.lname,users.id from users inner join concept inner join assets '
+		+ 'on concept.assetid=assets.id and users.id=concept.userid and assets.projectid='+ req.body.projectid +';',
+		function(err,concept){
+			if(err){
+				console.log('error getConcept query:'+JSON.stringify(concept));
+				throw err;
+			}
+			res.end(JSON.stringify(concept));
+		}
+	);
+}
+
+exports.getModeling = function(req,res){
+	connection.query(
+		'select modeling.assetid,users.fname,users.lname,users.id from users inner join modeling inner join assets '
+		+ 'on modeling.assetid=assets.id and users.id=modeling.userid and assets.projectid='+ req.body.projectid +';',
+		function(err,modeling){
+			if(err){
+				console.log('error getModeling query:'+JSON.stringify(modeling));
+				throw err;
+			}
+			res.end(JSON.stringify(modeling));
+		}
+	);
+}
+
+exports.getShading = function(req,res){
+	connection.query(
+		'select shading.assetid,users.fname,users.lname,users.id from users inner join shading inner join assets '
+		+ 'on shading.assetid=assets.id and users.id=shading.userid and assets.projectid='+ req.body.projectid +';',
+		function(err,shading){
+			if(err){
+				console.log('error getShading query:'+JSON.stringify(shading));
+				throw err;
+			}
+			res.end(JSON.stringify(shading));
 		}
 	);
 }

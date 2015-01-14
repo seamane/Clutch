@@ -42,8 +42,7 @@ app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/a
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname+'/views/navbar.html');});
 app.get('/chicken.jpg',function(req,res){res.sendFile(__dirname+'/views/chicken.jpg');});
 app.get('/chickens.png',function(req,res){res.sendFile(__dirname+'/views/chickens.png');});
-
-
+app.get('/favicon.ico',function(req,res){res.sendFile(__dirname+'/views/favicon.ico');});
 
 app.post('/validateUser',database.validateUser);
 app.post('/createUser',database.createUser);
@@ -61,8 +60,14 @@ app.post('/getPrevis',database.getPrevis);
 app.post('/getFX',database.getFX);
 app.post('/getLighters',database.getLighters);
 app.post('/getWranglers',database.getWranglers);
+app.post('/getConcept',database.getConcept);
+app.post('/getModeling',database.getModeling);
+app.post('/getShading',database.getShading);
 app.post('/getNotes',database.getNotes);
 app.post('/postAnnouncement',database.postAnnouncement);
+app.post('/sendEmail',email.sendEmail);
+app.post('/getAssets',database.getAssets);
+
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
 app.get('/loginpage',function(req,res){res.sendFile(__dirname + '/views/index.html');});
@@ -74,22 +79,3 @@ app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
 app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
 app.get('/createUser',function(req,res){res.sendFile(__dirname+'/views/createUser.html');});
-app.post('/sendEmail',email.sendEmail);
-// app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
-
-
-// // catch 404 and forward error handler
-// app.use(function(req,res,next){
-// 	var err = new Error("Not Found");
-// 	err.status = 404;
-// 	next(err);
-// });
-
-// //production error handler
-// app.use(function(err,req,res){
-// 	res.status(err.status||500);
-// 	res.render('error',{
-// 		message: err.message,
-// 		error: {}
-// 	});
-// });

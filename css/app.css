@@ -29,10 +29,6 @@
 	color:black;
 }
 
-.shot-drop{
-
-}
-
 .shots{
 	padding:none !important;
 }
@@ -144,4 +140,20 @@ th{
 .notes-button{
 	width:125px !important;
 	font-size:80%;
+}
+.notes-dropdown{
+	position:relative;
+	background: white;
+}
+.asset-table{
+	border-collapse: collapse;
+    height: 50px;
+    font-size: 16px;
+    border-width: 2px;
+    border: 2px solid black;
+    width: 600px;
+}
+.asset-table th{
+	border-left: 2px solid black;
+	height: 50px;
 }

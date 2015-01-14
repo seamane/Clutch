@@ -147,7 +147,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.shots = orderBy(data,'name',false);
-			// alert(JSON.stringify(data));
+		});
+
+		$http.post('/getAssets',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.assets = orderBy(data,'name',false);
 		});
 
 		$http.post('/getPrevis',{
@@ -184,6 +190,27 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		success(function(data){
 			$scope.fx = data;
 		});
+
+		$http.post('/getConcept',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.concept = data;
+		});
+
+		$http.post('/getModeling',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.modeling = data;
+		});
+
+		$http.post('/getShading',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.shading = data;
+		});
 	}
 
 	$scope.postAnnouncement = function(){
@@ -212,21 +239,9 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}
 	}
 
-	// $scope.makeBools = function(){
-	// 	$scope.clicks = [];
-		
-	// 	for(var i=0; i < $scope.sequences.length; i++){
-	// 		$scope.clicks=$scope.clicks.concat([{
-	// 			'name':$scope.sequences[i].name,
-	// 			'bool':false
-	// 		}]);
-	// 	}
-	// }
-
 	$scope.getInfo();
 
-	$scope.toggleBool = function(seq){
-		// alert(JSON.stringify($scope.sequences));
+	$scope.toggleSeq = function(seq){
 		for(var i=0; i < $scope.sequences.length; i++){
 			if($scope.sequences[i].name == seq.name)
 			{
@@ -236,11 +251,31 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}
 	}
 
-	$scope.show = function(seq){
+	$scope.toggleAsset = function(ass){
+		for(var i=0; i < $scope.assets.length; i++){
+			if($scope.assets[i].name == ass.name)
+			{
+				$scope.assets[i].bool = !$scope.assets[i].bool;
+				return $scope.assets[i].bool;
+			}
+		}
+	}
+
+	$scope.showSeq = function(seq){
 		for(var i=0; i < $scope.sequences.length; i++){
 			if($scope.sequences[i].name == seq.name)
 			{
 				return $scope.sequences[i].bool;
+			}
+		}
+		return false;
+	}
+
+	$scope.showAssets = function(ass){
+		for(var i=0; i < $scope.assets.length; i++){
+			if($scope.assets[i].name == ass.name)
+			{
+				return $scope.assets[i].bool;
 			}
 		}
 		return false;
@@ -309,6 +344,39 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		for(var i = 0; i < $scope.wranglers.length; ++i){
 			if($scope.wranglers[i].shotid == shotid){
 				label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getConcept = function(assid){
+		var label = '+ Assign';
+		for(var i = 0; i < $scope.concept.length; ++i){
+			if($scope.concept[i].assid == assid){
+				label = $scope.concept[i].fname + ' ' + $scope.concept[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getModeling = function(assid){
+		var label = '+ Assign';
+		for(var i = 0; i < $scope.modeling.length; ++i){
+			if($scope.modeling[i].assid == assid){
+				label = $scope.modeling[i].fname + ' ' + $scope.modeling[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getShading = function(assid){
+		var label = '+ Assign';
+		for(var i = 0; i < $scope.shading.length; ++i){
+			if($scope.shading[i].assid == assid){
+				label = $scope.shading[i].fname + ' ' + $scope.shading[i].lname;
 				break;
 			}
 		}
