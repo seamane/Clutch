@@ -84,17 +84,33 @@
               <th> Wrangler</th>
               <th> FX </th>
             </table>
-            <ul ng-show="showSeq(seq)" >
-              <div ng-repeat='shot in getShots(seq)' ng-click='toggleSeq(seq)'>
-                <button class="small round button shot-button dropdown" data-dropdown="shotinfo">{{shot.name}}</button>
-                <button class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,previs)'>{{getPrevis(shot.id)}}</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
+            <ul>
+              <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq(seq)'>
+                <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" data-dropdown="shotinfo">{{shot.name}}</button>
+                <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
+                <button ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,previs)'>{{getPrevis(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
               </div>
             </ul>
+            <div ng-show='showSeq(seq)' class="row">
+              <div class="large-2 columns right">
+                  <button class="tiny expand button navbar-button" ng-click="showShotForm();toggleSeq(seq)">Add Shot</button>
+              </div>
+              <div class="large-10 columns right" ng-class="{'fadein':shotVisible , 'fadeout':!shotVisible}">
+                <div class="small-3 columns">
+                  <input ng-click='toggleSeq(seq)'class="blue-input" type="text" placeholder="Title" ng-model="shotTitle" ng-class="{'has-error' : shotAttempted}">
+                </div>
+                <div class="small-8 columns">
+                  <input ng-click='toggleSeq(seq)'class="blue-input" type="text" placeholder="Description" ng-model="shotDesc" ng-class="{'has-error' : shotAttempted}">
+                </div>
+                <div class="small-1 columns">
+                  <button ng-click='toggleSeq(seq)'href="#" class="button postfix signUp-button" ng-click="addShot(seq)" >+</button>
+                </div>
+              </div>
+            </div>
           </a>
         </div>
       </div>

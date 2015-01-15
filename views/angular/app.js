@@ -80,6 +80,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.visible = false;
 	$scope.attempted = false;
 	$scope.title = null;
+
+	// Shot stuff
+	$scope.shotVisible = false;
+	$scope.shotAttempted = false;
+	$scope.shotTitle = null;
+	$scope.shotDesc = null;
+
 	// $scope.announcementsLimit = 5;
 	$scope.postAnnTextBox = false;
 	$scope.announcements = [];
@@ -246,6 +253,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			if($scope.sequences[i].name == seq.name)
 			{
 				$scope.sequences[i].bool = !$scope.sequences[i].bool;
+				// alert('toggleSeq '+$scope.sequences[i].bool+$scope.showSeq(seq));
 				return $scope.sequences[i].bool;
 			}
 		}
@@ -265,6 +273,9 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		for(var i=0; i < $scope.sequences.length; i++){
 			if($scope.sequences[i].name == seq.name)
 			{
+				// if($scope.sequences[i].bool == true){
+				// 	alert('showSeq: ' + $scope.sequences[i].bool);
+				// }
 				return $scope.sequences[i].bool;
 			}
 		}
@@ -282,17 +293,20 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	}
 
 	$scope.getShots = function(seq){
-		if($scope.show(seq)){
+		// if($scope.show(seq)){
+		// 	alert('getShots: ');
 			$scope.seqShots = [];
 			for(var i = 0; i < $scope.shots.length; ++i){
 				if($scope.shots[i].sequenceid == seq.id){
+					// alert('add to seqShots');
 					$scope.seqShots = $scope.seqShots.concat([
 						$scope.shots[i]
 					]);
 				}
 			}
 			return $scope.seqShots;
-		}
+		// }
+		// return [];
 	}
 
 	$scope.getPrevis = function(shotid){
@@ -402,11 +416,42 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			}).
 			success(function(data){
 				$scope.currentButtonDropDown = data[0];
-				// alert(json.stringify(data));
 			});
 		}
 		else{
 			$scope.getNotes(shot,$scope.types.type);
+		}
+	}
+
+	$scope.showShotForm = function(){
+		$scope.shotVisible = !$scope.shotVisible;
+		$scope.shotAttempted = false;
+		$scope.shotTitle = null;
+		$scope.shotDesc = null;
+	}
+
+	$scope.addShot = function(seq){
+		if($scope.shotTitle === null || $scope.shotDesc === null){
+			$scope.shotAttempted = true;
+		}
+		else{
+			$scope.shotAttempted = false;
+			$http.post("/createShot",{
+				'name':$scope.shotTitle,
+				'desc':$scope.shotDesc,
+				'sequenceid':seq.id
+			}).
+			success(function(data){
+				$scope.shotTitle = null;
+				$scope.shotDesc = null;
+			});
+
+			$http.post('/getShots',{
+				'projectid':$scope.projectid
+			}).
+			success(function(data){
+				$scope.shots = orderBy(data,'name',false);
+			});
 		}
 	}
 })

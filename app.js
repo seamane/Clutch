@@ -67,6 +67,7 @@ app.post('/getNotes',database.getNotes);
 app.post('/postAnnouncement',database.postAnnouncement);
 app.post('/sendEmail',email.sendEmail);
 app.post('/getAssets',database.getAssets);
+app.post('/createShot',database.createShot);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});

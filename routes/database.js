@@ -583,3 +583,19 @@ exports.postAnnouncement = function(req,res){
 		}
 	);
 }
+
+exports.createShot = function(req,res){
+	connection.query(
+		'INSERT INTO shots(name, description,sequenceid) '
+		+ 'VALUES(\'' + req.body.name + '\',\'' 
+					  + req.body.desc + '\',\'' 
+					  + req.body.sequenceid + '\');',
+		function(err,rows,fields){
+			if(err){
+				console.log('error addShot query');
+				throw err;
+			}
+			res.end(JSON.stringify(rows));
+		}
+	);
+}
