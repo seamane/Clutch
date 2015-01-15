@@ -573,7 +573,6 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
     	$cookieStore.remove('userInfo');
     	$cookieStore.remove('projectInfo');
     	window.location.href = '/';
-    	// alert(JSON.stringify($cookieStore));
     }
 });
 
@@ -589,6 +588,8 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    success(function(data){
 	    	if(JSON.stringify(data) === '[]'){
 	    		$scope.failLogin = true;
+	    		$scope.username = '';
+	    		$scope.password = '';
 	    	}
 	    	else{
 	    		$cookieStore.put('userInfo',data[0]);
