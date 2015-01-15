@@ -120,104 +120,32 @@
           </a>
         </div>
       </div>
-  </div>
+    </div>
 
-
-<div class='row'>
-    <a class='accordion row' ng-repeat="seq in sequences" ng-click="toggleBool(seq)">
-        <table class="table large-12 columns" >
-        <th> Sequence {{seq.name}}: </th>
-        <th> Animator</th>
-        <th> Lighter</th>
-        <th> Wrangler</th>
-        <th> FX </div>
-      </table>
-      <ul ng-show="show(seq)" >
-        <div ng-repeat='shot in getShots(seq)' ng-click='toggleBool(seq)'>
-
-          <button class="small round button shot-button dropdown" data-dropdown="shotinfo">Shot {{shot.name}}</button>
-          <button class="notes-button dropdown">Notes</button>
-          <button class="shot-button-others  button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
-          <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
-          <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
-          <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
-        </div>
-      </ul>
-      <div class="row">
-		<div class="large-2 columns right">
-		    <button class="tiny expand button navbar-button" ng-click="showShotForm()">Add Shot</button>
-		</div>
-	    <div class="large-10 columns right" ng-class="{'fadein':shotVisible , 'fadeout':!shotVisible}">
-	      <div class="small-3 columns">
-	        <input class="blue-input" type="text" placeholder="Title" ng-model="shotTitle" ng-class="{'has-error' : shotAttempted}">
-	      </div>
-          <div class="small-8 columns">
-            <input class="blue-input" type="text" placeholder="Description" ng-model="shotDesc" ng-class="{'has-error' : shotAttempted}">
-          </div>
-          <div class="small-1 columns">
-	        <button href="#" class="button postfix signUp-button" ng-click="addShot(seq)" >+</button>
-	      </div>
-	    </div>
+    <ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
+      <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
+      <div class='panel' ng-repeat="note in notes">
+        <p>{{note.note}}</p>
+        <p class="right">~{{note.fname}} {{note.lname}}</p>
+        <p class="right">{{note.time}}</p>
       </div>
-    </a>
-</div>
+    </ul>
 
+    <ul id="notesDrop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false">
+      <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
+      <div class='panel' ng-repeat="note in notes">
+        <p>{{note.note}}</p>
+        <p class="right">~{{note.fname}} {{note.lname}}</p>
+        <p class="right">{{note.time}}</p>
+      </div>
+    </ul>
 
-<!-- <button data-dropdown="drop" aria-controls="drop", aria-expanded="false" class="small round button dropdown">Dropdown Button</button><br> -->
-<ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
-  <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
-  <div class='panel' ng-repeat="note in notes">
-    <p>{{note.note}}</p>
-    <p class="right">~{{note.fname}} {{note.lname}}</p>
-    <p class="right">{{note.time}}</p>
-  </div>
-</ul>
-
-
-
-
-
-          <!-- <div id='Lighting'data-dropdown-content class="f-dropdown content large"showinfo></div> -->
-  <!-- Start Accordian -->
- <!--  <dl class="accordion row" ng-repeat='seq in sequences' data-accordion>
-    <dd class="accordion-navigation">
-      <a href="#seqA">{{seq.name}}
-        <div id="seqA" class="content shots" ng-click='showSeq=!showSeq'>
-          <ul class="button-group">
-            <li><a class="button shot-name">Shot 001 </a></li>
-            <li><a class="button shot" data-dropdown="Lighting">Lighter</a></li>
-            <li><a class="button shot" data-dropdown="Lighting">Animator</a></li>
-            <li><a id="vfx" ng-click="showDropDown=!showDropDown" class="button shot" data-options="scrolltop:false">FX</a></li>
-            <li><a class="button shot"> Shot Wrangler</a></li>
-          </ul>
-          <div showinfo></div> 
-        </div>
-      </a>
-    </dd>
-    </dl> -->
-<!-- Lighting Dropdown -->
-         <!--  <div id="Lighting" data-dropdown-content class="f-dropdown content large" >
-               <form>
-                  <div class="row">
-                    <div class="">
-                      <label>Assign to:</label>
-                      <input type="text" placeholder="" />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="">
-                      <label>Info</label>
-                      <textarea placeholder="small-12.columns"></textarea>
-                    </div>
-                  </div>
-                   <div class="row">
-                    <div class="">
-                      <a href="#" class="small radius button">Add</a><br/>
-                    </div>
-                  </div>
-              </form>
-          </div> -->
-  <!-- </dl> -->
+<!-- <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert round button dropdown">Dropdown Button</button><br>
+<ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
+  <li><a href="#">This is a link</a></li>
+  <li><a href="#">This is another</a></li>
+  <li><a href="#">Yet another</a></li>
+</ul> -->
 
     <script src="../js/vendor/jquery.js"></script>
     <script src="../js/foundation.min.js"></script>
