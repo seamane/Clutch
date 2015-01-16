@@ -60,7 +60,7 @@ app.post('/getPrevis',database.getPrevis);
 app.post('/getFX',database.getFX);
 app.post('/getLighters',database.getLighters);
 app.post('/getWranglers',database.getWranglers);
-app.post('/getConcept',database.getConcept);
+app.post('/getRigging',database.getRigging);
 app.post('/getModeling',database.getModeling);
 app.post('/getShading',database.getShading);
 app.post('/getNotes',database.getNotes);

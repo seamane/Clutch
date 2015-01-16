@@ -153,7 +153,14 @@ th{
     border: 2px solid black;
     width: 600px;
 }
-.asset-table th{
+.asset-table th:first-child{
 	border-left: 2px solid black;
 	height: 50px;
+	padding:0px;
+}
+th{
+	text-align: center;
+	border-left: 2px solid black;
+	height: 50px;
+	padding:0px;
 }

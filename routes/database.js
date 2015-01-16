@@ -197,7 +197,7 @@ createTables = function()
 	});
 
 	connection.query(
-		'CREATE TABLE IF NOT EXISTS concept('
+		'CREATE TABLE IF NOT EXISTS rigging('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'assetid INT,'
@@ -504,16 +504,16 @@ exports.getFX = function(req,res){
 	);
 }
 
-exports.getConcept = function(req,res){
+exports.getRigging = function(req,res){
 	connection.query(
-		'select concept.assetid,users.fname,users.lname,users.id from users inner join concept inner join assets '
-		+ 'on concept.assetid=assets.id and users.id=concept.userid and assets.projectid='+ req.body.projectid +';',
-		function(err,concept){
+		'select rigging.assetid,users.fname,users.lname,users.id from users inner join rigging inner join assets '
+		+ 'on rigging.assetid=assets.id and users.id=rigging.userid and assets.projectid='+ req.body.projectid +';',
+		function(err,rigging){
 			if(err){
-				console.log('error getConcept query:'+JSON.stringify(concept));
+				console.log('error getRigging query:'+JSON.stringify(rigging));
 				throw err;
 			}
-			res.end(JSON.stringify(concept));
+			res.end(JSON.stringify(rigging));
 		}
 	);
 }

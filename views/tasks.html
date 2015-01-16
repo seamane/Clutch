@@ -18,44 +18,44 @@
     <div loadnavbar></div>  
 
     <div class="row">
-      <div class="large-12 columns">
-        <h1>Announcements</h1>
-      </div>
-      <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == false'>+ New Announcement</a>
-      <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == true'>- Hide</a>
-        <textarea rows="2" placeholder="New Announcement..." class="large-4 columns left" ng-model='message' ng-show='postAnnTextBox'></textarea>
-        <button class="small button" ng-click="postAnnouncement();postAnnTextBox = !postAnnTextBox;" ng-show='postAnnTextBox'>Post</button>
-    </div>
-
-
-    <div class="row">
-      <div class="large-12 columns" ng-repeat='ann in announcements|limitTo:announcementsLimit'>
-        <div class="panel">
-          <h6>{{ann.message}}</h6>
-          <h6 class="right">{{ann.time | date:'MM/dd/yyyy HH:mm:ss'}}</h6>
-        </div>
-      </div>
-      <div ng-if='announcementsLimit > 5'>
-        <a ng-click='seeLess()'>See fewer announcements...</a>
-      </div>
-      <div ng-show='announcementsLimit != announcements.length'>
-        <a ng-click='seeMore()'>See older announcements...</a>
-      </div>
-    </div>
-
-    <div class="row">
       <h1  class="large-12 columns black-background">{{projectName}}</h1>
     </div>
 
     <dl class="row tabs" data-tab>
-      <dd class="active"><a href="#panel1">Shots</a></dd>
+      <dd class="active"><a href="#panel3">Announcements</a></dd>
+      <dd><a href="#panel1">Shots</a></dd>
       <dd><a href="#panel2">Assets</a></dd>
     </dl>
 
     <div class="tabs-content">
+      <!-- Announcements tab -->
+      <div class="content active" id="panel3">
+        <div class="row">
+          <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == false'><font size="2.5">+ New Announcement</font></a><br><br>
+          <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == true'><font size="2.5">- Hide</font></a>
+            <textarea rows="2" placeholder="New Announcement..." class="large-4 columns left" ng-model='message' ng-show='postAnnTextBox'></textarea>
+            <button class="small button" ng-click="postAnnouncement();postAnnTextBox = !postAnnTextBox;" ng-show='postAnnTextBox'>Post</button>
+        </div>
+
+
+        <div class="row">
+          <div class="large-12 columns" ng-repeat='ann in announcements|limitTo:announcementsLimit'>
+            <div class="panel">
+              <h6>{{ann.message}}</h6>
+              <h6 class="right">{{ann.time | date:'MM/dd/yyyy HH:mm:ss'}}</h6>
+            </div>
+          </div>
+          <div ng-if='announcementsLimit > 5'>
+            <a ng-click='seeLess()'><font size="2.5">See fewer announcements...</font></a>
+          </div>
+          <div ng-show='announcementsLimit != announcements.length'>
+            <a ng-click='seeMore()'><font size="2.5">See older announcements...</font></a>
+          </div>
+        </div>
+      </div>
 
       <!-- this is the shots tab -->
-      <div class="content active" id="panel1">
+      <div class="content" id="panel1">
         <div class="row">    
             <div class="large-2 columns right">
               <div class="row collapse">
@@ -81,7 +81,7 @@
               <th> Previs</th>
               <th> Animator</th>
               <th> Lighter</th>
-              <th> Wrangler</th>
+              <th> Rendering</th>
               <th> FX </th>
             </table>
             <ul>
@@ -120,17 +120,17 @@
         <div class='row'>
           <a class='accordion row' ng-repeat="ass in assets" ng-click="toggleAsset(ass)">
             <table class="asset-table large-12 columns" >
-              <th> {{ass.name}}: </th>
-              <th> Concept</th>
-              <th> Modeling</th>
-              <th> Shading</th>
+              <th>  {{ass.name}}: </th>
+              <th>  Modeling</th>
+              <th>  Shading</th>
+              <th>  Rigging</th>
             </table>
             <ul ng-show="showAssets(ass)" >
               <div ng-click='toggleAsset(ass)'>
-                <button class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,concept)'>{{getConcept(ass.id)}}</button>
+                <br><br><button class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,modeling)'>{{getModeling(ass.id)}}</button>
                 <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,shading)'>{{getShading(ass.id)}}</button>
+                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,rigging)'>{{getRigging(ass.id)}}</button>
               </div>
             </ul>
           </a>

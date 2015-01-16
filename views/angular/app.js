@@ -198,11 +198,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			$scope.fx = data;
 		});
 
-		$http.post('/getConcept',{
+		$http.post('/getRigging',{
 			'projectid':$scope.projectid
 		}).
 		success(function(data){
-			$scope.concept = data;
+			$scope.rigging = data;
 		});
 
 		$http.post('/getModeling',{
@@ -364,11 +364,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		return label;
 	}
 
-	$scope.getConcept = function(assid){
+	$scope.getRigging = function(assid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.concept.length; ++i){
-			if($scope.concept[i].assid == assid){
-				label = $scope.concept[i].fname + ' ' + $scope.concept[i].lname;
+		for(var i = 0; i < $scope.rigging.length; ++i){
+			if($scope.rigging[i].assid == assid){
+				label = $scope.rigging[i].fname + ' ' + $scope.rigging[i].lname;
 				break;
 			}
 		}

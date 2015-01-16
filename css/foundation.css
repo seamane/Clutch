@@ -1093,7 +1093,7 @@ button, .button {
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   font-weight: normal;
   line-height: normal;
-  margin: 0 0 1.25rem;
+  margin: 0 0 .5rem;
   position: relative;
   text-decoration: none;
   text-align: center;
@@ -3283,7 +3283,7 @@ meta.foundation-mq-topbar {
 
 .tabs {
   margin-bottom: 0 !important;
-  margin-left: 0; }
+  margin-left: 1; }
   .tabs:before, .tabs:after {
     content: " ";
     display: table; }
