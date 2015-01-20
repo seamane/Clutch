@@ -83,16 +83,18 @@
               <th> Lighter</th>
               <th> Rendering</th>
               <th> FX </th>
+              <th> Compositing</th>
             </table>
             <ul>
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq(seq)'>
                 <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,previs)'>{{getPrevis(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,previs)'>{{getPrevis(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getCompositing(shot.id)}}</button>
               </div>
             </ul>
             <div ng-show='showSeq(seq)' class="row">
@@ -117,20 +119,38 @@
 
       <!-- this is the assets tab -->
       <div class="content" id="panel2">
-        <div class='row'>
+        <div class='row'>   
+            <div class="row">    
+              <div class="large-2 columns left">
+                <div class="row collapse">
+                  <a ng-click="showForm()" class="tiny expand button navbar-button">Add Asset</a><br/>
+                </div>
+              </div>
+              <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
+                <div class="row collapse">
+                  <div class="small-3 columns">
+                    <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+                  </div>
+                  <div class="small-9 columns">
+                    <input class="blue-input" type="text" placeholder="Title" ng-model="assetTitle" ng-class="{'has-error' : attempted}">
+                  </div>
+                </div>
+              </div>
+            </div>
+
           <a class='accordion row' ng-repeat="ass in assets" ng-click="toggleAsset(ass)">
-            <table class="asset-table large-12 columns" >
+            <table class="asset-table" >
               <th>  {{ass.name}}: </th>
               <th>  Modeling</th>
               <th>  Shading</th>
               <th>  Rigging</th>
             </table>
-            <ul ng-show="showAssets(ass)" >
-              <div ng-click='toggleAsset(ass)'>
-                <br><br><button class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,modeling)'>{{getModeling(ass.id)}}</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,shading)'>{{getShading(ass.id)}}</button>
-                <button class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,rigging)'>{{getRigging(ass.id)}}</button>
+            <ul class="no-margin" ng-show="showAssets(ass)" >
+              <div class="no-margin" ng-click='toggleAsset(ass)'>
+                <br><br><button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
+                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,modeling)'>{{getModeling(ass.id)}}</button>
+                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,shading)'>{{getShading(ass.id)}}</button>
+                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,rigging)'>{{getRigging(ass.id)}}</button>
               </div>
             </ul>
           </a>

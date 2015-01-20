@@ -58,6 +58,7 @@ app.post('/getAnnouncements',database.getAnnouncements);
 app.post('/getSequences',database.getSequences);
 app.post('/getPrevis',database.getPrevis);
 app.post('/getFX',database.getFX);
+app.post('/getCompositing',database.getCompositing);
 app.post('/getLighters',database.getLighters);
 app.post('/getWranglers',database.getWranglers);
 app.post('/getRigging',database.getRigging);
@@ -68,6 +69,7 @@ app.post('/postAnnouncement',database.postAnnouncement);
 app.post('/sendEmail',email.sendEmail);
 app.post('/getAssets',database.getAssets);
 app.post('/createShot',database.createShot);
+app.post('/createAsset',database.createAsset);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});

@@ -109,12 +109,16 @@
 }
 .shot-button{
 	background-color: #e3e3e3;
-	width:105px !important;
+	width:95px !important;
 	height:45px;
+	text-align: left;
 }
 .shot-button-others{
-	width:145px !important;
 	font-size: 80%;
+	padding-left: 10px;
+	height:45px;
+	margin-left:1px;
+	text-align: left;
 }
 .sequence-bar{
 	float:left; 
@@ -125,6 +129,8 @@
     font-size: 16px;
     border-width: 2px;
     border-left: 2px solid black;
+    padding-left: 15px;
+    padding-right:15px;
 }
 .table{
 	 border-collapse: collapse;
@@ -136,10 +142,14 @@ th:first-child{
 th{
 	border-collapse: collapse;
 	width:160px;
+	padding:0px;
 }
 .notes-button{
-	width:125px !important;
+	width:92px !important;
 	font-size:80%;
+	text-align: center;
+	padding-left:15px;
+	height: 45px;
 }
 .notes-dropdown{
 	position:relative;
@@ -152,15 +162,42 @@ th{
     border-width: 2px;
     border: 2px solid black;
     width: 600px;
+    margin-bottom: 0px;
 }
 .asset-table th:first-child{
 	border-left: 2px solid black;
 	height: 50px;
-	padding:0px;
+	padding-left:15px;
+	padding-right:0px;
 }
 th{
 	text-align: center;
 	border-left: 2px solid black;
 	height: 50px;
 	padding:0px;
+}
+.asset-note-button{
+	width:185px;
+	height:45px;
+	font-size:80%;
+	padding-left: 15px;
+	text-align: left;
+	margin-top: 0px;
+	margin-bottom:0px;
+}
+.asset-other-button{
+	padding-left: 15px;
+	margin-left:1px;
+	height:45px;
+	font-size:80%;
+	text-align: left;
+	margin-top: 0px;
+	margin-bottom:0px;
+}
+
+.no-margin ul,div{
+	margin-top:0px;
+	margin-bottom:0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
 }

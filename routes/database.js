@@ -173,6 +173,18 @@ createTables = function()
 	});
 
 	connection.query(
+		'CREATE TABLE IF NOT EXISTS compositing('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'shotid INT,'
+		+ 'userid INT'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
 		'CREATE TABLE IF NOT EXISTS previs('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
@@ -504,6 +516,20 @@ exports.getFX = function(req,res){
 	);
 }
 
+exports.getCompositing = function(req,res){
+	connection.query(
+		'select compositing.shotid,users.fname,users.lname,users.id from users inner join compositing inner join shots inner join sequences '
+		+ 'on compositing.shotid=shots.id and users.id=compositing.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
+		function(err,compositing){
+			if(err){
+				console.log('error getCompositing query:'+JSON.stringify(compositing));
+				throw err;
+			}
+			res.end(JSON.stringify(compositing));
+		}
+	);
+}
+
 exports.getRigging = function(req,res){
 	connection.query(
 		'select rigging.assetid,users.fname,users.lname,users.id from users inner join rigging inner join assets '
@@ -596,6 +622,21 @@ exports.createShot = function(req,res){
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
+		}
+	);
+}
+
+exports.createAsset = function(req,res){
+	connection.query
+	(
+		'INSERT INTO assets (name, projectid)' +
+		'VALUES (\''+req.body.name+'\', \''+req.body.projectid+'\');',
+		function (err,rows,fields){
+			if(err){
+				console.log('error addSequence query');
+				throw err;
+			}
+			res.end("success");
 		}
 	);
 }

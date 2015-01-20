@@ -113,7 +113,29 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			}).
 			success(function(data){
 				$scope.sequences = orderBy(data,'name',false);
-			// $scope.makeBools();
+			});
+		}
+	}
+
+	$scope.addAsset  = function(){
+		if($scope.assetTitle === null){
+			$scope.attempted = true;
+		}
+		else{
+			alert("createAsset");
+			$scope.attempted = false;
+			$http.post('createAsset',{
+				'name': $scope.assetTitle,
+				'projectid' : $scope.projectid
+			}).
+			success(function(data){
+				$scope.assetTitle = null;
+			});
+			$http.post('/getAssets',{
+				'projectid': $scope.projectid
+			}).
+			success(function(data){
+				$scope.assets = orderBy(data,'name',false);
 			});
 		}
 	}
@@ -122,6 +144,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		$scope.visible = !$scope.visible;
 		$scope.attempted = false;
 		$scope.title = null;
+		$scope.assetTitle = null;
 	}
 	$scope.getProjectName = function(){
 		return $cookieStore.get('projectInfo').name;
@@ -196,6 +219,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.fx = data;
+		});
+
+		$http.post('/getCompositing',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.compositing = data;
 		});
 
 		$http.post('/getRigging',{
@@ -347,6 +377,17 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		for(var i = 0; i < $scope.fx.length; ++i){
 			if($scope.fx[i].shotid == shotid){
 				label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
+				break;
+			}
+		}
+		return label;
+	}
+
+	$scope.getCompositing = function(shotid){
+		var label = '+ Assign';
+		for(var i = 0; i < $scope.compositing.length; ++i){
+			if($scope.compositing[i].shotid == shotid){
+				label = $scope.compositing[i].fname + ' ' + $scope.compositing[i].lname;
 				break;
 			}
 		}
