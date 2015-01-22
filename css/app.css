@@ -135,9 +135,10 @@
 .table{
 	 border-collapse: collapse;
 	 border:2px solid black;
+	 margin-bottom: 10px;
 }
 th:first-child{
-	width:282px !important;
+	width:282px;
 }
 th{
 	border-collapse: collapse;
@@ -169,6 +170,7 @@ th{
 	height: 50px;
 	padding-left:15px;
 	padding-right:0px;
+	width: 150px;
 }
 th{
 	text-align: center;
@@ -182,7 +184,7 @@ th{
 	font-size:80%;
 	padding-left: 15px;
 	text-align: left;
-	margin-top: 0px;
+	margin-top: 10px;
 	margin-bottom:0px;
 }
 .asset-other-button{
@@ -200,4 +202,5 @@ th{
 	margin-bottom:0px;
 	padding-top: 0px;
 	padding-bottom: 0px;
+	/*height: 0px;*/
 }
