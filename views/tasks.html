@@ -30,7 +30,11 @@
       <dd class="active"><a href="#panel3">Announcements</a></dd>
       <dd><a href="#panel1">Shots</a></dd>
       <dd><a href="#panel2">Assets</a></dd>
+<<<<<<< HEAD
       <dd><a href="#panel5">Directory</a></dd>
+=======
+      <dd><a href="#panel4">My Tasks</a></dd>
+>>>>>>> origin/master
     </dl>
 
     <div class="tabs-content">
@@ -43,12 +47,11 @@
             <button class="small button" ng-click="postAnnouncement();postAnnTextBox = !postAnnTextBox;" ng-show='postAnnTextBox'>Post</button>
         </div>
 
-
         <div class="row">
           <div class="large-12 columns" ng-repeat='ann in announcements|limitTo:announcementsLimit'>
             <div class="panel">
               <h6>{{ann.message}}</h6>
-              <h6 class="right">{{ann.time | date:'MM/dd/yyyy HH:mm:ss'}}</h6>
+              <h6 class="right" style="font-size:9pt">{{ann.time | date:'MM/dd/yyyy HH:mm:ss'}}</h6>
             </div>
           </div>
           <div ng-if='announcementsLimit > 5'>
@@ -63,21 +66,21 @@
       <!-- this is the shots tab -->
       <div class="content" id="panel1">
         <div class="row">    
-            <div class="large-2 columns right">
-              <div class="row collapse">
-                <a ng-click="showForm()" class="tiny expand button navbar-button">Add Sequence</a><br/>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm()" class="tiny expand button navbar-button">Add Sequence</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="addSequence()" >+</a>
+              </div>
+              <div class="small-9 columns">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="title" ng-class="{'has-error' : attempted}">
               </div>
             </div>
-            <div class="large-2 columns right" ng-class="{'fadein':visible , 'fadeout':!visible}">
-              <div class="row collapse">
-                <div class="small-9 columns">
-                  <input class="blue-input" type="text" placeholder="Title" ng-model="title" ng-class="{'has-error' : attempted}">
-                </div>
-                <div class="small-3 columns">
-                  <a href="#" class="button postfix signUp-button" ng-click="addSequence()" >+</a>
-                </div>
-              </div>
-            </div>
+          </div>
         </div>
 
         <div class='row'>
@@ -126,23 +129,23 @@
       <!-- this is the assets tab -->
       <div class="content" id="panel2">
         <div class='row'>   
-            <div class="row">    
-              <div class="large-2 columns left">
-                <div class="row collapse">
-                  <a ng-click="showForm()" class="tiny expand button navbar-button">Add Asset</a><br/>
-                </div>
+          <div class="row">    
+            <div class="large-2 columns left">
+              <div class="row collapse">
+                <a ng-click="showForm()" class="tiny expand button navbar-button">Add Asset</a><br/>
               </div>
-              <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
-                <div class="row collapse">
-                  <div class="small-3 columns">
-                    <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
-                  </div>
-                  <div class="small-9 columns">
-                    <input class="blue-input" type="text" placeholder="Title" ng-model="assetTitle" ng-class="{'has-error' : attempted}">
-                  </div>
+            </div>
+            <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
+              <div class="row collapse">
+                <div class="small-3 columns">
+                  <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+                </div>
+                <div class="small-9 columns">
+                  <input class="blue-input" type="text" placeholder="Title" ng-model="assetTitle" ng-class="{'has-error' : attempted}">
                 </div>
               </div>
             </div>
+          </div>
 
           <a class='accordion row' ng-repeat="ass in assets" ng-click="toggleAsset(ass)">
             <table class="asset-table" >
@@ -151,9 +154,9 @@
               <th>  Shading</th>
               <th>  Rigging</th>
             </table>
-            <ul class="no-margin" ng-show="showAssets(ass)" >
-              <div class="no-margin" ng-click='toggleAsset(ass)'>
-                <br><br><button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
+            <ul ng-show="showAssets(ass)" >
+              <div ng-click='toggleAsset(ass)'>
+                <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,modeling)'>{{getModeling(ass.id)}}</button>
                 <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,shading)'>{{getShading(ass.id)}}</button>
                 <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,rigging)'>{{getRigging(ass.id)}}</button>
@@ -180,6 +183,9 @@
             </tr>
           </table>
         </div>
+      <!-- this is the My Tasks tab-->
+      <div class="content" id="panel4">
+
       </div>
     </div>
 
