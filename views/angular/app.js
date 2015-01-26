@@ -186,6 +186,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			$scope.assets = orderBy(data,'name',false);
 		});
 
+		$http.post('/getUsers',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.users = data;
+		});
+
 		$http.post('/getPrevis',{
 			'projectid':$scope.projectid
 		}).

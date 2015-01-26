@@ -640,3 +640,18 @@ exports.createAsset = function(req,res){
 		}
 	);
 }
+
+exports.getUsers = function(req,res){
+	connection.query
+	(
+		'SELECT fname, lname, email, phone FROM users INNER JOIN members ON users.id = members.userid WHERE projectid=' +
+		 req.body.projectid + ' ORDER BY lname;',
+		 function(err, members){
+		 	if(err){
+		 		console.log('error getUsers query');
+		 		throw err;
+		 	}
+		 	res.end(JSON.stringify(members));
+		 }
+	);
+}

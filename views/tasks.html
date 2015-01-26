@@ -10,6 +10,11 @@
     <script src="../js/vendor/modernizr.js"></script>    
     <script src="angular/angular.js"></script>  
     <script type = 'text/javascript' src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script src="../js/vendor/jquery.js"></script>
+    <script src="../js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
     <script type = 'text/javascript' src="angular/app.js"></script>  
 
   </head>
@@ -25,6 +30,7 @@
       <dd class="active"><a href="#panel3">Announcements</a></dd>
       <dd><a href="#panel1">Shots</a></dd>
       <dd><a href="#panel2">Assets</a></dd>
+      <dd><a href="#panel5">Directory</a></dd>
     </dl>
 
     <div class="tabs-content">
@@ -156,6 +162,25 @@
           </a>
         </div>
       </div>
+
+      <div class="content" id="panel5">
+        <div class="row">
+          <table class="large-12">
+            <tr>
+              <th>First</th>
+              <th>Last</th>
+              <th>Email</th>
+              <th>Phone</th>
+            </tr>
+            <tr ng-repeat='user in users'>
+              <td>{{user.fname}}</td>
+              <td>{{user.lname}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.phone}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
 
     <ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
@@ -183,12 +208,7 @@
   <li><a href="#">Yet another</a></li>
 </ul> -->
 
-    <script src="../js/vendor/jquery.js"></script>
-    <script src="../js/foundation.min.js"></script>
-
-    <script>
-      $(document).foundation();
-    </script>
+    
 
 
 
