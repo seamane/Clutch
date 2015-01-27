@@ -642,17 +642,17 @@ exports.createAsset = function(req,res){
 	);
 }
 
-exports.getMembers = function(req,res){
+exports.getUsers = function(req,res){
 	connection.query
 	(
-		'SELECT users.* from users inner join members ' +
-		'on members.projectid=' + req.body.projectid + " and members.userid=users.id;",
-		function(err,members){
-			if(err){
-				console.log('error getMembers query');
-				throw err;
-			}
-			res.end(JSON.stringify(members));
-		}
+		'SELECT id,fname, lname, email, phone FROM users INNER JOIN members ON users.id = members.userid WHERE projectid=' +
+		 req.body.projectid + ' ORDER BY lname;',
+		 function(err, members){
+		 	if(err){
+		 		console.log('error getUsers query');
+		 		throw err;
+		 	}
+		 	res.end(JSON.stringify(members));
+		 }
 	);
 }
