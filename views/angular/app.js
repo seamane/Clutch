@@ -668,6 +668,12 @@ app.controller('indexController', function($scope, $http,$cookieStore){
    		//alert("IN");
    		window.location.href = '/createUser';
    	}
+
+    $scope.keypress = function(event){
+    	if(event.which == 13){
+    		$scope.loginButton();
+    	}
+    }
 });
 
 app.controller('homeController',function($scope,$http,$cookieStore){
