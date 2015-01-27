@@ -164,7 +164,14 @@
     </div>
 
     <ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
-      <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
+
+
+
+      <li>
+        <!-- <ac-select ac-model="assignedMember" ac-options="m.fname for m in members" ac-change="memberChanged(value)"></ac-select> -->
+        <input type="text" placeholder="Assign to">
+        <a href="" class="button postfix black-button">Assign</a>
+      </li>
       <div class='panel' ng-repeat="note in notes">
         <p>{{note.note}}</p>
         <p class="right">~{{note.fname}} {{note.lname}}</p>

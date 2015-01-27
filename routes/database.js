@@ -64,6 +64,7 @@ createTables = function()
 		+ 'frames INT,'
 		+ 'description VARCHAR(500),'
 		+ 'name VARCHAR(20),'
+		+ 'status VARCHAR(20),'
 		+ 'sequenceid INT'//,'
 		//+ 'projectid INT'
 		+ ');',function (err){
@@ -326,7 +327,7 @@ exports.createSequence = function(req, res){
 				console.log('error addSequence query');
 				throw err;
 			}
-			res.end(JSON.stringify(rows));
+			res.end("success");
 		}
 	);
 }
@@ -637,6 +638,21 @@ exports.createAsset = function(req,res){
 				throw err;
 			}
 			res.end("success");
+		}
+	);
+}
+
+exports.getMembers = function(req,res){
+	connection.query
+	(
+		'SELECT users.* from users inner join members ' +
+		'on members.projectid=' + req.body.projectid + " and members.userid=users.id;",
+		function(err,members){
+			if(err){
+				console.log('error getMembers query');
+				throw err;
+			}
+			res.end(JSON.stringify(members));
 		}
 	);
 }

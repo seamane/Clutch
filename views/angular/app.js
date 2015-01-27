@@ -248,6 +248,14 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		success(function(data){
 			$scope.shading = data;
 		});
+
+		$http.post('/getMembers',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.members = data;
+			alert(JSON.stringify($scope.members));
+		});
 	}
 
 	$scope.postAnnouncement = function(){
