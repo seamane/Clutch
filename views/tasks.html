@@ -115,7 +115,7 @@
                   <input ng-click='toggleSeq(seq)'class="blue-input" type="text" placeholder="Description" ng-model="shotDesc" ng-class="{'has-error' : shotAttempted}">
                 </div>
                 <div class="small-1 columns">
-                  <button ng-click='toggleSeq(seq)'href="#" class="button postfix signUp-button" ng-click="addShot(seq)" >+</button>
+                  <button href="#" class="button postfix signUp-button" ng-click="toggleSeq(seq);addShot(seq,shotDesc,shotTitle)">+</button>
                 </div>
               </div>
             </div>

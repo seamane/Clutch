@@ -1,54 +1,24 @@
-<!-- <!DOCTYPE html>
-<html>
-    <head>
-        <title>First Angular App</title>
-        <script type='text/javascript' src="angular/angular.js"></script>
-        <script type='text/javascript' src="angular/app.js"></script>
-    </head>
-    <body>
-         <div id= 'test' ng-app="my_ang_app" ng-controller="first_div">
-            {{message}}
-         </div>
-
-             
-        <div id="container">
-                <div id="login" ng-app='my_ang_app' ng-controller='sign_up'>
-                    <input type="text" size="40" ng-model="email"><br>
-                    <input type="password" size="40" ng-model="password"><br>
-                    <button ng-click="check_credentials()">Login</button><br>
-                    <span id="message"></span>
-                </div>
-        </div>
-
-    </body>
-</html> -->
-
-
 <!DOCTYPE html>
-<html ng-app="clutchApp">
+<html ng-app="AcuteTest">
 
   <head>
     <meta charset="utf-8" />
-        <title>First Angular App</title>
-        <script type='text/javascript' src="angular/angular.js"></script>
-        <script type='text/javascript' src="angular/app.js"></script>
+    <title>First Angular App</title>
+    <script type='text/javascript' src="angular/angular.js"></script>
+    <script type='text/javascript' src="angular/AcuteTest.js"></script>
+    <link href="../css/acute.select.css" rel="stylesheet"/>
+    <script type="text/javascript" src="angular/acute.select.js"></script>
   </head>
 
-  <body ng-controller="MainCtrl">
-    <p>Hello {{name}}!</p>
+  <body ng-controller="MainController">
     
-    <div style='height:1000px'>
+    <!-- <ac-select ac-model="data.selectedShape" ac-options="for shape in shapes"></select> -->
 
-    
-    <input type="text" size="40" ng-model='username' placeholder='username'<br>
-    <input type="password" size="40" ng-model='password' placeholder='password'<br>
-    <button ng-click="testButton()">Login</button><br>
-    
-      
-      <a id='here'></a>
-     
-    </div>
-     <h1>here</h1>
+   <!--  <ac-select ac-model='selectedColour' ac-options='state.name for state in getStates()'
+    ac-change='selectionChanged(value)' ac-settings='{ loadOnOpen: true }'></select> -->
+<select class="ac-select stateList" ac-model="selectedMember" ac-options="s.fname for s in getAllStates()" 
+        ac-settings="{ comboMode: true, loadOnOpen: true, minWidth: '300px' }" ac-change="stateSelected(value)"></select>
+
   </body>
 
 </html>

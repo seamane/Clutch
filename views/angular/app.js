@@ -11,7 +11,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 			|| $scope.email==undefined || $scope.passwordconfirm==undefined
 			|| $scope.phoneNum==undefined)
 			{
-				alert("One or more fields are blank. Please check to make sure that all of the provided fields are filled out.");
+				alert("One or more fields are blank. Please check to make sure that all of the provided fields are correctly filled out.");
 			}
 			else
 			{
@@ -84,8 +84,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	// Shot stuff
 	$scope.shotVisible = false;
 	$scope.shotAttempted = false;
-	$scope.shotTitle = null;
-	$scope.shotDesc = null;
+	// $scope.shotTitle = null;
+	// $scope.shotDesc = null;
 
 	// $scope.announcementsLimit = 5;
 	$scope.postAnnTextBox = false;
@@ -482,31 +482,32 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.showShotForm = function(){
 		$scope.shotVisible = !$scope.shotVisible;
 		$scope.shotAttempted = false;
-		$scope.shotTitle = null;
-		$scope.shotDesc = null;
+		// $scope.shotTitle = undefined;
+		// $scope.shotDesc = undefined;
 	}
 
-	$scope.addShot = function(seq){
-		if($scope.shotTitle === null || $scope.shotDesc === null){
+	$scope.addShot = function(seq,desc,title){
+		if(title == undefined || desc == undefined){
+			alert("title or desc undefined");
 			$scope.shotAttempted = true;
 		}
 		else{
+			alert("createShot");
 			$scope.shotAttempted = false;
 			$http.post("/createShot",{
-				'name':$scope.shotTitle,
-				'desc':$scope.shotDesc,
+				'name':title,
+				'desc':desc,
 				'sequenceid':seq.id
 			}).
 			success(function(data){
-				$scope.shotTitle = null;
-				$scope.shotDesc = null;
-			});
-
-			$http.post('/getShots',{
-				'projectid':$scope.projectid
-			}).
-			success(function(data){
-				$scope.shots = orderBy(data,'name',false);
+				$scope.shotTitle = undefined;
+				$scope.shotDesc = undefined;
+				$http.post('/getShots',{
+					'projectid':$scope.projectid
+				}).
+				success(function(data){
+					$scope.shots = orderBy(data,'name',false);
+				});
 			});
 		}
 	}
