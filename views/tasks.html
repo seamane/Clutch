@@ -65,13 +65,23 @@
         <div class="row">    
           <div class="large-2 columns left">
             <div class="row collapse">
-              <a ng-click="showForm()" class="tiny expand button navbar-button">Add Sequence</a><br/>
+              <a ng-click="showForm()" class="tiny expand button navbar-button">Add Sequence</a><a class="tiny expand button navbar-button">Delete Sequence</a><br/>
             </div>
           </div>
           <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
             <div class="row collapse">
               <div class="small-3 columns">
                 <a href="#" class="button postfix signUp-button" ng-click="addSequence()" >+</a>
+              </div>
+              <div class="small-9 columns">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="title" ng-class="{'has-error' : attempted}">
+              </div>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{fadein':visible , 'fadeout':!visible}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="addSequence()" >-</a>
               </div>
               <div class="small-9 columns">
                 <input class="blue-input" type="text" placeholder="Title" ng-model="title" ng-class="{'has-error' : attempted}">
@@ -106,6 +116,7 @@
             <div ng-show='showSeq(seq)' class="row">
               <div class="large-2 columns right">
                   <button class="tiny expand button navbar-button" ng-click="showShotForm();toggleSeq(seq)">Add Shot</button>
+                  <button class="tiny button navbar-button">Delete Shot</button>
               </div>
               <div class="large-10 columns right" ng-class="{'fadein':shotVisible , 'fadeout':!shotVisible}">
                 <div class="small-3 columns">
@@ -173,13 +184,13 @@
               <th>Phone</th>
               <th>Message</th>
             </tr>
-            <tr ng-repeat='user in users'>
+            <tr ng-repeat='user in members'>
               <td>{{user.fname}}</td>
               <td>{{user.lname}}</td>
               <td>{{user.email}}</td>
               <td>{{user.phone}}</td>
               <td>
-                <button ng-click="sendMessage()">Send Message</button>
+                <button id="{{user.email}}" ng-click="enablePopup(user.email)">Send Message</button>
               </td>
             </tr>
           </table>
@@ -221,8 +232,19 @@
   <li><a href="#">This is another</a></li>
   <li><a href="#">Yet another</a></li>
 </ul> -->
-
-    
+  
+    <div id="shadow" ng-click="disablePopup()"></div>
+    <div id="shadowBox">
+      <form>
+        <label>Subject:
+          <input type="text" ng-model="emailSubject"/>
+        </label>
+        <label>Message
+          <textarea ng-model="emailBody"></textarea>
+        </label>
+        <button ng-click="sendMessage()">Send</button>
+      </form>
+    </div>
 
 
 
