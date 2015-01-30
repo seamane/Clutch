@@ -1,24 +1,39 @@
 <!DOCTYPE html>
-<html ng-app="AcuteTest">
+<html ng-app="app">
 
   <head>
-    <meta charset="utf-8" />
+    <!-- <meta charset="utf-8" />
     <title>First Angular App</title>
     <script type='text/javascript' src="angular/angular.js"></script>
-    <script type='text/javascript' src="angular/AcuteTest.js"></script>
-    <link href="../css/acute.select.css" rel="stylesheet"/>
-    <script type="text/javascript" src="angular/acute.select.js"></script>
+    <script type='text/javascript' src="angular/AcuteTest.js"></script>-->
+    <!--<link href="../css/acute.select.css" rel="stylesheet"/>
+    <script type="text/javascript" src="angular/acute.select.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+    <link rel="stylesheet" href="../css/autocomplete.css">
+    <script type="text/javascript" src="angular/autocomplete.js"></script>
+    <script type="text/javascript" src="angular/AcuteTest.js"></script>
   </head>
 
-  <body ng-controller="MainController">
+  <body ng-controller="MyCtrl">
     
     <!-- <ac-select ac-model="data.selectedShape" ac-options="for shape in shapes"></select> -->
 
    <!--  <ac-select ac-model='selectedColour' ac-options='state.name for state in getStates()'
     ac-change='selectionChanged(value)' ac-settings='{ loadOnOpen: true }'></select> -->
-<select class="ac-select stateList" ac-model="selectedMember" ac-options="s.fname for s in getAllStates()" 
-        ac-settings="{ comboMode: true, loadOnOpen: true, minWidth: '300px' }" ac-change="stateSelected(value)"></select>
 
+
+ <autocomplete ng-model="result" attr-placeholder="type to search movies..." click-activation="true" data="movies" on-type="doSomething" on-select="doSomethingElse"></autocomplete>
+     
+
+
+    <!-- <select class="ac-select stateList" ac-model="selectedMember" ac-options="s.fname for s in getAllStates()" 
+        ac-settings="{ comboMode: true, loadOnOpen: true, minWidth: '300px' }" ac-change="stateSelected(value)"></select>
+ -->
+
+
+
+           <!--  <input auto-complete ui-items="names" ng-model="selected">
+            selected = {{selected}} -->
   </body>
 
 </html>

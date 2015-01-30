@@ -15,6 +15,10 @@
     <script>
       $(document).foundation();
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+    <link rel="stylesheet" href="../css/autocomplete.css">
+    <script type="text/javascript" src="angular/autocomplete.js"></script>
+    <!--<script type="text/javascript" src="angular/AcuteTest.js"></script>-->
     <script type = 'text/javascript' src="angular/app.js"></script>  
 
   </head>
@@ -193,6 +197,9 @@
       <li>
         <!-- <ac-select ac-model="assignedMember" ac-options="m.fname for m in members" ac-change="memberChanged(value)"></ac-select> -->
         <input type="text" placeholder="Assign to">
+        <!-- <div ng-app="app" ng-controller="MyCtrl">
+          <autocomplete ng-model="result" attr-placeholder="type to search movies..." click-activation="true" data="movies" on-type="doSomething" on-select="doSomethingElse"></autocomplete>
+        </div> -->
         <a href="" class="button postfix black-button">Assign</a>
       </li>
       <div class='panel' ng-repeat="note in notes">
