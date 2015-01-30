@@ -71,7 +71,7 @@ app.post('/getAssets',database.getAssets);
 app.post('/createShot',database.createShot);
 app.post('/createAsset',database.createAsset);
 app.post('/getUsers',database.getUsers);
-app.post('/getShotInfo',database.getShotInfo);
+// app.post('/getShotInfo',database.getShotInfo);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
