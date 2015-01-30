@@ -1,4 +1,4 @@
-var app = angular.module('clutchApp', ['ngCookies','autocomplete']);
+var app = angular.module('clutchApp', ['ngCookies']);
 
 app.controller('createUserController', function($scope, $http, $cookieStore)
 {
@@ -257,6 +257,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.members = data;
+			alert(JSON.stringify($scope.members));
 		});
 	}
 
@@ -483,9 +484,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.addShot = function(seq,desc,title){
 		if(title == undefined || desc == undefined){
+			alert("title or desc undefined");
 			$scope.shotAttempted = true;
 		}
 		else{
+			alert("createShot");
 			$scope.shotAttempted = false;
 			$http.post("/createShot",{
 				'name':title,
