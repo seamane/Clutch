@@ -95,6 +95,9 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.fx = 'fx';
 	$scope.wrangler = 'wrangler';
 
+	$scope.popup = false;
+	$scope.recipient = "";
+
 	$scope.addSequence  = function(){
 		if($scope.title === null){
 			$scope.attempted = true;
@@ -184,13 +187,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.assets = orderBy(data,'name',false);
-		});
-
-		$http.post('/getUsers',{
-			'projectid':$scope.projectid
-		}).
-		success(function(data){
-			$scope.users = data;
 		});
 
 		$http.post('/getPrevis',{
@@ -507,6 +503,49 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 				});
 			});
 		}
+	}
+
+	$scope.enablePopup = function(recipientEmail){
+		if(!$scope.popup){
+			$("#shadow").fadeIn(0500);
+			$("#shadowBox").fadeIn(0500);
+			$scope.popup = true;
+		}
+		$scope.recipient = recipientEmail;
+	}
+
+	$scope.disablePopup = function(){
+		if($scope.popup){
+			$("#shadow").fadeOut(0500);
+			$("#shadowBox").fadeOut(0500);
+			$scope.popup = false;
+		}
+	}
+
+	$scope.sendMessage = function(){
+		if($scope.recipient == undefined || $scope.recipient == ""){
+			alert("This user does not have a registered email");
+			return;
+		}
+		if($scope.emailBody == undefined){
+			alert("You must enter a message");
+			return;
+		}
+		$http.post('/sendEmail',
+  		{
+  			'to': $scope.recipient,
+  			'subject': $scope.emailSubject,
+  			'text': $scope.emailBody  
+  		}).
+  		success(function(data){
+  			alert("Your message was successfully sent");
+  			$scope.emailSubject = null;
+  			$scope.emailBody = null;
+  		}).
+  		error(function(){
+  			alert("An error occurred and your message was not successfully delivered.");
+  		});
+  		$scope.disablePopup();
 	}
 })
 .directive('showinfo', function($compile) {
