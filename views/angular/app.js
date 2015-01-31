@@ -77,13 +77,16 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	var orderBy = $filter('orderBy');
 	$scope.shots = [];
 	$scope.projectid = $cookieStore.get('projectInfo').id;
-	$scope.visible = false;
+	$scope.addVisible = false;
+	$scope.deleteVisible = false;
 	$scope.attempted = false;
 	$scope.title = null;
 
 	// Shot stuff
 	$scope.shotVisible = false;
 	$scope.shotAttempted = false;
+
+	$scope.shotDelete = false;
 	// $scope.shotTitle = null;
 	// $scope.shotDesc = null;
 
@@ -120,6 +123,22 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}
 	}
 
+	$scope.deleteSequence = function(){
+		if(confirm("Are you sure you want to delete sequence "+$scope.sequenceName+"?")){
+			$http.post('/deleteSequence',{
+				'name': $scope.sequenceName
+			}).
+			success(function(data){
+				$http.post('/getSequences',{
+					'projectid': $scope.projectid
+				}).
+				success(function(data){
+					$scope.sequences = orderBy(data,'name',false);
+				})
+			});
+		}
+	}
+
 	$scope.addAsset  = function(){
 		if($scope.assetTitle === null){
 			$scope.attempted = true;
@@ -143,11 +162,18 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}
 	}
 
-	$scope.showForm = function(){
-		$scope.visible = !$scope.visible;
-		$scope.attempted = false;
-		$scope.title = null;
-		$scope.assetTitle = null;
+	$scope.showForm = function(form){
+		switch(form){
+			case 1:
+				$scope.addVisible = !$scope.addVisible;
+				$scope.attempted = false;
+				$scope.title = null;
+				$scope.assetTitle = null;
+				break;
+			case 2:
+				$scope.deleteVisible = !$scope.deleteVisible;
+		}
+		
 	}
 	$scope.getProjectName = function(){
 		return $cookieStore.get('projectInfo').name;
@@ -257,7 +283,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}).
 		success(function(data){
 			$scope.members = data;
-			alert(JSON.stringify($scope.members));
+			//alert(JSON.stringify($scope.members));
 		});
 	}
 
@@ -482,6 +508,10 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		// $scope.shotDesc = undefined;
 	}
 
+	$scope.showShotDeleteForm = function(){
+		$scope.shotDelete = !$scope.shotDelete;
+	}
+
 	$scope.addShot = function(seq,desc,title){
 		if(title == undefined || desc == undefined){
 			alert("title or desc undefined");
@@ -498,6 +528,25 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			success(function(data){
 				$scope.shotTitle = undefined;
 				$scope.shotDesc = undefined;
+				$http.post('/getShots',{
+					'projectid':$scope.projectid
+				}).
+				success(function(data){
+					$scope.shots = orderBy(data,'name',false);
+				});
+			});
+		}
+	}
+
+	$scope.deleteShot = function(seq,shotName){
+		if(confirm("Are you sure you want to delete shot "+shotName+"?")){
+			console.log("ABOUT TO SEND REQUEST");
+			$http.post("/deleteShot",{
+				'shotName':shotName
+			}).
+			success(function(){
+				$scope.shotName = undefined;
+				console.log("SUCCESS");
 				$http.post('/getShots',{
 					'projectid':$scope.projectid
 				}).

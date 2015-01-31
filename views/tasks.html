@@ -65,10 +65,10 @@
         <div class="row">    
           <div class="large-2 columns left">
             <div class="row collapse">
-              <a ng-click="showForm()" class="tiny expand button navbar-button">Add Sequence</a><a class="tiny expand button navbar-button">Delete Sequence</a><br/>
+              <a ng-click="showForm(1)" class="tiny expand button navbar-button">Add Sequence</a><br/>
             </div>
           </div>
-          <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
+          <div class="large-2 columns left" ng-class="{'fadein':addVisible , 'fadeout':!addVisible}">
             <div class="row collapse">
               <div class="small-3 columns">
                 <a href="#" class="button postfix signUp-button" ng-click="addSequence()" >+</a>
@@ -78,13 +78,22 @@
               </div>
             </div>
           </div>
-          <div class="large-2 columns left" ng-class="{fadein':visible , 'fadeout':!visible}">
+        </div>
+        <div class="row">
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(2)" class="tiny expand button navbar-button">Delete Sequence</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':deleteVisible , 'fadeout':!deleteVisible}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="addSequence()" >-</a>
+                <a href="#" class="button postfix signUp-button" ng-click="deleteSequence()" >-</a>
               </div>
               <div class="small-9 columns">
-                <input class="blue-input" type="text" placeholder="Title" ng-model="title" ng-class="{'has-error' : attempted}">
+                <select ng-model="sequenceName">
+                  <option ng-repeat="seq in sequences" ng-click="toggleSeq(seq)">{{seq.name}}</option>
+                </select>
               </div>
             </div>
           </div>
@@ -116,7 +125,7 @@
             <div ng-show='showSeq(seq)' class="row">
               <div class="large-2 columns right">
                   <button class="tiny expand button navbar-button" ng-click="showShotForm();toggleSeq(seq)">Add Shot</button>
-                  <button class="tiny button navbar-button">Delete Shot</button>
+                  <button class="tiny expand button navbar-button" ng-click="showShotDeleteForm();toggleSeq(seq)">Delete Shot</button>
               </div>
               <div class="large-10 columns right" ng-class="{'fadein':shotVisible , 'fadeout':!shotVisible}">
                 <div class="small-3 columns">
@@ -128,6 +137,26 @@
                 <div class="small-1 columns">
                   <button href="#" class="button postfix signUp-button" ng-click="toggleSeq(seq);addShot(seq,shotDesc,shotTitle)">+</button>
                 </div>
+              </div>
+              <!-- DELETE SHOT -->
+              <div class="large-10 columns right" ng-class="{'fadein':shotDelete , 'fadeout':!shotDelete}">
+                <div class="small-1 columns right">
+                  <button href="#" class="button postfix signUp-button" ng-click="toggleSeq(seq);deleteShot(seq,shotName)">-</button>
+                </div>
+                <div class="small-3 columns right">
+                  <select ng-click="toggleSeq(seq)" ng-model="shotName">
+                    <option ng-repeat="shot in getShots(seq)">{{shot.name}}</option>
+                  </select>
+                </div>
+                <!--<div class="small-3 columns">
+                  <input ng-click='toggleSeq(seq)'class="blue-input" type="text" placeholder="Title" ng-model="shotTitle" ng-class="{'has-error' : shotAttempted}">
+                </div>
+                <div class="small-8 columns">
+                  <input ng-click='toggleSeq(seq)'class="blue-input" type="text" placeholder="Description" ng-model="shotDesc" ng-class="{'has-error' : shotAttempted}">
+                </div>
+                <div class="small-1 columns">
+                  <button href="#" class="button postfix signUp-button" ng-click="toggleSeq(seq);addShot(seq,shotDesc,shotTitle)">+</button>
+                </div>-->
               </div>
             </div>
           </a>
