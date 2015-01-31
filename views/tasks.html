@@ -15,6 +15,7 @@
     <script>
       $(document).foundation();
     </script>
+    <script type = 'text/javascript' src="angular/autocomplete.js"></script> 
     <script type = 'text/javascript' src="angular/app.js"></script>  
 
   </head>
@@ -254,9 +255,9 @@
 
 
       <li>
-        <!-- <ac-select ac-model="assignedMember" ac-options="m.fname for m in members" ac-change="memberChanged(value)"></ac-select> -->
         <!-- <input type="text" placeholder="Assign to"> -->
         <autocomplete ng-model="result" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+
         <a href="" class="button postfix black-button">Assign</a>
       </li>
       <div class='panel' ng-repeat="note in notes">

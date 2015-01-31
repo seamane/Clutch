@@ -95,5 +95,6 @@ app.get('/css/acute.select.css',function(req,res){res.sendFile(__dirname+'/css/a
 app.get('/angular/acute.select.js',function(req,res){res.sendFile(__dirname+'/views/angular/acute.select.js');});
 app.get('/acute.select/acute.select.htm',function(req,res){res.sendFile(__dirname+'/views/acute.select.htm');});
 app.get('/css/images/dropdown.gif',function(req,res){res.sendFile(__dirname+'/views/images/dropdown.gif');});
+app.get('/angular/autocomplete.js',function(req,res){res.sendFile(__dirname+'/views/angular/autocomplete.js');});
 
 

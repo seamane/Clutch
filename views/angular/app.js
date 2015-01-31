@@ -1,4 +1,4 @@
-var app = angular.module('clutchApp', ['ngCookies']);
+var app = angular.module('clutchApp', ['ngCookies','autocomplete']);
 
 app.controller('createUserController', function($scope, $http, $cookieStore)
 {
