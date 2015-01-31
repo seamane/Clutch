@@ -87,7 +87,7 @@ app.factory('AssignMember', function($http, $q, $timeout, $cookieStore){
 		    	userNames = userNames.concat([name]);
 		    }
 		    members = userNames;
-		    alert("userNames:"+JSON.stringify(userNames));
+		    //alert("userNames:"+JSON.stringify(userNames));
 
 		    $timeout(function(){
 		      // moviedata.resolve(movies);
@@ -193,7 +193,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			$scope.attempted = true;
 		}
 		else{
-			alert("createAsset");
+			//alert("createAsset");
 			$scope.attempted = false;
 			$http.post('createAsset',{
 				'name': $scope.assetTitle,
@@ -541,7 +541,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getNotes = function(shot,type){
-		alert("type:"+type);
+		//alert("type:"+type);
 		$http.post('/getNotes',{
 			'shotid':shot.id,
 			'type':type
@@ -575,11 +575,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.addShot = function(seq,desc,title){
 		if(title == undefined || desc == undefined){
-			alert("title or desc undefined");
+			//alert("title or desc undefined");
 			$scope.shotAttempted = true;
 		}
 		else{
-			alert("createShot");
+			//alert("createShot");
 			$scope.shotAttempted = false;
 			$http.post("/createShot",{
 				'name':title,
