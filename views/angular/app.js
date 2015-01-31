@@ -162,6 +162,22 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}
 	}
 
+	$scope.deleteAsset = function(){
+		if(confirm("Are you sure you want to delete asset "+$scope.assetName+"?")){
+			$http.post('/deleteAsset',{
+				'name':$scope.assetName
+			}).
+			success(function(data){
+				$http.post('/getAssets',{
+					'projectid':$scope.projectid
+				}).
+				success(function(data){
+					$scope.assets = orderBy(data,'name',false);
+				});
+			});
+		}
+	}
+
 	$scope.showForm = function(form){
 		switch(form){
 			case 1:

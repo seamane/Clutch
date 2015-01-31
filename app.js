@@ -72,6 +72,7 @@ app.post('/getAssets',database.getAssets);
 app.post('/createShot',database.createShot);
 app.post('/deleteShot',database.deleteShot);
 app.post('/createAsset',database.createAsset);
+app.post('/deleteAsset',database.deleteAsset);
 app.post('/getUsers',database.getUsers);
 // app.post('/getShotInfo',database.getShotInfo);
 

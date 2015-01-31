@@ -169,16 +169,35 @@
           <div class="row">    
             <div class="large-2 columns left">
               <div class="row collapse">
-                <a ng-click="showForm()" class="tiny expand button navbar-button">Add Asset</a><br/>
+                <a ng-click="showForm(1)" class="tiny expand button navbar-button">Add Asset</a><br/>
               </div>
             </div>
-            <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
+            <div class="large-2 columns left" ng-class="{'fadein':addVisible , 'fadeout':!addVisible}">
               <div class="row collapse">
                 <div class="small-3 columns">
                   <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
                 </div>
                 <div class="small-9 columns">
                   <input class="blue-input" type="text" placeholder="Title" ng-model="assetTitle" ng-class="{'has-error' : attempted}">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">    
+            <div class="large-2 columns left">
+              <div class="row collapse">
+                <a ng-click="showForm(2)" class="tiny expand button navbar-button">Delete Asset</a><br/>
+              </div>
+            </div>
+            <div class="large-2 columns left" ng-class="{'fadein':deleteVisible , 'fadeout':!deleteVisible}">
+              <div class="row collapse">
+                <div class="small-3 columns">
+                  <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+                </div>
+                <div class="small-9 columns">
+                  <select ng-model="assetName">
+                    <option ng-repeat="ass in assets">{{ass.name}}</option>
+                  </select>
                 </div>
               </div>
             </div>

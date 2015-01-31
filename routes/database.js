@@ -671,6 +671,19 @@ exports.createAsset = function(req,res){
 	);
 }
 
+exports.deleteAsset = function(req,res){
+	connection.query(
+		'DELETE FROM assets WHERE name="'+req.body.name+'";',
+		function(err){
+			if(err){
+				console.log('error deleteAsset query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
 exports.getUsers = function(req,res){
 	connection.query
 	(
