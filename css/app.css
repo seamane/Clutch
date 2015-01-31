@@ -228,3 +228,7 @@ th{
 	margin-left: -25%;
 	padding: 50px;
 }
+
+form .row{
+	margin-bottom: 10px;
+}

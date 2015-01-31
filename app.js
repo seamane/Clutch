@@ -53,6 +53,7 @@ app.post('/addProject', database.addProject);
 app.post('/getShots',database.getShots);
 app.post('/getAnimators',database.getAnimators);
 app.post('/createSequence', database.createSequence);
+app.post('/deleteSequence', database.deleteSequence);
 app.post('/getProjects',database.getProjects);
 app.post('/getAnnouncements',database.getAnnouncements);
 app.post('/getSequences',database.getSequences);
@@ -69,6 +70,7 @@ app.post('/postAnnouncement',database.postAnnouncement);
 app.post('/sendEmail',email.sendEmail);
 app.post('/getAssets',database.getAssets);
 app.post('/createShot',database.createShot);
+app.post('/deleteShot',database.deleteShot);
 app.post('/createAsset',database.createAsset);
 app.post('/getUsers',database.getUsers);
 // app.post('/getShotInfo',database.getShotInfo);
@@ -84,7 +86,6 @@ app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
 app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
 app.get('/createUser',function(req,res){res.sendFile(__dirname+'/views/createUser.html');});
-app.get('/directory',function(req,res){res.sendFile(__dirname+'/views/directory.html');});
 
 //testing stuff
 app.get('/test',function(req,res){res.sendFile(__dirname+'/views/test.html');});
