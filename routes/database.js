@@ -332,6 +332,19 @@ exports.createSequence = function(req, res){
 	);
 }
 
+exports.deleteSequence = function(req, res){
+	connection.query(
+		'DELETE FROM sequences WHERE name ="' + req.body.name + '";',
+		function (err){
+			if(err){
+				console.log('error deleteSequence query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
 exports.createProject = function(req,res){
 
 	connection.query(
@@ -628,6 +641,21 @@ exports.createShot = function(req,res){
 	);
 }
 
+exports.deleteShot = function(req,res){
+	console.log(JSON.stringify(req.body));
+	console.log('DELETE FROM shots WHERE name="' + req.body.shotName + '";');
+	connection.query(
+		'DELETE FROM shots WHERE name="' + req.body.shotName + '";',
+		function(err){
+			if(err){
+				console.log('error deleteShot query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
 exports.createAsset = function(req,res){
 	connection.query
 	(
@@ -636,6 +664,19 @@ exports.createAsset = function(req,res){
 		function (err,rows,fields){
 			if(err){
 				console.log('error addSequence query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
+exports.deleteAsset = function(req,res){
+	connection.query(
+		'DELETE FROM assets WHERE name="'+req.body.name+'";',
+		function(err){
+			if(err){
+				console.log('error deleteAsset query');
 				throw err;
 			}
 			res.end("success");
