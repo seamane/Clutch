@@ -67,7 +67,39 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
    	}
 });
 
-app.controller('taskController', function($filter, $scope, $http, $cookieStore){
+app.factory('AssignMember', function($http, $q, $timeout, $cookieStore){
+  	var AssignMember = new Object();
+
+	AssignMember.getmembers = function(i) {
+	    var moviedata = $q.defer();
+	    var members;
+	    var userJSON = [];
+		$http.post('/getUsers',{
+			'projectid':$cookieStore.get('projectInfo').id
+		}).
+		success(function(data){
+			userJSON = userJSON.concat(data);
+		    var userNames = [];
+
+		    for(var i = 0; i < userJSON.length; ++i)
+		    {
+		    	var name = userJSON[i].fname + " " + userJSON[i].lname;
+		    	userNames = userNames.concat([name]);
+		    }
+		    members = userNames;
+		    alert("userNames:"+JSON.stringify(userNames));
+
+		    $timeout(function(){
+		      // moviedata.resolve(movies);
+		      moviedata.resolve(members);
+		    },1000);
+		});
+	    return moviedata.promise
+	}
+	return AssignMember;
+});
+
+app.controller('taskController', function($filter, $scope, $http, $cookieStore, AssignMember){
 	if($cookieStore.get('userInfo') == undefined){
 		window.location.href = '/';
 	}
@@ -97,6 +129,23 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.popup = false;
 	$scope.recipient = "";
+
+	$scope.assignMembers = AssignMember.getmembers("...");
+  	$scope.assignMembers.then(function(data){
+    	$scope.assignMembers = data;
+    });
+
+    $scope.updateSuggestions = function(typedthings){
+	    console.log("Do something like reload data with this: " + typedthings );
+	    $scope.newAssignMembers = AssignMember.getmembers(typedthings);
+	    $scope.newAssignMembers.then(function(data){
+	      	$scope.assignMembers = data;
+	    });
+	}
+
+	$scope.doSomethingElse = function(suggestion){
+	    console.log("Suggestion selected: " + suggestion);
+	}
 
 	$scope.addSequence  = function(){
 		if($scope.title === null){
@@ -449,6 +498,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	}
 
 	$scope.getNotes = function(shot,type){
+		alert("type:"+type);
 		$http.post('/getNotes',{
 			'shotid':shot.id,
 			'type':type
@@ -458,20 +508,15 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		});
 	}
 
-	$scope.currentDropDown = function(seq,shot,type){
-		if(type == 0){
-			$http.post('/getShotInfo',{
-				'sequenceid': seq.id,
-				'projectid' : $scope.projectid,
-				'shotid' : shot.id
-			}).
-			success(function(data){
-				$scope.currentButtonDropDown = data[0];
-			});
-		}
-		else{
-			$scope.getNotes(shot,$scope.types.type);
-		}
+	$scope.getPrevisDropDown = function(seq,shot){
+		$http.post('/getPrevisDropDown',{
+			'sequenceid': seq.id,
+			'projectid' : $scope.projectid,
+			'shotid' : shot.id
+		}).
+		success(function(data){
+			$scope.currentButtonDropDown = data[0];
+		});
 	}
 
 	$scope.showShotForm = function(){

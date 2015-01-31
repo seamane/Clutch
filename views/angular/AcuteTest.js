@@ -96,43 +96,52 @@
 //     $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
 // }
 
-var app = angular.module('app', ['autocomplete']);
+var app = angular.module('app', ['autocomplete','ngCookies']);
 
 // the service that retrieves some movie title from an url
-app.factory('MovieRetriever', function($http, $q, $timeout){
-  var MovieRetriever = new Object();
+app.factory('MovieRetriever', function($http, $q, $timeout, $cookieStore){
+  	var MovieRetriever = new Object();
 
   MovieRetriever.getmovies = function(i) {
   	// alert(JSON.stringify(i));
     var moviedata = $q.defer();
     // var movies;
     var members;
+    var userJSON = [];
+	$http.post('/getUsers',{
+		'projectid':$cookieStore.get('projectInfo').id
+	}).
+	success(function(data){
+		alert("success"+JSON.stringify(data));
+		userJSON = userJSON.concat(data);
+	
+		alert("userJSON:"+userJSON);
+	    // var someMovies = ["The Wolverine", "The Smurfs 2", "The Mortal Instruments: City of Bones", "Drinking Buddies", "All the Boys Love Mandy Lane", "The Act Of Killing", "Red 2", "Jobs", "Getaway", "Red Obsession", "2 Guns", "The World's End", "Planes", "Paranoia", "The To Do List", "Man of Steel"];
 
-    // var someMovies = ["The Wolverine", "The Smurfs 2", "The Mortal Instruments: City of Bones", "Drinking Buddies", "All the Boys Love Mandy Lane", "The Act Of Killing", "Red 2", "Jobs", "Getaway", "Red Obsession", "2 Guns", "The World's End", "Planes", "Paranoia", "The To Do List", "Man of Steel"];
+	    // var moreMovies = ["The Wolverine", "The Smurfs 2", "The Mortal Instruments: City of Bones", "Drinking Buddies", "All the Boys Love Mandy Lane", "The Act Of Killing", "Red 2", "Jobs", "Getaway", "Red Obsession", "2 Guns", "The World's End", "Planes", "Paranoia", "The To Do List", "Man of Steel", "The Way Way Back", "Before Midnight", "Only God Forgives", "I Give It a Year", "The Heat", "Pacific Rim", "Pacific Rim", "Kevin Hart: Let Me Explain", "A Hijacking", "Maniac", "After Earth", "The Purge", "Much Ado About Nothing", "Europa Report", "Stuck in Love", "We Steal Secrets: The Story Of Wikileaks", "The Croods", "This Is the End", "The Frozen Ground", "Turbo", "Blackfish", "Frances Ha", "Prince Avalanche", "The Attack", "Grown Ups 2", "White House Down", "Lovelace", "Girl Most Likely", "Parkland", "Passion", "Monsters University", "R.I.P.D.", "Byzantium", "The Conjuring", "The Internship"]
 
-    // var moreMovies = ["The Wolverine", "The Smurfs 2", "The Mortal Instruments: City of Bones", "Drinking Buddies", "All the Boys Love Mandy Lane", "The Act Of Killing", "Red 2", "Jobs", "Getaway", "Red Obsession", "2 Guns", "The World's End", "Planes", "Paranoia", "The To Do List", "Man of Steel", "The Way Way Back", "Before Midnight", "Only God Forgives", "I Give It a Year", "The Heat", "Pacific Rim", "Pacific Rim", "Kevin Hart: Let Me Explain", "A Hijacking", "Maniac", "After Earth", "The Purge", "Much Ado About Nothing", "Europa Report", "Stuck in Love", "We Steal Secrets: The Story Of Wikileaks", "The Croods", "This Is the End", "The Frozen Ground", "Turbo", "Blackfish", "Frances Ha", "Prince Avalanche", "The Attack", "Grown Ups 2", "White House Down", "Lovelace", "Girl Most Likely", "Parkland", "Passion", "Monsters University", "R.I.P.D.", "Byzantium", "The Conjuring", "The Internship"]
+	    //var userJSON = [{'fname':'Eric','lname':'Seaman'},{'fname':'Erica','lname':'Leonardo'},{'fname':'Paul','lname':'Soderquist'},{'fname':'Mike','lname':'Framp'},{'fname':'Eric','lname':'Rommer'},{'fname':'Can','lname':'Can'}];
+	    
+	    var userNames = [];
+	    for(var i = 0; i < userJSON.length; ++i)
+	    {
+	    	alert('here');
+	    	var name = userJSON[i].fname + " " + userJSON[i].lname;
+	    	userNames = userNames.concat([name]);
+	    }
+	    alert(JSON.stringify("usernames:"+userNames));
+	    members = userNames;
+	    // if(i && i.indexOf('T')!=-1)
+	    //   movies=moreMovies;
+	    // else
+	    //   movies=moreMovies;
 
-    var userJSON = [{'fname':'Eric','lname':'Seaman'},{'fname':'Erica','lname':'Leonardo'},{'fname':'Paul','lname':'Soderquist'},{'fname':'Mike','lname':'Framp'},{'fname':'Eric','lname':'Rommer'},{'fname':'Can','lname':'Can'}];
-    
-    var userNames = [];
-    for(var i = 0; i < userJSON.length; ++i)
-    {
-    	var name = userJSON[i].fname + " " + userJSON[i].lname;
-    	userNames = userNames.concat([name]);
-    }
 
-    members = userNames;
-    // if(i && i.indexOf('T')!=-1)
-    //   movies=moreMovies;
-    // else
-    //   movies=moreMovies;
-
-
-    $timeout(function(){
-      // moviedata.resolve(movies);
-      moviedata.resolve(members);
-    },1000);
-
+	    $timeout(function(){
+	      // moviedata.resolve(movies);
+	      moviedata.resolve(members);
+	    },1000);
+	});
     return moviedata.promise
   }
 
@@ -146,9 +155,9 @@ app.controller('MyCtrl', function($scope, MovieRetriever){
     $scope.movies = data;
   });
 
-  $scope.getmovies = function(){
-    return $scope.movies;
-  }
+  // $scope.getmovies = function(){
+  //   return $scope.movies;
+  // }
 
   $scope.doSomething = function(typedthings){
     console.log("Do something like reload data with this: " + typedthings );

@@ -109,12 +109,12 @@
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq(seq)'>
                 <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,previs)'>{{getPrevis(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getCompositing(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'previs')">{{getPrevis(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'fx')">{{getFX(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'compositing')">{{getCompositing(shot.id)}}</button>
               </div>
             </ul>
             <div ng-show='showSeq(seq)' class="row">
@@ -211,10 +211,9 @@
 
       <li>
         <!-- <ac-select ac-model="assignedMember" ac-options="m.fname for m in members" ac-change="memberChanged(value)"></ac-select> -->
-        <input type="text" placeholder="Assign to">
-        <!-- <div ng-app="app" ng-controller="MyCtrl">
-          <autocomplete ng-model="result" attr-placeholder="type to search movies..." click-activation="true" data="movies" on-type="doSomething" on-select="doSomethingElse"></autocomplete>
-        </div> -->
+        <!-- <input type="text" placeholder="Assign to"> -->
+        <autocomplete ng-model="result" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+        
         <a href="" class="button postfix black-button">Assign</a>
       </li>
       <div class='panel' ng-repeat="note in notes">
