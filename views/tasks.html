@@ -214,9 +214,9 @@
             <ul ng-show="showAssets(ass)" >
               <div ng-click='toggleAsset(ass)'>
                 <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,modeling)'>{{getModeling(ass.id)}}</button>
-                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,shading)'>{{getShading(ass.id)}}</button>
-                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,rigging)'>{{getRigging(ass.id)}}</button>
+                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
+                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
+                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getRigging(ass.id)}}</button>
               </div>
             </ul>
           </a>
@@ -256,7 +256,7 @@
 
       <li>
         <!-- <input type="text" placeholder="Assign to"> -->
-        <autocomplete ng-model="result" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+        <autocomplete ng-model="result" ng-click="" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
 
         <a href="" class="button postfix black-button">Assign</a>
       </li>

@@ -1,5 +1,38 @@
 var app = angular.module('clutchApp', ['ngCookies','autocomplete']);
 
+
+app.factory('AssignMember', function($http, $q, $timeout, $cookieStore){
+  	var AssignMember = new Object();
+
+	AssignMember.getmembers = function(i) {
+	    var moviedata = $q.defer();
+	    var members;
+	    var userJSON = [];
+		$http.post('/getUsers',{
+			'projectid':$cookieStore.get('projectInfo').id
+		}).
+		success(function(data){
+			userJSON = userJSON.concat(data);
+		    var userNames = [];
+
+		    for(var i = 0; i < userJSON.length; ++i)
+		    {
+		    	var name = userJSON[i].fname + " " + userJSON[i].lname;
+		    	userNames = userNames.concat([name]);
+		    }
+		    members = userNames;
+		    //alert("userNames:"+JSON.stringify(userNames));
+
+		    $timeout(function(){
+		      // moviedata.resolve(movies);
+		      moviedata.resolve(members);
+		    },1000);
+		});
+	    return moviedata.promise
+	}
+	return AssignMember;
+});
+
 app.controller('createUserController', function($scope, $http, $cookieStore)
 {
 	$scope.createUser = function() 
@@ -67,43 +100,12 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
    	}
 });
 
-app.factory('AssignMember', function($http, $q, $timeout, $cookieStore){
-  	var AssignMember = new Object();
-
-	AssignMember.getmembers = function(i) {
-	    var moviedata = $q.defer();
-	    var members;
-	    var userJSON = [];
-		$http.post('/getUsers',{
-			'projectid':$cookieStore.get('projectInfo').id
-		}).
-		success(function(data){
-			userJSON = userJSON.concat(data);
-		    var userNames = [];
-
-		    for(var i = 0; i < userJSON.length; ++i)
-		    {
-		    	var name = userJSON[i].fname + " " + userJSON[i].lname;
-		    	userNames = userNames.concat([name]);
-		    }
-		    members = userNames;
-		    //alert("userNames:"+JSON.stringify(userNames));
-
-		    $timeout(function(){
-		      // moviedata.resolve(movies);
-		      moviedata.resolve(members);
-		    },1000);
-		});
-	    return moviedata.promise
-	}
-	return AssignMember;
-});
-
 app.controller('taskController', function($filter, $scope, $http, $cookieStore, AssignMember){
 	if($cookieStore.get('userInfo') == undefined){
 		window.location.href = '/';
 	}
 
+	$scope.dropdownSeq = undefined;
 	$scope.showDropDown = false;
     $scope.projectName = $cookieStore.get('projectInfo').name;
 	var orderBy = $filter('orderBy');
