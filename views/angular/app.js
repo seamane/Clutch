@@ -350,7 +350,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}).
 		success(function(data){
 			$scope.members = data;
-			//alert(JSON.stringify($scope.members));
 		});
 	}
 
@@ -361,9 +360,26 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			'message':$scope.message
 		}).
 		success(function(data){
+			alert('postAnnouncement success');
 			$scope.announcements = orderBy(data,'time',true);
+			$scope.recipient = $scope.getMemberEmails();
+			alert(JSON.stringify($scope.recipient));
+  			$scope.emailSubject = "New Announcement From Clutch";
+  			$scope.emailBody = $scope.message;
+			$scope.sendMessage();
 			$scope.message = "";
 		});
+	}
+
+	$scope.getMemberEmails = function(){
+		alert("getMemberEmails");
+		var emailAddresses = [];
+		for(var i = 0; i < $scope.members; ++i)
+		{
+			emailAddresses = emailAddresses.concat([$scope.members[i].email]);
+		}
+
+		return emailAddresses;
 	}
 
 	$scope.seeMore = function(){
@@ -387,7 +403,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			if($scope.sequences[i].name == seq.name)
 			{
 				$scope.sequences[i].bool = !$scope.sequences[i].bool;
-				// alert('toggleSeq '+$scope.sequences[i].bool+$scope.showSeq(seq));
 				return $scope.sequences[i].bool;
 			}
 		}
@@ -407,9 +422,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		for(var i=0; i < $scope.sequences.length; i++){
 			if($scope.sequences[i].name == seq.name)
 			{
-				// if($scope.sequences[i].bool == true){
-				// 	alert('showSeq: ' + $scope.sequences[i].bool);
-				// }
 				return $scope.sequences[i].bool;
 			}
 		}
@@ -427,28 +439,25 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getShots = function(seq){
-		// if($scope.show(seq)){
-		// 	alert('getShots: ');
 			$scope.seqShots = [];
 			for(var i = 0; i < $scope.shots.length; ++i){
 				if($scope.shots[i].sequenceid == seq.id){
-					// alert('add to seqShots');
 					$scope.seqShots = $scope.seqShots.concat([
 						$scope.shots[i]
 					]);
 				}
 			}
 			return $scope.seqShots;
-		// }
-		// return [];
 	}
 
 	$scope.getPrevis = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.previs.length; ++i){
-			if($scope.previs[i].shotid == shotid){
-				label = $scope.previs[i].fname + ' ' + $scope.previs[i].lname[0] + '.';
-				break;
+		if($scope.previs != undefined){
+			for(var i = 0; i < $scope.previs.length; ++i){
+				if($scope.previs[i].shotid == shotid){
+					label = $scope.previs[i].fname + ' ' + $scope.previs[i].lname[0] + '.';
+					break;
+				}
 			}
 		}
 		return label;
@@ -456,10 +465,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getAnimator = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.animators.length; ++i){
-			if($scope.animators[i].shotid == shotid){
-				label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname[0] + '.';
-				break;
+		if($scope.animators != undefined){
+			for(var i = 0; i < $scope.animators.length; ++i){
+				if($scope.animators[i].shotid == shotid){
+					label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname[0] + '.';
+					break;
+				}
 			}
 		}
 		return label;
@@ -467,10 +478,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getLighter = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.lighters.length; ++i){
-			if($scope.lighters[i].shotid == shotid){
-				label = $scope.lighters[i].fname + ' ' + $scope.lighters[i].lname;
-				break;
+		if($scope.lighters != undefined){
+			for(var i = 0; i < $scope.lighters.length; ++i){
+				if($scope.lighters[i].shotid == shotid){
+					label = $scope.lighters[i].fname + ' ' + $scope.lighters[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -478,10 +491,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getFX = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.fx.length; ++i){
-			if($scope.fx[i].shotid == shotid){
-				label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
-				break;
+		if($scope.fx != undefined){
+			for(var i = 0; i < $scope.fx.length; ++i){
+				if($scope.fx[i].shotid == shotid){
+					label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -489,10 +504,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getCompositing = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.compositing.length; ++i){
-			if($scope.compositing[i].shotid == shotid){
-				label = $scope.compositing[i].fname + ' ' + $scope.compositing[i].lname;
-				break;
+		if($scope.compositing != undefined){
+			for(var i = 0; i < $scope.compositing.length; ++i){
+				if($scope.compositing[i].shotid == shotid){
+					label = $scope.compositing[i].fname + ' ' + $scope.compositing[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -500,10 +517,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getWrangler = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.wranglers.length; ++i){
-			if($scope.wranglers[i].shotid == shotid){
-				label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
-				break;
+		if($scope.wranglers != undefined){
+			for(var i = 0; i < $scope.wranglers.length; ++i){
+				if($scope.wranglers[i].shotid == shotid){
+					label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -511,10 +530,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getRigging = function(assid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.rigging.length; ++i){
-			if($scope.rigging[i].assid == assid){
-				label = $scope.rigging[i].fname + ' ' + $scope.rigging[i].lname;
-				break;
+		if($scope.rigging != undefined){
+			for(var i = 0; i < $scope.rigging.length; ++i){
+				if($scope.rigging[i].assid == assid){
+					label = $scope.rigging[i].fname + ' ' + $scope.rigging[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -522,10 +543,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getModeling = function(assid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.modeling.length; ++i){
-			if($scope.modeling[i].assid == assid){
-				label = $scope.modeling[i].fname + ' ' + $scope.modeling[i].lname;
-				break;
+		if($scope.modeling != undefined){
+			for(var i = 0; i < $scope.modeling.length; ++i){
+				if($scope.modeling[i].assid == assid){
+					label = $scope.modeling[i].fname + ' ' + $scope.modeling[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -533,10 +556,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getShading = function(assid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.shading.length; ++i){
-			if($scope.shading[i].assid == assid){
-				label = $scope.shading[i].fname + ' ' + $scope.shading[i].lname;
-				break;
+		if($scope.shading != undefined){
+			for(var i = 0; i < $scope.shading.length; ++i){
+				if($scope.shading[i].assid == assid){
+					label = $scope.shading[i].fname + ' ' + $scope.shading[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -653,7 +678,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
   			'text': $scope.emailBody  
   		}).
   		success(function(data){
-  			alert("Your message was successfully sent");
+  			//alert("Your message was successfully sent");
   			$scope.emailSubject = null;
   			$scope.emailBody = null;
   		}).
