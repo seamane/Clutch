@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clutch</title>
     <link rel="stylesheet" href="../css/foundation.css" />
+    <link rel="stylesheet" href="../css/autocomplete.css">
     <!-- Do not change name of this file (app.css) -->
     <link rel="stylesheet" href="../css/app.css">
     <script src="../js/vendor/modernizr.js"></script>    
@@ -31,7 +32,7 @@
       <dd class="active"><a href="#panel3">Announcements</a></dd>
       <dd><a href="#panel1">Shots</a></dd>
       <dd><a href="#panel2">Assets</a></dd>
-      <dd><a href="#panel4">My Tasks</a></dd>
+      <!-- <dd><a href="#panel4">My Tasks</a></dd> -->
       <dd><a href="#panel5">Directory</a></dd>
     </dl>
 
@@ -245,9 +246,9 @@
           </table>
         </div>
       <!-- this is the My Tasks tab-->
-      <div class="content" id="panel4">
+      <!-- <div class="content" id="panel4">
 
-      </div>
+      </div> -->
     </div>
 
     <ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
@@ -275,13 +276,6 @@
         <p class="right">{{note.time}}</p>
       </div>
     </ul>
-
-<!-- <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert round button dropdown">Dropdown Button</button><br>
-<ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
-  <li><a href="#">This is a link</a></li>
-  <li><a href="#">This is another</a></li>
-  <li><a href="#">Yet another</a></li>
-</ul> -->
   
     <div id="shadow" ng-click="disablePopup()"></div>
     <div id="shadowBox">
