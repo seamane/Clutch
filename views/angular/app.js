@@ -140,6 +140,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
     	$scope.assignMembers = data;
     });
 
+    $scope.popupEnum = {
+    	MESSAGE: 0,
+    	ASSIGN: 1,
+    	NOTES: 2
+    }
+
     $scope.updateSuggestions = function(typedthings){
 	    console.log("Do something like reload data with this: " + typedthings );
 	    $scope.newAssignMembers = AssignMember.getmembers(typedthings);
@@ -638,10 +644,19 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}
 	}
 
-	$scope.enablePopup = function(recipientEmail){
+	$scope.enablePopup = function(recipientEmail, popupType){
+		console.log(popupType);
 		if(!$scope.popup){
 			$("#shadow").fadeIn(0500);
-			$("#shadowBox").fadeIn(0500);
+			switch(popupType){
+				case 0: 
+					$("#shadowBox").fadeIn(0500);
+					break;
+				case 1:
+					$("#noteBox").fadeIn(0500);
+					break;
+				default:
+			}
 			$scope.popup = true;
 		}
 		$scope.recipient = recipientEmail;
@@ -651,6 +666,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		if($scope.popup){
 			$("#shadow").fadeOut(0500);
 			$("#shadowBox").fadeOut(0500);
+			$("#noteBox").fadeOut(0500);
 			$scope.popup = false;
 		}
 	}
