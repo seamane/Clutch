@@ -350,6 +350,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}).
 		success(function(data){
 			$scope.members = data;
+			// alert(JSON.stringify($scope.members));
 		});
 	}
 
@@ -360,10 +361,10 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			'message':$scope.message
 		}).
 		success(function(data){
-			alert('postAnnouncement success');
+			// alert('postAnnouncement success');
 			$scope.announcements = orderBy(data,'time',true);
 			$scope.recipient = $scope.getMemberEmails();
-			alert(JSON.stringify($scope.recipient));
+			// alert(JSON.stringify($scope.recipient));
   			$scope.emailSubject = "New Announcement From Clutch";
   			$scope.emailBody = $scope.message;
 			$scope.sendMessage();
@@ -372,11 +373,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getMemberEmails = function(){
-		alert("getMemberEmails");
+		// alert("getMemberEmails");
 		var emailAddresses = [];
-		for(var i = 0; i < $scope.members; ++i)
+		for(var i = 0; i < $scope.members.length; ++i)
 		{
 			emailAddresses = emailAddresses.concat([$scope.members[i].email]);
+			// alert("i:"+i+" "+JSON.stringify(emailAddresses));
 		}
 
 		return emailAddresses;
@@ -574,19 +576,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			'type':type
 		}).
 		success(function(data){
-			$scope.notes = data;
+			$scope.notes = orderBy(data,'time',true);
 		});
 	}
 
-	$scope.getPrevisDropDown = function(seq,shot){
-		$http.post('/getPrevisDropDown',{
-			'sequenceid': seq.id,
-			'projectid' : $scope.projectid,
-			'shotid' : shot.id
-		}).
-		success(function(data){
-			$scope.currentButtonDropDown = data[0];
-		});
+	$scope.getPopUpInfo = function(shot,type){
+
 	}
 
 	$scope.showShotForm = function(){
@@ -602,11 +597,9 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.addShot = function(seq,desc,title){
 		if(title == undefined || desc == undefined){
-			//alert("title or desc undefined");
 			$scope.shotAttempted = true;
 		}
 		else{
-			//alert("createShot");
 			$scope.shotAttempted = false;
 			$http.post("/createShot",{
 				'name':title,

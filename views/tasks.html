@@ -40,10 +40,10 @@
       <!-- Announcements tab -->
       <div class="content active" id="panel3">
         <div class="row">
-          <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == false'><font size="2.5">+ New Announcement</font></a><br><br>
-            <textarea rows="2" placeholder="New Announcement..." class="large-4 columns left" ng-model='message' ng-show='postAnnTextBox'></textarea>
+          <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == false'><font size="2.5">+ New Announcement</font></a>
+          <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == true'><font size="2.5">- Hide</font></a>
+            <br><br><textarea rows="2" placeholder="New Announcement..." class="large-4 columns left" ng-model='message' ng-show='postAnnTextBox'></textarea>
             <button class="small button" ng-click="postAnnouncement();postAnnTextBox = !postAnnTextBox;" ng-show='postAnnTextBox'>Post</button>
-          <br><a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == true'><font size="2.5">- Hide</font></a>
         </div>
 
         <div class="row">
@@ -117,7 +117,7 @@
                 <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'previs')">{{getPrevis(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getPopUpInfo(shot,'animator')">{{getAnimator(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'fx')">{{getFX(shot.id)}}</button>
@@ -257,7 +257,7 @@
 
       <li>
         <!-- <input type="text" placeholder="Assign to"> -->
-        <autocomplete ng-model="result" ng-click="" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+        <autocomplete ng-model="result" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
 
         <a href="" class="button postfix black-button">Assign</a>
       </li>
