@@ -216,7 +216,7 @@ th{
 	left:0px;
 }
 
-#shadowBox{
+#shadowBox, #noteBox{
 	width: 50%;
 	margin: 0px auto;
 	z-index: 3;

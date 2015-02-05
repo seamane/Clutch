@@ -116,7 +116,7 @@
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq(seq)'>
                 <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'previs')">{{getPrevis(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button" ng-click="enablePopup(null,popupEnum.ASSIGN)">{{getPrevis(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
@@ -240,7 +240,7 @@
               <td>{{user.email}}</td>
               <td>{{user.phone}}</td>
               <td>
-                <button id="{{user.email}}" ng-click="enablePopup(user.email)">Send Message</button>
+                <button id="user.email" ng-click="enablePopup(user.email, popupEnum.MESSAGE)">Send Message</button>
               </td>
             </tr>
           </table>
@@ -288,6 +288,13 @@
         </label>
         <button ng-click="sendMessage()">Send</button>
       </form>
+    </div>
+    <div id="noteBox">
+      <autocomplete ng-model="result" ng-click="" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+
+        <a href="" class="button postfix black-button">Assign</a>
+        <hr>
+        <div class="row" ></div> <!-- ng-repeat="note in notes"-->
     </div>
 
 
