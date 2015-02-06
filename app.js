@@ -69,6 +69,8 @@ app.post('/postAnnouncement',database.postAnnouncement);
 app.post('/sendEmail',email.sendEmail);
 app.post('/getAssets',database.getAssets);
 app.post('/createShot',database.createShot);
+app.post('/setFrames',database.setFrames);
+app.post('/setStatus',database.setStatus);
 app.post('/createAsset',database.createAsset);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});

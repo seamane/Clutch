@@ -62,6 +62,7 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'frames INT,'
+		+ 'status VARCHAR(15),'
 		+ 'description VARCHAR(500),'
 		+ 'name VARCHAR(20),'
 		+ 'sequenceid INT'//,'
@@ -612,16 +613,45 @@ exports.postAnnouncement = function(req,res){
 
 exports.createShot = function(req,res){
 	connection.query(
-		'INSERT INTO shots(name, description,sequenceid) '
+		'INSERT INTO shots(name,description,sequenceid,frames) '
 		+ 'VALUES(\'' + req.body.name + '\',\'' 
 					  + req.body.desc + '\',\'' 
-					  + req.body.sequenceid + '\');',
+					  + req.body.sequenceid + '\',\''
+					  + req.body.frames + '\');',
 		function(err,rows,fields){
 			if(err){
 				console.log('error addShot query');
 				throw err;
 			}
 			res.end(JSON.stringify(rows));
+		}
+	);
+}
+
+exports.setFrames = function(req,res){
+	connection.query
+	(
+		'UPDATE shots SET frames='+req.body.frames+' WHERE id='+req.body.shotid+';',
+		function(err,rows,fields){
+			if(err){
+				console.log('error setFrames query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
+exports.setStatus = function(req,res){
+	connection.query
+	(
+		'UPDATE shots SET status='+'\''+req.body.status+'\''+' WHERE id='+req.body.shotid+';',
+		function(err,rows,fields){
+			if(err){
+				console.log('error setStatus query');
+				throw err;
+			}
+			res.end("success");
 		}
 	);
 }

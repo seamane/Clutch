@@ -86,6 +86,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.shotAttempted = false;
 	$scope.shotTitle = null;
 	$scope.shotDesc = null;
+	$scope.currentShot = null;
 
 	// $scope.announcementsLimit = 5;
 	$scope.postAnnTextBox = false;
@@ -480,7 +481,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			$http.post("/createShot",{
 				'name':$scope.shotTitle,
 				'desc':$scope.shotDesc,
-				'sequenceid':seq.id
+				'sequenceid':seq.id,
+				'frames':0
 			}).
 			success(function(data){
 				$scope.shotTitle = null;
@@ -494,6 +496,48 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 				$scope.shots = orderBy(data,'name',false);
 			});
 		}
+	}
+
+	$scope.getShotById = function(shotId)
+	{
+		for(var i=0; i < $scope.shots.length; ++i)
+		{
+			if($scope.shots[i].id == shotId)
+				$scope.currentShot=$scope.shots[i];
+		}
+	}
+
+	$scope.setFrameCt = function(frames)
+	{
+		if(frames === null || frames === undefined)
+		{
+			$scope.framesAttempted = true;
+			return frames;
+		}
+		else
+		{
+			$scope.framesAttempted = false
+			$http.post("/setFrames",{
+				'frames':frames,
+				'shotid':$scope.currentShot.id
+			}).
+			success(function(data){
+				$scope.currentShot.frames = frames;
+			});
+
+			return null;
+		}
+	}
+
+	$scope.setNewStatus = function(status)
+	{
+		$http.post("/setStatus",{
+			'status':status,
+			'shotid':$scope.currentShot.id
+		}).
+		success(function(data){
+			$scope.currentShot.status = status;
+		});
 	}
 })
 .directive('showinfo', function($compile) {

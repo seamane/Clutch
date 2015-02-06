@@ -87,12 +87,12 @@
             </table>
             <ul>
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq(seq)'>
-                <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" data-dropdown="shotinfo">{{shot.name}}</button>
+                <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" ng-click='getShotById(shot.id)' data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,previs)'>{{getPrevis(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:133px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getCompositing(shot.id)}}</button>
               </div>
@@ -171,6 +171,25 @@
         <p class="right">{{note.time}}</p>
       </div>
     </ul>
+
+    <div id="shotinfo" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
+      <table>
+        <tr><div class="large-12 columns black-background" style="margin:2px">Frames:{{currentShot.frames}}</div></tr>
+        <tr>
+            <td><input type="text" style="margin:0px; border:0px; padding:0px" ng-model="frameCt" placeholder="Frames"></td>
+            <td><button style="margin:0px; border:0px; padding:2px" ng-click="frameCt=setFrameCt(frameCt)">+</button></td>
+        </tr>
+      </table>
+      <div class="large-12 columns black-background" style="margin:2px">Status:{{currentShot.status}}</div>
+      <form>
+          <input type="radio" name="status" ng-model="newStatus" value="Previs" ng-change="setNewStatus(newStatus)">Previs<br>
+          <input type="radio" name="status" ng-model="newStatus" value="Animation" ng-change="setNewStatus(newStatus)">Animation<br>
+          <input type="radio" name="status" ng-model="newStatus" value="Lighting" ng-change="setNewStatus(newStatus)">Lighting<br>
+          <input type="radio" name="status" ng-model="newStatus" value="Rendering" ng-change="setNewStatus(newStatus)">Rendering<br>
+          <input type="radio" name="status" ng-model="newStatus" value="FX" ng-change="setNewStatus(newStatus)">FX<br>
+          <input type="radio" name="status" ng-model="newStatus" value="Composite" ng-change="setNewStatus(newStatus)">Composite
+      </form>
+    </div>
 
     <ul id="notesDrop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false">
       <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
