@@ -65,6 +65,7 @@ createTables = function()
 		+ 'status VARCHAR(15),'
 		+ 'description VARCHAR(500),'
 		+ 'name VARCHAR(20),'
+		+ 'status VARCHAR(20),'
 		+ 'sequenceid INT'//,'
 		//+ 'projectid INT'
 		+ ');',function (err){
@@ -327,7 +328,20 @@ exports.createSequence = function(req, res){
 				console.log('error addSequence query');
 				throw err;
 			}
-			res.end(JSON.stringify(rows));
+			res.end("success");
+		}
+	);
+}
+
+exports.deleteSequence = function(req, res){
+	connection.query(
+		'DELETE FROM sequences WHERE name ="' + req.body.name + '";',
+		function (err){
+			if(err){
+				console.log('error deleteSequence query');
+				throw err;
+			}
+			res.end("success");
 		}
 	);
 }
@@ -612,6 +626,7 @@ exports.postAnnouncement = function(req,res){
 }
 
 exports.createShot = function(req,res){
+	console.log(JSON.stringify(req.body));
 	connection.query(
 		'INSERT INTO shots(name,description,sequenceid,frames) '
 		+ 'VALUES(\'' + req.body.name + '\',\'' 
@@ -620,10 +635,25 @@ exports.createShot = function(req,res){
 					  + req.body.frames + '\');',
 		function(err,rows,fields){
 			if(err){
-				console.log('error addShot query');
+				console.log('error createShot query');
 				throw err;
 			}
-			res.end(JSON.stringify(rows));
+			res.end("success");
+		}
+	);
+}
+
+exports.deleteShot = function(req,res){
+	console.log(JSON.stringify(req.body));
+	console.log('DELETE FROM shots WHERE name="' + req.body.shotName + '";');
+	connection.query(
+		'DELETE FROM shots WHERE name="' + req.body.shotName + '";',
+		function(err){
+			if(err){
+				console.log('error deleteShot query');
+				throw err;
+			}
+			res.end("success");
 		}
 	);
 }
@@ -668,5 +698,33 @@ exports.createAsset = function(req,res){
 			}
 			res.end("success");
 		}
+	);
+}
+
+exports.deleteAsset = function(req,res){
+	connection.query(
+		'DELETE FROM assets WHERE name="'+req.body.name+'";',
+		function(err){
+			if(err){
+				console.log('error deleteAsset query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
+exports.getUsers = function(req,res){
+	connection.query
+	(
+		'SELECT users.id,fname, lname, email, phone FROM users INNER JOIN members ON users.id = members.userid WHERE projectid=' +
+		 req.body.projectid + ' ORDER BY lname;',
+		 function(err, members){
+		 	if(err){
+		 		console.log('error getUsers query');
+		 		throw err;
+		 	}
+		 	res.end(JSON.stringify(members));
+		 }
 	);
 }

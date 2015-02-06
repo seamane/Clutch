@@ -1,4 +1,37 @@
-var app = angular.module('clutchApp', ['ngCookies']);
+var app = angular.module('clutchApp', ['ngCookies','autocomplete']);
+
+
+app.factory('AssignMember', function($http, $q, $timeout, $cookieStore){
+  	var AssignMember = new Object();
+
+	AssignMember.getmembers = function(i) {
+	    var moviedata = $q.defer();
+	    var members;
+	    var userJSON = [];
+		$http.post('/getUsers',{
+			'projectid':$cookieStore.get('projectInfo').id
+		}).
+		success(function(data){
+			userJSON = userJSON.concat(data);
+		    var userNames = [];
+
+		    for(var i = 0; i < userJSON.length; ++i)
+		    {
+		    	var name = userJSON[i].fname + " " + userJSON[i].lname;
+		    	userNames = userNames.concat([name]);
+		    }
+		    members = userNames;
+		    //alert("userNames:"+JSON.stringify(userNames));
+
+		    $timeout(function(){
+		      // moviedata.resolve(movies);
+		      moviedata.resolve(members);
+		    },1000);
+		});
+	    return moviedata.promise
+	}
+	return AssignMember;
+});
 
 app.controller('createUserController', function($scope, $http, $cookieStore)
 {
@@ -11,7 +44,7 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
 			|| $scope.email==undefined || $scope.passwordconfirm==undefined
 			|| $scope.phoneNum==undefined)
 			{
-				alert("One or more fields are blank. Please check to make sure that all of the provided fields are filled out.");
+				alert("One or more fields are blank. Please check to make sure that all of the provided fields are correctly filled out.");
 			}
 			else
 			{
@@ -67,17 +100,19 @@ app.controller('createUserController', function($scope, $http, $cookieStore)
    	}
 });
 
-app.controller('taskController', function($filter, $scope, $http, $cookieStore){
+app.controller('taskController', function($filter, $scope, $http, $cookieStore, AssignMember){
 	if($cookieStore.get('userInfo') == undefined){
 		window.location.href = '/';
 	}
 
+	$scope.dropdownSeq = undefined;
 	$scope.showDropDown = false;
     $scope.projectName = $cookieStore.get('projectInfo').name;
 	var orderBy = $filter('orderBy');
 	$scope.shots = [];
 	$scope.projectid = $cookieStore.get('projectInfo').id;
-	$scope.visible = false;
+	$scope.addVisible = false;
+	$scope.deleteVisible = false;
 	$scope.attempted = false;
 	$scope.title = null;
 
@@ -87,6 +122,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.shotTitle = null;
 	$scope.shotDesc = null;
 	$scope.currentShot = null;
+	$scope.shotDelete = false;
 
 	// $scope.announcementsLimit = 5;
 	$scope.postAnnTextBox = false;
@@ -95,6 +131,32 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	$scope.lighter = 'lighter';
 	$scope.fx = 'fx';
 	$scope.wrangler = 'wrangler';
+
+	$scope.popup = false;
+	$scope.recipient = "";
+
+	$scope.assignMembers = AssignMember.getmembers("...");
+  	$scope.assignMembers.then(function(data){
+    	$scope.assignMembers = data;
+    });
+
+    $scope.popupEnum = {
+    	MESSAGE: 0,
+    	ASSIGN: 1,
+    	NOTES: 2
+    }
+
+    $scope.updateSuggestions = function(typedthings){
+	    console.log("Do something like reload data with this: " + typedthings );
+	    $scope.newAssignMembers = AssignMember.getmembers(typedthings);
+	    $scope.newAssignMembers.then(function(data){
+	      	$scope.assignMembers = data;
+	    });
+	}
+
+	$scope.doSomethingElse = function(suggestion){
+	    console.log("Suggestion selected: " + suggestion);
+	}
 
 	$scope.addSequence  = function(){
 		if($scope.title === null){
@@ -118,12 +180,28 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}
 	}
 
+	$scope.deleteSequence = function(){
+		if(confirm("Are you sure you want to delete sequence "+$scope.sequenceName+"?")){
+			$http.post('/deleteSequence',{
+				'name': $scope.sequenceName
+			}).
+			success(function(data){
+				$http.post('/getSequences',{
+					'projectid': $scope.projectid
+				}).
+				success(function(data){
+					$scope.sequences = orderBy(data,'name',false);
+				})
+			});
+		}
+	}
+
 	$scope.addAsset  = function(){
 		if($scope.assetTitle === null){
 			$scope.attempted = true;
 		}
 		else{
-			alert("createAsset");
+			//alert("createAsset");
 			$scope.attempted = false;
 			$http.post('createAsset',{
 				'name': $scope.assetTitle,
@@ -141,11 +219,34 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		}
 	}
 
-	$scope.showForm = function(){
-		$scope.visible = !$scope.visible;
-		$scope.attempted = false;
-		$scope.title = null;
-		$scope.assetTitle = null;
+	$scope.deleteAsset = function(){
+		if(confirm("Are you sure you want to delete asset "+$scope.assetName+"?")){
+			$http.post('/deleteAsset',{
+				'name':$scope.assetName
+			}).
+			success(function(data){
+				$http.post('/getAssets',{
+					'projectid':$scope.projectid
+				}).
+				success(function(data){
+					$scope.assets = orderBy(data,'name',false);
+				});
+			});
+		}
+	}
+
+	$scope.showForm = function(form){
+		switch(form){
+			case 1:
+				$scope.addVisible = !$scope.addVisible;
+				$scope.attempted = false;
+				$scope.title = null;
+				$scope.assetTitle = null;
+				break;
+			case 2:
+				$scope.deleteVisible = !$scope.deleteVisible;
+		}
+		
 	}
 	$scope.getProjectName = function(){
 		return $cookieStore.get('projectInfo').name;
@@ -249,6 +350,14 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		success(function(data){
 			$scope.shading = data;
 		});
+
+		$http.post('/getUsers',{
+			'projectid':$scope.projectid
+		}).
+		success(function(data){
+			$scope.members = data;
+			// alert(JSON.stringify($scope.members));
+		});
 	}
 
 	$scope.postAnnouncement = function(){
@@ -258,9 +367,27 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			'message':$scope.message
 		}).
 		success(function(data){
+			// alert('postAnnouncement success');
 			$scope.announcements = orderBy(data,'time',true);
+			$scope.recipient = $scope.getMemberEmails();
+			// alert(JSON.stringify($scope.recipient));
+  			$scope.emailSubject = "New Announcement From Clutch";
+  			$scope.emailBody = $scope.message;
+			$scope.sendMessage();
 			$scope.message = "";
 		});
+	}
+
+	$scope.getMemberEmails = function(){
+		// alert("getMemberEmails");
+		var emailAddresses = [];
+		for(var i = 0; i < $scope.members.length; ++i)
+		{
+			emailAddresses = emailAddresses.concat([$scope.members[i].email]);
+			// alert("i:"+i+" "+JSON.stringify(emailAddresses));
+		}
+
+		return emailAddresses;
 	}
 
 	$scope.seeMore = function(){
@@ -284,7 +411,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 			if($scope.sequences[i].name == seq.name)
 			{
 				$scope.sequences[i].bool = !$scope.sequences[i].bool;
-				// alert('toggleSeq '+$scope.sequences[i].bool+$scope.showSeq(seq));
 				return $scope.sequences[i].bool;
 			}
 		}
@@ -304,9 +430,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		for(var i=0; i < $scope.sequences.length; i++){
 			if($scope.sequences[i].name == seq.name)
 			{
-				// if($scope.sequences[i].bool == true){
-				// 	alert('showSeq: ' + $scope.sequences[i].bool);
-				// }
 				return $scope.sequences[i].bool;
 			}
 		}
@@ -324,28 +447,25 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 	}
 
 	$scope.getShots = function(seq){
-		// if($scope.show(seq)){
-		// 	alert('getShots: ');
 			$scope.seqShots = [];
 			for(var i = 0; i < $scope.shots.length; ++i){
 				if($scope.shots[i].sequenceid == seq.id){
-					// alert('add to seqShots');
 					$scope.seqShots = $scope.seqShots.concat([
 						$scope.shots[i]
 					]);
 				}
 			}
 			return $scope.seqShots;
-		// }
-		// return [];
 	}
 
 	$scope.getPrevis = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.previs.length; ++i){
-			if($scope.previs[i].shotid == shotid){
-				label = $scope.previs[i].fname + ' ' + $scope.previs[i].lname[0] + '.';
-				break;
+		if($scope.previs != undefined){
+			for(var i = 0; i < $scope.previs.length; ++i){
+				if($scope.previs[i].shotid == shotid){
+					label = $scope.previs[i].fname + ' ' + $scope.previs[i].lname[0] + '.';
+					break;
+				}
 			}
 		}
 		return label;
@@ -353,10 +473,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.getAnimator = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.animators.length; ++i){
-			if($scope.animators[i].shotid == shotid){
-				label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname[0] + '.';
-				break;
+		if($scope.animators != undefined){
+			for(var i = 0; i < $scope.animators.length; ++i){
+				if($scope.animators[i].shotid == shotid){
+					label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname[0] + '.';
+					break;
+				}
 			}
 		}
 		return label;
@@ -364,10 +486,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.getLighter = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.lighters.length; ++i){
-			if($scope.lighters[i].shotid == shotid){
-				label = $scope.lighters[i].fname + ' ' + $scope.lighters[i].lname;
-				break;
+		if($scope.lighters != undefined){
+			for(var i = 0; i < $scope.lighters.length; ++i){
+				if($scope.lighters[i].shotid == shotid){
+					label = $scope.lighters[i].fname + ' ' + $scope.lighters[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -375,10 +499,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.getFX = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.fx.length; ++i){
-			if($scope.fx[i].shotid == shotid){
-				label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
-				break;
+		if($scope.fx != undefined){
+			for(var i = 0; i < $scope.fx.length; ++i){
+				if($scope.fx[i].shotid == shotid){
+					label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -386,10 +512,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.getCompositing = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.compositing.length; ++i){
-			if($scope.compositing[i].shotid == shotid){
-				label = $scope.compositing[i].fname + ' ' + $scope.compositing[i].lname;
-				break;
+		if($scope.compositing != undefined){
+			for(var i = 0; i < $scope.compositing.length; ++i){
+				if($scope.compositing[i].shotid == shotid){
+					label = $scope.compositing[i].fname + ' ' + $scope.compositing[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -397,10 +525,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.getWrangler = function(shotid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.wranglers.length; ++i){
-			if($scope.wranglers[i].shotid == shotid){
-				label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
-				break;
+		if($scope.wranglers != undefined){
+			for(var i = 0; i < $scope.wranglers.length; ++i){
+				if($scope.wranglers[i].shotid == shotid){
+					label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -408,10 +538,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.getRigging = function(assid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.rigging.length; ++i){
-			if($scope.rigging[i].assid == assid){
-				label = $scope.rigging[i].fname + ' ' + $scope.rigging[i].lname;
-				break;
+		if($scope.rigging != undefined){
+			for(var i = 0; i < $scope.rigging.length; ++i){
+				if($scope.rigging[i].assid == assid){
+					label = $scope.rigging[i].fname + ' ' + $scope.rigging[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -419,10 +551,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.getModeling = function(assid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.modeling.length; ++i){
-			if($scope.modeling[i].assid == assid){
-				label = $scope.modeling[i].fname + ' ' + $scope.modeling[i].lname;
-				break;
+		if($scope.modeling != undefined){
+			for(var i = 0; i < $scope.modeling.length; ++i){
+				if($scope.modeling[i].assid == assid){
+					label = $scope.modeling[i].fname + ' ' + $scope.modeling[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
@@ -430,70 +564,83 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 
 	$scope.getShading = function(assid){
 		var label = '+ Assign';
-		for(var i = 0; i < $scope.shading.length; ++i){
-			if($scope.shading[i].assid == assid){
-				label = $scope.shading[i].fname + ' ' + $scope.shading[i].lname;
-				break;
+		if($scope.shading != undefined){
+			for(var i = 0; i < $scope.shading.length; ++i){
+				if($scope.shading[i].assid == assid){
+					label = $scope.shading[i].fname + ' ' + $scope.shading[i].lname;
+					break;
+				}
 			}
 		}
 		return label;
 	}
 
 	$scope.getNotes = function(shot,type){
+		//alert("type:"+type);
 		$http.post('/getNotes',{
 			'shotid':shot.id,
 			'type':type
 		}).
 		success(function(data){
-			$scope.notes = data;
+			$scope.notes = orderBy(data,'time',true);
 		});
 	}
 
-	$scope.currentDropDown = function(seq,shot,type){
-		if(type == 0){
-			$http.post('/getShotInfo',{
-				'sequenceid': seq.id,
-				'projectid' : $scope.projectid,
-				'shotid' : shot.id
-			}).
-			success(function(data){
-				$scope.currentButtonDropDown = data[0];
-			});
-		}
-		else{
-			$scope.getNotes(shot,$scope.types.type);
-		}
+	$scope.getPopUpInfo = function(shot,type){
+
 	}
 
 	$scope.showShotForm = function(){
 		$scope.shotVisible = !$scope.shotVisible;
 		$scope.shotAttempted = false;
-		$scope.shotTitle = null;
-		$scope.shotDesc = null;
+		// $scope.shotTitle = undefined;
+		// $scope.shotDesc = undefined;
 	}
 
-	$scope.addShot = function(seq){
-		if($scope.shotTitle === null || $scope.shotDesc === null){
+	$scope.showShotDeleteForm = function(){
+		$scope.shotDelete = !$scope.shotDelete;
+	}
+
+	$scope.addShot = function(seq,desc,title){
+		if(title == undefined || desc == undefined){
 			$scope.shotAttempted = true;
 		}
 		else{
 			$scope.shotAttempted = false;
 			$http.post("/createShot",{
-				'name':$scope.shotTitle,
-				'desc':$scope.shotDesc,
+				'name':title,
+				'desc':desc,
 				'sequenceid':seq.id,
 				'frames':0
 			}).
 			success(function(data){
-				$scope.shotTitle = null;
-				$scope.shotDesc = null;
+				$scope.shotTitle = undefined;
+				$scope.shotDesc = undefined;
+				$http.post('/getShots',{
+					'projectid':$scope.projectid
+				}).
+				success(function(data){
+					$scope.shots = orderBy(data,'name',false);
+				});
 			});
+		}
+	}
 
-			$http.post('/getShots',{
-				'projectid':$scope.projectid
+	$scope.deleteShot = function(seq,shotName){
+		if(confirm("Are you sure you want to delete shot "+shotName+"?")){
+			console.log("ABOUT TO SEND REQUEST");
+			$http.post("/deleteShot",{
+				'shotName':shotName
 			}).
-			success(function(data){
-				$scope.shots = orderBy(data,'name',false);
+			success(function(){
+				$scope.shotName = undefined;
+				console.log("SUCCESS");
+				$http.post('/getShots',{
+					'projectid':$scope.projectid
+				}).
+				success(function(data){
+					$scope.shots = orderBy(data,'name',false);
+				});
 			});
 		}
 	}
@@ -538,6 +685,59 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore){
 		success(function(data){
 			$scope.currentShot.status = status;
 		});
+	}
+
+	$scope.enablePopup = function(recipientEmail, popupType){
+		console.log(popupType);
+		if(!$scope.popup){
+			$("#shadow").fadeIn(0500);
+			switch(popupType){
+				case 0: 
+					$("#shadowBox").fadeIn(0500);
+					break;
+				case 1:
+					$("#noteBox").fadeIn(0500);
+					break;
+				default:
+			}
+			$scope.popup = true;
+		}
+		$scope.recipient = recipientEmail;
+	}
+
+	$scope.disablePopup = function(){
+		if($scope.popup){
+			$("#shadow").fadeOut(0500);
+			$("#shadowBox").fadeOut(0500);
+			$("#noteBox").fadeOut(0500);
+			$scope.popup = false;
+		}
+	}
+
+	$scope.sendMessage = function(){
+		if($scope.recipient == undefined || $scope.recipient == ""){
+			alert("This user does not have a registered email");
+			return;
+		}
+		if($scope.emailBody == undefined){
+			alert("You must enter a message");
+			return;
+		}
+		$http.post('/sendEmail',
+  		{
+  			'to': $scope.recipient,
+  			'subject': $scope.emailSubject,
+  			'text': $scope.emailBody  
+  		}).
+  		success(function(data){
+  			//alert("Your message was successfully sent");
+  			$scope.emailSubject = null;
+  			$scope.emailBody = null;
+  		}).
+  		error(function(){
+  			alert("An error occurred and your message was not successfully delivered.");
+  		});
+  		$scope.disablePopup();
 	}
 })
 .directive('showinfo', function($compile) {
@@ -697,6 +897,12 @@ app.controller('indexController', function($scope, $http,$cookieStore){
    		//alert("IN");
    		window.location.href = '/createUser';
    	}
+
+    $scope.keypress = function(event){
+    	if(event.which == 13){
+    		$scope.loginButton();
+    	}
+    }
 });
 
 app.controller('homeController',function($scope,$http,$cookieStore){

@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Clutch</title>
     <link rel="stylesheet" href="../css/foundation.css" />
+    <link rel="stylesheet" href="../css/autocomplete.css">
     <!-- Do not change name of this file (app.css) -->
     <link rel="stylesheet" href="../css/app.css">
     <script src="../js/vendor/modernizr.js"></script>    
     <script src="angular/angular.js"></script>  
     <script type = 'text/javascript' src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script src="../js/vendor/jquery.js"></script>
+    <script src="../js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <script type = 'text/javascript' src="angular/autocomplete.js"></script> 
     <script type = 'text/javascript' src="angular/app.js"></script>  
 
   </head>
@@ -25,16 +32,17 @@
       <dd class="active"><a href="#panel3">Announcements</a></dd>
       <dd><a href="#panel1">Shots</a></dd>
       <dd><a href="#panel2">Assets</a></dd>
-      <dd><a href="#panel4">My Tasks</a></dd>
+      <!-- <dd><a href="#panel4">My Tasks</a></dd> -->
+      <dd><a href="#panel5">Directory</a></dd>
     </dl>
 
     <div class="tabs-content">
       <!-- Announcements tab -->
       <div class="content active" id="panel3">
         <div class="row">
-          <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == false'><font size="2.5">+ New Announcement</font></a><br><br>
+          <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == false'><font size="2.5">+ New Announcement</font></a>
           <a class="left" ng-click='postAnnTextBox = !postAnnTextBox' ng-show='postAnnTextBox == true'><font size="2.5">- Hide</font></a>
-            <textarea rows="2" placeholder="New Announcement..." class="large-4 columns left" ng-model='message' ng-show='postAnnTextBox'></textarea>
+            <br><br><textarea rows="2" placeholder="New Announcement..." class="large-4 columns left" ng-model='message' ng-show='postAnnTextBox'></textarea>
             <button class="small button" ng-click="postAnnouncement();postAnnTextBox = !postAnnTextBox;" ng-show='postAnnTextBox'>Post</button>
         </div>
 
@@ -59,16 +67,35 @@
         <div class="row">    
           <div class="large-2 columns left">
             <div class="row collapse">
-              <a ng-click="showForm()" class="tiny expand button navbar-button">Add Sequence</a><br/>
+              <a ng-click="showForm(1)" class="tiny expand button navbar-button">Add Sequence</a><br/>
             </div>
           </div>
-          <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
+          <div class="large-2 columns left" ng-class="{'fadein':addVisible , 'fadeout':!addVisible}">
             <div class="row collapse">
               <div class="small-3 columns">
                 <a href="#" class="button postfix signUp-button" ng-click="addSequence()" >+</a>
               </div>
               <div class="small-9 columns">
                 <input class="blue-input" type="text" placeholder="Title" ng-model="title" ng-class="{'has-error' : attempted}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(2)" class="tiny expand button navbar-button">Delete Sequence</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':deleteVisible , 'fadeout':!deleteVisible}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="deleteSequence()" >-</a>
+              </div>
+              <div class="small-9 columns">
+                <select ng-model="sequenceName">
+                  <option ng-repeat="seq in sequences" ng-click="toggleSeq(seq)">{{seq.name}}</option>
+                </select>
               </div>
             </div>
           </div>
@@ -89,17 +116,18 @@
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq(seq)'>
                 <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" ng-click='getShotById(shot.id)' data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,previs)'>{{getPrevis(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,animator)'>{{getAnimator(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,lighter)'>{{getLighter(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:133px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,wrangler)'>{{getWrangler(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getFX(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,fx)'>{{getCompositing(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button" ng-click="enablePopup(null,popupEnum.ASSIGN)">{{getPrevis(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'fx')">{{getFX(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'compositing')">{{getCompositing(shot.id)}}</button>
               </div>
             </ul>
             <div ng-show='showSeq(seq)' class="row">
               <div class="large-2 columns right">
                   <button class="tiny expand button navbar-button" ng-click="showShotForm();toggleSeq(seq)">Add Shot</button>
+                  <button class="tiny expand button navbar-button" ng-click="showShotDeleteForm();toggleSeq(seq)">Delete Shot</button>
               </div>
               <div class="large-10 columns right" ng-class="{'fadein':shotVisible , 'fadeout':!shotVisible}">
                 <div class="small-3 columns">
@@ -109,8 +137,28 @@
                   <input ng-click='toggleSeq(seq)'class="blue-input" type="text" placeholder="Description" ng-model="shotDesc" ng-class="{'has-error' : shotAttempted}">
                 </div>
                 <div class="small-1 columns">
-                  <button ng-click='toggleSeq(seq)'href="#" class="button postfix signUp-button" ng-click="addShot(seq)" >+</button>
+                  <button href="#" class="button postfix signUp-button" ng-click="toggleSeq(seq);addShot(seq,shotDesc,shotTitle)">+</button>
                 </div>
+              </div>
+              <!-- DELETE SHOT -->
+              <div class="large-10 columns right" ng-class="{'fadein':shotDelete , 'fadeout':!shotDelete}">
+                <div class="small-1 columns right">
+                  <button href="#" class="button postfix signUp-button" ng-click="toggleSeq(seq);deleteShot(seq,shotName)">-</button>
+                </div>
+                <div class="small-3 columns right">
+                  <select ng-click="toggleSeq(seq)" ng-model="shotName">
+                    <option ng-repeat="shot in getShots(seq)">{{shot.name}}</option>
+                  </select>
+                </div>
+                <!--<div class="small-3 columns">
+                  <input ng-click='toggleSeq(seq)'class="blue-input" type="text" placeholder="Title" ng-model="shotTitle" ng-class="{'has-error' : shotAttempted}">
+                </div>
+                <div class="small-8 columns">
+                  <input ng-click='toggleSeq(seq)'class="blue-input" type="text" placeholder="Description" ng-model="shotDesc" ng-class="{'has-error' : shotAttempted}">
+                </div>
+                <div class="small-1 columns">
+                  <button href="#" class="button postfix signUp-button" ng-click="toggleSeq(seq);addShot(seq,shotDesc,shotTitle)">+</button>
+                </div>-->
               </div>
             </div>
           </a>
@@ -123,16 +171,35 @@
           <div class="row">    
             <div class="large-2 columns left">
               <div class="row collapse">
-                <a ng-click="showForm()" class="tiny expand button navbar-button">Add Asset</a><br/>
+                <a ng-click="showForm(1)" class="tiny expand button navbar-button">Add Asset</a><br/>
               </div>
             </div>
-            <div class="large-2 columns left" ng-class="{'fadein':visible , 'fadeout':!visible}">
+            <div class="large-2 columns left" ng-class="{'fadein':addVisible , 'fadeout':!addVisible}">
               <div class="row collapse">
                 <div class="small-3 columns">
                   <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
                 </div>
                 <div class="small-9 columns">
                   <input class="blue-input" type="text" placeholder="Title" ng-model="assetTitle" ng-class="{'has-error' : attempted}">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">    
+            <div class="large-2 columns left">
+              <div class="row collapse">
+                <a ng-click="showForm(2)" class="tiny expand button navbar-button">Delete Asset</a><br/>
+              </div>
+            </div>
+            <div class="large-2 columns left" ng-class="{'fadein':deleteVisible , 'fadeout':!deleteVisible}">
+              <div class="row collapse">
+                <div class="small-3 columns">
+                  <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+                </div>
+                <div class="small-9 columns">
+                  <select ng-model="assetName">
+                    <option ng-repeat="ass in assets">{{ass.name}}</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -148,23 +215,52 @@
             <ul ng-show="showAssets(ass)" >
               <div ng-click='toggleAsset(ass)'>
                 <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,modeling)'>{{getModeling(ass.id)}}</button>
-                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,shading)'>{{getShading(ass.id)}}</button>
-                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click='currentDropDown(seq,shot,rigging)'>{{getRigging(ass.id)}}</button>
+                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
+                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
+                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getRigging(ass.id)}}</button>
               </div>
             </ul>
           </a>
         </div>
       </div>
 
+      <div class="content" id="panel5">
+        <div class="row">
+          <table class="large-12">
+            <tr>
+              <th>First</th>
+              <th>Last</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Message</th>
+            </tr>
+            <tr ng-repeat='user in members'>
+              <td>{{user.fname}}</td>
+              <td>{{user.lname}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.phone}}</td>
+              <td>
+                <button id="user.email" ng-click="enablePopup(user.email, popupEnum.MESSAGE)">Send Message</button>
+              </td>
+            </tr>
+          </table>
+        </div>
       <!-- this is the My Tasks tab-->
-      <div class="content" id="panel4">
+      <!-- <div class="content" id="panel4">
 
-      </div>
+      </div> -->
     </div>
 
     <ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
-      <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
+
+
+
+      <li>
+        <!-- <input type="text" placeholder="Assign to"> -->
+        <autocomplete ng-model="result" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+
+        <a href="" class="button postfix black-button">Assign</a>
+      </li>
       <div class='panel' ng-repeat="note in notes">
         <p>{{note.note}}</p>
         <p class="right">~{{note.fname}} {{note.lname}}</p>
@@ -199,20 +295,26 @@
         <p class="right">{{note.time}}</p>
       </div>
     </ul>
+  
+    <div id="shadow" ng-click="disablePopup()"></div>
+    <div id="shadowBox">
+      <form>
+        <label>Subject:
+          <input type="text" ng-model="emailSubject"/>
+        </label>
+        <label>Message
+          <textarea ng-model="emailBody"></textarea>
+        </label>
+        <button ng-click="sendMessage()">Send</button>
+      </form>
+    </div>
+    <div id="noteBox">
+      <autocomplete ng-model="result" ng-click="" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
 
-<!-- <button data-dropdown="drop" aria-controls="drop" aria-expanded="false" class="large alert round button dropdown">Dropdown Button</button><br>
-<ul id="drop" data-dropdown-content class="f-dropdown" role="menu" aria-hidden="false" tabindex="-1">
-  <li><a href="#">This is a link</a></li>
-  <li><a href="#">This is another</a></li>
-  <li><a href="#">Yet another</a></li>
-</ul> -->
-
-    <script src="../js/vendor/jquery.js"></script>
-    <script src="../js/foundation.min.js"></script>
-
-    <script>
-      $(document).foundation();
-    </script>
+        <a href="" class="button postfix black-button">Assign</a>
+        <hr>
+        <div class="row" ></div> <!-- ng-repeat="note in notes"-->
+    </div>
 
 
 

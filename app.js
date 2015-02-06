@@ -40,9 +40,9 @@ app.get('/angular/angular.min.js.map',function(req,res){res.sendFile(__dirname+'
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js');});
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js');});
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname+'/views/navbar.html');});
-app.get('/chicken.jpg',function(req,res){res.sendFile(__dirname+'/views/chicken.jpg');});
-app.get('/chickens.png',function(req,res){res.sendFile(__dirname+'/views/chickens.png');});
-app.get('/favicon.ico',function(req,res){res.sendFile(__dirname+'/views/favicon.ico');});
+app.get('/chicken.jpg',function(req,res){res.sendFile(__dirname+'/views/images/chicken.jpg');});
+app.get('/chickens.png',function(req,res){res.sendFile(__dirname+'/views/images/chickens.png');});
+app.get('/favicon.ico',function(req,res){res.sendFile(__dirname+'/views/images/favicon.ico');});
 
 app.post('/validateUser',database.validateUser);
 app.post('/createUser',database.createUser);
@@ -53,6 +53,7 @@ app.post('/addProject', database.addProject);
 app.post('/getShots',database.getShots);
 app.post('/getAnimators',database.getAnimators);
 app.post('/createSequence', database.createSequence);
+app.post('/deleteSequence', database.deleteSequence);
 app.post('/getProjects',database.getProjects);
 app.post('/getAnnouncements',database.getAnnouncements);
 app.post('/getSequences',database.getSequences);
@@ -69,9 +70,13 @@ app.post('/postAnnouncement',database.postAnnouncement);
 app.post('/sendEmail',email.sendEmail);
 app.post('/getAssets',database.getAssets);
 app.post('/createShot',database.createShot);
+app.post('/deleteShot',database.deleteShot);
 app.post('/setFrames',database.setFrames);
 app.post('/setStatus',database.setStatus);
 app.post('/createAsset',database.createAsset);
+app.post('/deleteAsset',database.deleteAsset);
+app.post('/getUsers',database.getUsers);
+// app.post('/getShotInfo',database.getShotInfo);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
@@ -84,3 +89,15 @@ app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
 app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
 app.get('/createUser',function(req,res){res.sendFile(__dirname+'/views/createUser.html');});
+
+//testing stuff
+app.get('/test',function(req,res){res.sendFile(__dirname+'/views/test.html');});
+app.get('/angular/AcuteTest.js',function(req,res){res.sendFile(__dirname+'/views/angular/AcuteTest.js');});
+app.get('/css/acute.select.css',function(req,res){res.sendFile(__dirname+'/css/acute.select.css');});
+app.get('/angular/acute.select.js',function(req,res){res.sendFile(__dirname+'/views/angular/acute.select.js');});
+app.get('/acute.select/acute.select.htm',function(req,res){res.sendFile(__dirname+'/views/acute.select.htm');});
+app.get('/css/images/dropdown.gif',function(req,res){res.sendFile(__dirname+'/views/images/dropdown.gif');});
+app.get('/angular/autocomplete.js',function(req,res){res.sendFile(__dirname+'/views/angular/autocomplete.js');});
+app.get('/css/autocomplete.css',function(req,res){res.sendFile(__dirname+'/css/autocomplete.css');});
+
+
