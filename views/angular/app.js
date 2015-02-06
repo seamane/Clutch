@@ -196,7 +196,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}
 	}
 
-	$scope.addAsset  = function(){
+	$scope.addAsset  = function(type){
 		if($scope.assetTitle === null){
 			$scope.attempted = true;
 		}
@@ -205,7 +205,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			$scope.attempted = false;
 			$http.post('createAsset',{
 				'name': $scope.assetTitle,
-				'projectid' : $scope.projectid
+				'projectid' : $scope.projectid,
+				'type' : type
 			}).
 			success(function(data){
 				$scope.assetTitle = null;
