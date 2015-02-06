@@ -289,10 +289,12 @@
           <input type="radio" name="status" ng-model="newStatus" value="Previs" ng-change="setNewStatus(newStatus)">Previs<br>
           <input type="radio" name="status" ng-model="newStatus" value="Animation" ng-change="setNewStatus(newStatus)">Animation<br>
           <input type="radio" name="status" ng-model="newStatus" value="Lighting" ng-change="setNewStatus(newStatus)">Lighting<br>
-          <input type="radio" name="status" ng-model="newStatus" value="Rendering" ng-change="setNewStatus(newStatus)">Rendering<br>
-          <input type="radio" name="status" ng-model="newStatus" value="FX" ng-change="setNewStatus(newStatus)">FX<br>
-          <input type="radio" name="status" ng-model="newStatus" value="Composite" ng-change="setNewStatus(newStatus)">Composite
+          <input type="radio" name="status" ng-model="newStatus" value="Compositing" ng-change="setNewStatus(newStatus)">Compositing<br>
+          <input type="radio" name="status" ng-model="newStatus" value="Final" ng-change="setNewStatus(newStatus)">Final<br>
+          <input type="radio" name="status" ng-model="newStatus" value="Polish" ng-change="setNewStatus(newStatus)">Polish<br>
+          <input type="radio" name="status" ng-model="newStatus" value="Done" ng-change="setNewStatus(newStatus)">Done<br>
       </form>
+      <div class="large-12 columns black-background" style="margin:2px">{{currentShot.description}}</div>
     </div>
 
     <ul id="notesDrop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false">

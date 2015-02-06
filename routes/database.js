@@ -62,7 +62,6 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'frames INT,'
-		+ 'status VARCHAR(15),'
 		+ 'description VARCHAR(500),'
 		+ 'name VARCHAR(20),'
 		+ 'status VARCHAR(20),'
