@@ -200,26 +200,26 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}
 	}
 
-	$scope.addAsset  = function(type){
-		if($scope.assetTitle === null){
+	$scope.addAsset  = function(type,assetTitle){
+		alert("addAsset:"+type+","+assetTitle);
+		if(assetTitle == undefined || assetTitle == ''){
+			alert("undefined");
 			$scope.attempted = true;
 		}
 		else{
-			//alert("createAsset");
 			$scope.attempted = false;
-			$http.post('createAsset',{
-				'name': $scope.assetTitle,
+			$http.post('/createAsset',{
+				'name': assetTitle,
 				'projectid' : $scope.projectid,
 				'type' : type
 			}).
 			success(function(data){
-				$scope.assetTitle = null;
-			});
-			$http.post('/getAssets',{
-				'projectid': $scope.projectid
-			}).
-			success(function(data){
-				$scope.assets = orderBy(data,'name',false);
+				$http.post('/getAssets',{
+					'projectid': $scope.projectid
+				}).
+				success(function(data){
+					$scope.assets = orderBy(data,'name',false);
+				});
 			});
 		}
 	}
@@ -921,6 +921,7 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    		$scope.password = '';
 	    	}
 	    	else{
+	    		alert("cookie:"+JSON.stringify(data[0]));
 	    		$cookieStore.put('userInfo',data[0]);
 	    		$scope.failLogin = false;
 	    		window.location.href = '/home';
@@ -933,7 +934,6 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 
    	$scope.signUp =function() 
    	{
-   		//alert("IN");
    		window.location.href = '/createUser';
    	}
 

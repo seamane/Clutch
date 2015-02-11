@@ -259,29 +259,24 @@ exports.validateUser = function(req,res){
 				console.log('error validatUser query');
 				throw err;
 			}
-			// if(JSON.stringify(rows) === '[]')
-			// {
-				res.end(JSON.stringify(rows));
-			// }
-			// else
-			// {
-			// 	//console.log(JSON.stringify(rows));
-			// 		//console.log(rows[0].username);
-			// 		var salt = rows[0].salt;
-			// 		var h = rows[0].hashe;
-			// 		var compare = sha1(req.body.password + salt);
-			// 		if(compare == h)
-			// 		{
-			// 			res.end(JSON.stringify(rows));
-			// 		}
-			// 		else
-			// 		{
-			// 			res.end('[]');
-			// 		}
-
-			//}
-			//console.log("AFTER ROWS");
-			//res.end(JSON.stringify(rows));
+			if(JSON.stringify(rows) != '[]'){
+				var salt = rows[0].salt;
+				var h = rows[0].hashe;
+				var compare = sha1(req.body.password + salt);
+				if(compare != h)
+				{
+					res.end('[]');
+				}
+				res.end(JSON.stringify([{
+	    			"id":rows[0].id,
+	    			"fname":rows[0].fname,
+	    			"lname":rows[0].lname,
+	    			"username":rows[0].username,
+	    			"phone":rows[0].phone,
+	    			"email":rows[0].email
+	    		}]));
+			}
+			res.end(JSON.stringify(rows));
 		}
 	);
 }
@@ -689,9 +684,9 @@ exports.setStatus = function(req,res){
 exports.createAsset = function(req,res){
 	connection.query
 	(
-		'INSERT INTO assets (name, projectid)' +
-		'VALUES (\''+req.body.name+'\', \''+req.body.projectid+'\');',
-		function (err,rows,fields){
+		'INSERT INTO assets (name, projectid,type)' +
+		'VALUES (\''+req.body.name+'\', \''+req.body.projectid+'\',\''+req.body.type+'\');',
+		function (err){
 			if(err){
 				console.log('error addSequence query');
 				throw err;

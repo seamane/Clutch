@@ -168,7 +168,9 @@
       <!-- this is the assets tab -->
       <div class="content" id="panel2">
         <div class="row">
-          <h2 class="asset-types">Character</h2>
+          <div class="large-3 columns">
+            <h2 class="asset-types">Character</h2>
+          </div>
           <div class="large-2 columns left">
             <div class="row collapse">
               <a ng-click="showForm(1)" class="tiny expand button navbar-button">Add Asset</a><br/>
@@ -177,7 +179,7 @@
           <div class="large-2 columns left" ng-class="{'fadein':addVisibleChar , 'fadeout':!addVisibleChar}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset('CHAR',charAssetTitle);charAssetTitle=''">+</a>
               </div>
               <div class="small-9 columns">
                 <input class="blue-input" type="text" placeholder="Title" ng-model="charAssetTitle" ng-class="{'has-error' : attempted}">
@@ -205,7 +207,9 @@
         <hr class="lineBreak" noshade="true">
 
         <div class="row">
-          <h3 class="asset-types-props">Character Props</h3>
+          <div class="large-3 columns">
+            <h3 class="asset-types-props">Character Props</h3>
+          </div>
           <div class="large-2 columns left">
             <div class="row collapse">
               <a ng-click="showForm(3)" class="tiny expand button navbar-button">Add Asset</a><br/>
@@ -214,10 +218,10 @@
           <div class="large-2 columns left" ng-class="{'fadein':addVisibleCharProp , 'fadeout':!addVisibleCharProp}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset('CHAR_PROP')">+</a>
               </div>
               <div class="small-9 columns">
-                <input class="blue-input" type="text" placeholder="Title" ng-model="charAssetTitle" ng-class="{'has-error' : attempted}">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="charPropAssetTitle" ng-class="{'has-error' : attempted}">
               </div>
             </div>
           </div>
@@ -232,7 +236,7 @@
                 <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
               </div>
               <div class="small-9 columns">
-                <select ng-model="CharAssetName">
+                <select ng-model="CharPropAssetName">
                   <option ng-repeat="ass in assets">{{ass.name}}</option>
                 </select>
               </div>
@@ -242,7 +246,9 @@
         <hr class="lineBreak-props" noshade="true">
 
         <div class="row">
-          <h2 class="asset-types">Environment</h2>
+          <div class="large-3 columns">
+            <h2 class="asset-types">Environment</h2>
+          </div>
           <div class="large-2 columns left">
             <div class="row collapse">
               <a ng-click="showForm(5)" class="tiny expand button navbar-button">Add Asset</a><br/>
@@ -251,10 +257,10 @@
           <div class="large-2 columns left" ng-class="{'fadein':addVisibleEnv , 'fadeout':!addVisibleEnv}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset('ENV')">+</a>
               </div>
               <div class="small-9 columns">
-                <input class="blue-input" type="text" placeholder="Title" ng-model="charAssetTitle" ng-class="{'has-error' : attempted}">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="envAssetTitle" ng-class="{'has-error' : attempted}">
               </div>
             </div>
           </div>
@@ -269,7 +275,7 @@
                 <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
               </div>
               <div class="small-9 columns">
-                <select ng-model="CharAssetName">
+                <select ng-model="envAssetName">
                   <option ng-repeat="ass in assets">{{ass.name}}</option>
                 </select>
               </div>
@@ -279,7 +285,9 @@
         <hr class="lineBreak" noshade="true">
 
         <div class="row">
-          <h3 class="asset-types-props">Environment Props</h3>
+          <div class="large-3 columns">
+            <h3 class="asset-types-props">Environment Props</h3>
+          </div>
           <div class="large-2 columns left">
             <div class="row collapse">
               <a ng-click="showForm(7)" class="tiny expand button navbar-button">Add Asset</a><br/>
@@ -288,10 +296,10 @@
           <div class="large-2 columns left" ng-class="{'fadein':addVisibleEnvProp , 'fadeout':!addVisibleEnvProp}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset('ENV_PROP')">+</a>
               </div>
               <div class="small-9 columns">
-                <input class="blue-input" type="text" placeholder="Title" ng-model="charAssetTitle" ng-class="{'has-error' : attempted}">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="envPropAssetTitle" ng-class="{'has-error' : attempted}">
               </div>
             </div>
           </div>
@@ -306,7 +314,7 @@
                 <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
               </div>
               <div class="small-9 columns">
-                <select ng-model="CharAssetName">
+                <select ng-model="envPropAssetName">
                   <option ng-repeat="ass in assets">{{ass.name}}</option>
                 </select>
               </div>
