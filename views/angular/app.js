@@ -170,13 +170,17 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			}).
 			success(function(data){
 				$scope.title = null;
+				$scope.sequences = orderBy($scope.sequences.concat([{
+				'name': $scope.title,
+				'projectid' : $scope.projectid}]),
+				'name',false);
 			});
-			$http.post('/getSequences',{
-				'projectid': $scope.projectid
-			}).
-			success(function(data){
-				$scope.sequences = orderBy(data,'name',false);
-			});
+			// $http.post('/getSequences',{
+			// 	'projectid': $scope.projectid
+			// }).
+			// success(function(data){
+			// 	$scope.sequences = orderBy(data,'name',false);
+			// });
 		}
 	}
 
@@ -239,13 +243,41 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	$scope.showForm = function(form){
 		switch(form){
 			case 1:
-				$scope.addVisible = !$scope.addVisible;
+				$scope.addVisibleChar = !$scope.addVisibleChar;
 				$scope.attempted = false;
 				$scope.title = null;
 				$scope.assetTitle = null;
 				break;
 			case 2:
-				$scope.deleteVisible = !$scope.deleteVisible;
+				$scope.deleteVisibleChar = !$scope.deleteVisibleChar;
+				break;
+			case 3:
+				$scope.addVisibleCharProp = !$scope.addVisibleCharProp;
+				$scope.attempted = false;
+				$scope.title = null;
+				$scope.assetTitle = null;
+				break;
+			case 4:
+				$scope.deleteVisibleCharProp = !$scope.deleteVisibleCharProp;
+				break;
+			case 5:
+				$scope.addVisibleEnv = !$scope.addVisibleEnv;
+				$scope.attempted = false;
+				$scope.title = null;
+				$scope.assetTitle = null;
+				break;
+			case 6:
+				$scope.deleteVisibleEnv = !$scope.deleteVisibleEnv;
+				break;
+			case 7:
+				$scope.addVisibleEnvProp = !$scope.addVisibleEnvProp;
+				$scope.attempted = false;
+				$scope.title = null;
+				$scope.assetTitle = null;
+				break;
+			case 8:
+				$scope.deleteVisibleEnvProp = !$scope.deleteVisibleEnvProp;
+				break;
 		}
 		
 	}
@@ -617,12 +649,18 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			success(function(data){
 				$scope.shotTitle = undefined;
 				$scope.shotDesc = undefined;
-				$http.post('/getShots',{
-					'projectid':$scope.projectid
-				}).
-				success(function(data){
-					$scope.shots = orderBy(data,'name',false);
-				});
+				// $http.post('/getShots',{
+				// 	'projectid':$scope.projectid
+				// }).
+				// success(function(data){
+				// 	$scope.shots = orderBy(data,'name',false);
+				// });
+				$scope.shots = orderBy($scope.shots.concat([{
+				'name':title,
+				'desc':desc,
+				'sequenceid':seq.id,
+				'frames':0}]),
+				'name',false);
 			});
 		}
 	}

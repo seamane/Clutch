@@ -167,15 +167,156 @@
 
       <!-- this is the assets tab -->
       <div class="content" id="panel2">
-        <div class="row"><h2 class="asset-types">Character</h2></div>
+        <div class="row">
+          <h2 class="asset-types">Character</h2>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(1)" class="tiny expand button navbar-button">Add Asset</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':addVisibleChar , 'fadeout':!addVisibleChar}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+              </div>
+              <div class="small-9 columns">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="charAssetTitle" ng-class="{'has-error' : attempted}">
+              </div>
+            </div>
+          </div>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(2)" class="tiny expand button navbar-button">Delete Asset</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':deleteVisibleChar , 'fadeout':!deleteVisibleChar}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+              </div>
+              <div class="small-9 columns">
+                <select ng-model="CharAssetName">
+                  <option ng-repeat="ass in assets">{{ass.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
         <hr class="lineBreak" noshade="true">
-        <div class="row"><h3 class="asset-types-props">Character Props</h3></div>
+
+        <div class="row">
+          <h3 class="asset-types-props">Character Props</h3>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(3)" class="tiny expand button navbar-button">Add Asset</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':addVisibleCharProp , 'fadeout':!addVisibleCharProp}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+              </div>
+              <div class="small-9 columns">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="charAssetTitle" ng-class="{'has-error' : attempted}">
+              </div>
+            </div>
+          </div>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(4)" class="tiny expand button navbar-button">Delete Asset</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':deleteVisibleCharProp , 'fadeout':!deleteVisibleCharProp}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+              </div>
+              <div class="small-9 columns">
+                <select ng-model="CharAssetName">
+                  <option ng-repeat="ass in assets">{{ass.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
         <hr class="lineBreak-props" noshade="true">
-        <div class="row"><h2 class="asset-types">Environment</h2></div>
+
+        <div class="row">
+          <h2 class="asset-types">Environment</h2>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(5)" class="tiny expand button navbar-button">Add Asset</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':addVisibleEnv , 'fadeout':!addVisibleEnv}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+              </div>
+              <div class="small-9 columns">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="charAssetTitle" ng-class="{'has-error' : attempted}">
+              </div>
+            </div>
+          </div>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(6)" class="tiny expand button navbar-button">Delete Asset</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':deleteVisibleEnv , 'fadeout':!deleteVisibleEnv}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+              </div>
+              <div class="small-9 columns">
+                <select ng-model="CharAssetName">
+                  <option ng-repeat="ass in assets">{{ass.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
         <hr class="lineBreak" noshade="true">
-        <div class="row"><h3 class="asset-types-props">Environment Props</h3></div>
+
+        <div class="row">
+          <h3 class="asset-types-props">Environment Props</h3>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(7)" class="tiny expand button navbar-button">Add Asset</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':addVisibleEnvProp , 'fadeout':!addVisibleEnvProp}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset()">+</a>
+              </div>
+              <div class="small-9 columns">
+                <input class="blue-input" type="text" placeholder="Title" ng-model="charAssetTitle" ng-class="{'has-error' : attempted}">
+              </div>
+            </div>
+          </div>
+          <div class="large-2 columns left">
+            <div class="row collapse">
+              <a ng-click="showForm(8)" class="tiny expand button navbar-button">Delete Asset</a><br/>
+            </div>
+          </div>
+          <div class="large-2 columns left" ng-class="{'fadein':deleteVisibleEnvProp , 'fadeout':!deleteVisibleEnvProp}">
+            <div class="row collapse">
+              <div class="small-3 columns">
+                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+              </div>
+              <div class="small-9 columns">
+                <select ng-model="CharAssetName">
+                  <option ng-repeat="ass in assets">{{ass.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
         <hr class="lineBreak-props" noshade="true">
-        <div class='row'>   
+
+
+        <!-- <div class='row'>   
           <div class="row">    
             <div class="large-2 columns left">
               <div class="row collapse">
@@ -229,7 +370,7 @@
               </div>
             </ul>
           </a>
-        </div>
+        </div> -->
       </div>
 
       <div class="content" id="panel5">

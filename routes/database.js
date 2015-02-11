@@ -104,7 +104,7 @@ createTables = function()
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'name VARCHAR(20),'
-		+ 'type VARCHAR(20),'
+		+ 'type VARCHAR(20),'//CHAR,CHAR_PROP,ENV,ENV_PROP
 		+ 'projectid INT'
 		+ ');',function (err){
 		if(err){
