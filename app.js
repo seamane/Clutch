@@ -75,6 +75,7 @@ app.post('/setFrames',database.setFrames);
 app.post('/setStatus',database.setStatus);
 app.post('/createAsset',database.createAsset);
 app.post('/deleteAsset',database.deleteAsset);
+app.post('/createNote',database.createNote);
 app.post('/getUsers',database.getUsers);
 // app.post('/getShotInfo',database.getShotInfo);
 

@@ -146,6 +146,10 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
     	NOTES: 2
     }
 
+    // Popup stuff
+    $scope.currentShotId = undefined;
+    $scope.department = undefined;
+
     $scope.updateSuggestions = function(typedthings){
 	    console.log("Do something like reload data with this: " + typedthings );
 	    $scope.newAssignMembers = AssignMember.getmembers(typedthings);
@@ -236,6 +240,29 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				success(function(data){
 					$scope.assets = orderBy(data,'name',false);
 				});
+			});
+		}
+	}
+
+	$scope.addNote = function(){
+		if ($scope.noteFied != "" && $scope.noteField != undefined){
+			console.log($scope.currentShotId);
+			 $http.post('createNote',{
+				'note': $scope.noteField,
+				'shotid' : $scope.currentShotId,
+				'type' : $scope.department,
+				'userid' : $cookieStore.get("userInfo").id
+			}).
+			success(function(data){
+				$http.post('/getNotes',{
+				'shotid':$scope.currentShotId,
+				'type':$scope.department
+				}).
+				success(function(data){
+					$scope.notes = orderBy(data,'time',true);
+				});
+				$scope.noteField = undefined;
+				$scope.disablePopup();
 			});
 		}
 	}
@@ -726,8 +753,10 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		});
 	}
 
-	$scope.enablePopup = function(recipientEmail, popupType){
-		console.log(popupType);
+	$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
+		//console.log(popupType);
+		$scope.currentShotId = currentShot;
+		$scope.department = department;
 		if(!$scope.popup){
 			$("#shadow").fadeIn(0500);
 			switch(popupType){

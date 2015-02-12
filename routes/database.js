@@ -709,6 +709,20 @@ exports.deleteAsset = function(req,res){
 	);
 }
 
+exports.createNote = function(req,res){
+	connection.query(
+		'INSERT INTO notes (note, shotid, type, userid)' +
+		'VALUES (\''+req.body.note+'\', \''+req.body.shotid+'\', \''+req.body.type+'\', \''+req.body.userid+'\');',
+		function (err,rows,fields){
+			if(err){
+				console.log('error createNote query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
 exports.getUsers = function(req,res){
 	connection.query
 	(

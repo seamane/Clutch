@@ -116,7 +116,7 @@
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq(seq)'>
                 <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" ng-click='getShotById(shot.id)' data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button" ng-click="enablePopup(null,popupEnum.ASSIGN)">{{getPrevis(shot.id)}}</button>
+                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button" ng-click="getNotes(shot,'previs');enablePopup(null,popupEnum.ASSIGN,shot.id,'previs');">{{getPrevis(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
                 <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
@@ -472,7 +472,13 @@
 
         <a href="" class="button postfix black-button">Assign</a>
         <hr>
-        <div class="row" ></div> <!-- ng-repeat="note in notes"-->
+        <div class='panel' ng-repeat="note in notes">
+          <p>{{note.note}}</p>
+          <p class="right">~{{note.fname}} {{note.lname}}</p>
+          <p class="right">{{note.time}}</p>
+        </div>
+        <textarea placeholder="notes" ng-model="noteField"></textarea>
+        <button ng-click="addNote();">Add Note</button>
     </div>
 
 
