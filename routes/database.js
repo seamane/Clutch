@@ -4,7 +4,8 @@ var sha1 = require('sha1');
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'default'
+	password: 'default',
+	multipleStatements: true
 });
 
 exports.initDatabase = function(req,res)
@@ -330,12 +331,39 @@ exports.createSequence = function(req, res){
 
 exports.deleteSequence = function(req, res){
 	connection.query(
-		'DELETE FROM sequences WHERE name ="' + req.body.name + '";',
-		function (err){
+		'select id FROM sequences WHERE name ="' + req.body.name + '";'
+		+ 'delete from sequences where name="'+ req.body.name + '";',
+		function (err,seqid){
 			if(err){
 				console.log('error deleteSequence query');
 				throw err;
 			}
+			connection.query(
+				'select id from shots where sequenceid='+seqid+';'
+				'delete from shots where sequenceid='+seqid+';',
+				function(err,shotid){
+					if(err){
+						console.log('error deleteSequence query');
+						throw err;
+					}
+					connection.query(
+						'DELETE FROM animators WHERE shotid=' + shotid[0].id + ';'
+						+ 'DELETE FROM previs WHERE shotid=' + shotid[0].id + ';'
+						+ 'DELETE FROM lighters WHERE shotid=' + shotid[0].id + ';'
+						+ 'DELETE FROM vfx WHERE shotid=' + shotid[0].id + ';'
+						+ 'DELETE FROM notes WHERE shotid=' + shotid[0].id + ';'
+						+ 'DELETE FROM renderwranglers WHERE shotid=' + shotid[0].id + ';'
+						+ 'DELETE FROM compositing WHERE shotid=' + shotid[0].id + ';',
+						function(err){
+							if(err){
+								console.log('error deleteShot query 2');
+								throw err;
+							}
+							res.end("success");
+						}
+					);
+				}
+			);
 			res.end("success");
 		}
 	);
@@ -445,7 +473,13 @@ exports.getShots = function(req,res){
 exports.getAssets = function(req,res){
 	connection.query(
 		'select * from assets '
-		+ 'where assets.projectid='+req.body.projectid+';',
+		+ 'where assets.projectid='+req.body.projectid+' and assets.type = \'CHAR\';' 
+		+ 'select * from assets '
+		+ 'where assets.projectid='+req.body.projectid+' and assets.type = \'CHAR_PROP\';'
+		+ 'select * from assets '
+		+ 'where assets.projectid='+req.body.projectid+' and assets.type = \'ENV\';'
+		+ 'select * from assets '
+		+ 'where assets.projectid='+req.body.projectid+' and assets.type = \'ENV_PROP\';',
 		function(err,assets){
 			if(err){
 				console.log('error getAssets query');
@@ -621,7 +655,6 @@ exports.postAnnouncement = function(req,res){
 }
 
 exports.createShot = function(req,res){
-	console.log(JSON.stringify(req.body));
 	connection.query(
 		'INSERT INTO shots(name,description,sequenceid,frames) '
 		+ 'VALUES(\'' + req.body.name + '\',\'' 
@@ -639,16 +672,30 @@ exports.createShot = function(req,res){
 }
 
 exports.deleteShot = function(req,res){
-	console.log(JSON.stringify(req.body));
-	console.log('DELETE FROM shots WHERE name="' + req.body.shotName + '";');
 	connection.query(
-		'DELETE FROM shots WHERE name="' + req.body.shotName + '";',
-		function(err){
+		'select id from shots where name="'+req.body.shotName+'";'
+		+ 'DELETE FROM shots WHERE id=' + shotid[0].id + ';',
+		function(err,shotid){
 			if(err){
-				console.log('error deleteShot query');
+				console.log('error deleteShot query 1');
 				throw err;
 			}
-			res.end("success");
+			connection.query(
+				'DELETE FROM animators WHERE shotid=' + shotid[0].id + ';'
+				+ 'DELETE FROM previs WHERE shotid=' + shotid[0].id + ';'
+				+ 'DELETE FROM lighters WHERE shotid=' + shotid[0].id + ';'
+				+ 'DELETE FROM vfx WHERE shotid=' + shotid[0].id + ';'
+				+ 'DELETE FROM notes WHERE shotid=' + shotid[0].id + ';'
+				+ 'DELETE FROM renderwranglers WHERE shotid=' + shotid[0].id + ';'
+				+ 'DELETE FROM compositing WHERE shotid=' + shotid[0].id + ';',
+				function(err){
+					if(err){
+						console.log('error deleteShot query 2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
 		}
 	);
 }

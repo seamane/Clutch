@@ -21,7 +21,6 @@ app.factory('AssignMember', function($http, $q, $timeout, $cookieStore){
 		    	userNames = userNames.concat([name]);
 		    }
 		    members = userNames;
-		    //alert("userNames:"+JSON.stringify(userNames));
 
 		    $timeout(function(){
 		      // moviedata.resolve(movies);
@@ -33,21 +32,17 @@ app.factory('AssignMember', function($http, $q, $timeout, $cookieStore){
 	return AssignMember;
 });
 
-app.controller('createUserController', function($scope, $http, $cookieStore)
-{
-	$scope.createUser = function() 
-	{
+app.controller('createUserController', function($scope, $http, $cookieStore){
+	$scope.createUser = function(){
 		if($scope.password == $scope.passwordconfirm)
 		{
 			if($scope.username==undefined || $scope.fname==undefined 		//this all just makes sure all the fields have values
 			|| $scope.lname==undefined || $scope.password==undefined 		//
 			|| $scope.email==undefined || $scope.passwordconfirm==undefined
-			|| $scope.phoneNum==undefined)
-			{
+			|| $scope.phoneNum==undefined){
 				alert("One or more fields are blank. Please check to make sure that all of the provided fields are correctly filled out.");
 			}
-			else
-			{
+			else{
 				$http.post("/validateUser",{		//send a validate user request first to make sure that user isn't already there
 			   	 'username': $scope.username,
 			   	 'password': $scope.password
@@ -179,12 +174,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				'projectid' : $scope.projectid}]),
 				'name',false);
 			});
-			// $http.post('/getSequences',{
-			// 	'projectid': $scope.projectid
-			// }).
-			// success(function(data){
-			// 	$scope.sequences = orderBy(data,'name',false);
-			// });
 		}
 	}
 
@@ -205,9 +194,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.addAsset  = function(type,assetTitle){
-		alert("addAsset:"+type+","+assetTitle);
 		if(assetTitle == undefined || assetTitle == ''){
-			alert("undefined");
 			$scope.attempted = true;
 		}
 		else{
@@ -218,12 +205,34 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				'type' : type
 			}).
 			success(function(data){
-				$http.post('/getAssets',{
-					'projectid': $scope.projectid
-				}).
-				success(function(data){
-					$scope.assets = orderBy(data,'name',false);
-				});
+				if(type == "CHAR"){
+					$scope.charAssets = orderBy($scope.charAssets.concat([{
+						'name': assetTitle,
+						'projectid' : $scope.projectid,
+						'type' : type
+						}]),'name',false);
+				}
+				else if(type == "CHAR_PROP"){
+					$scope.charPropAssets = orderBy($scope.charPropAssets.concat([{
+						'name': assetTitle,
+						'projectid' : $scope.projectid,
+						'type' : type
+						}]),'name',false);
+				}
+				else if(type == "ENV"){
+					$scope.envAssets = orderBy($scope.envAssets.concat([{
+						'name': assetTitle,
+						'projectid' : $scope.projectid,
+						'type' : type
+						}]),'name',false);
+				}
+				else if(type == "ENV_PROP"){
+					$scope.envPropAssets = orderBy($scope.envPropAssets.concat([{
+						'name': assetTitle,
+						'projectid' : $scope.projectid,
+						'type' : type
+						}]),'name',false);
+				}
 			});
 		}
 	}
@@ -305,6 +314,15 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			case 8:
 				$scope.deleteVisibleEnvProp = !$scope.deleteVisibleEnvProp;
 				break;
+			case 9://add Sequence Button
+				$scope.addVisible = !$scope.addVisible;
+				$scope.attempted = false;
+				$scope.title = null;
+				$scope.assetTitle = null;
+				break;
+			case 10://delete Sequence Button
+				$scope.deleteVisible = !$scope.deleteVisible;
+				break;
 		}
 		
 	}
@@ -331,7 +349,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}).
 		success(function(data){
 			$scope.sequences = orderBy(data,'name',false);
-			// $scope.makeBools();
 		});
 
 		$http.post('/getShots',{
@@ -342,10 +359,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		});
 
 		$http.post('/getAssets',{
-			'projectid':$scope.projectid
+			'projectid':$scope.projectid,
 		}).
 		success(function(data){
-			$scope.assets = orderBy(data,'name',false);
+			$scope.charAssets = orderBy(data[0],'name',false);
+			$scope.charPropAssets = orderBy(data[1],'name',false);
+			$scope.envAssets = orderBy(data[2],'name',false);
+			$scope.envPropAssets = orderBy(data[3],'name',false);
 		});
 
 		$http.post('/getPrevis',{
@@ -416,7 +436,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}).
 		success(function(data){
 			$scope.members = data;
-			// alert(JSON.stringify($scope.members));
 		});
 	}
 
@@ -427,10 +446,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			'message':$scope.message
 		}).
 		success(function(data){
-			// alert('postAnnouncement success');
 			$scope.announcements = orderBy(data,'time',true);
 			$scope.recipient = $scope.getMemberEmails();
-			// alert(JSON.stringify($scope.recipient));
   			$scope.emailSubject = "New Announcement From Clutch";
   			$scope.emailBody = $scope.message;
 			$scope.sendMessage();
@@ -439,12 +456,9 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getMemberEmails = function(){
-		// alert("getMemberEmails");
 		var emailAddresses = [];
-		for(var i = 0; i < $scope.members.length; ++i)
-		{
+		for(var i = 0; i < $scope.members.length; ++i){
 			emailAddresses = emailAddresses.concat([$scope.members[i].email]);
-			// alert("i:"+i+" "+JSON.stringify(emailAddresses));
 		}
 
 		return emailAddresses;
@@ -466,42 +480,95 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.getInfo();
 
-	$scope.toggleSeq = function(seq){
-		for(var i=0; i < $scope.sequences.length; i++){
-			if($scope.sequences[i].name == seq.name)
-			{
-				$scope.sequences[i].bool = !$scope.sequences[i].bool;
-				return $scope.sequences[i].bool;
-			}
-		}
+	$scope.toggleSeq = function(index){
+		// for(var i=0; i < $scope.sequences.length; i++){
+		// 	if($scope.sequences[i].name == seq.name){
+		// 		$scope.sequences[i].bool = !$scope.sequences[i].bool;
+		// 		return $scope.sequences[i].bool;
+		// 	}
+		// }
+		$scope.sequences[index].bool = !$scope.sequences[index].bool;
+		//return $scope.sequences[index].bool;
 	}
 
-	$scope.toggleAsset = function(ass){
-		for(var i=0; i < $scope.assets.length; i++){
-			if($scope.assets[i].name == ass.name)
-			{
-				$scope.assets[i].bool = !$scope.assets[i].bool;
-				return $scope.assets[i].bool;
-			}
+	$scope.toggleAsset = function(index,type){
+		switch(type){
+			case 0://CHAR
+				// for(var i=0; i < $scope.charAssets.length; i++){
+				// 	if($scope.charAssets[i].name == ass.name){
+				// 		$scope.charAssets[i].bool = !$scope.charAssets[i].bool;
+				// 		return $scope.charAssets[i].bool;
+				// 	}
+				// }
+				$scope.charAssets[index].bool = !$scope.charAssets[index].bool;
+				return $scope.charAssets[index].bool;
+				break;
+			case 1://CHAR_PROP
+				for(var i=0; i < $scope.charPropAssets.length; i++){
+					if($scope.charPropAssets[i].name == ass.name){
+						$scope.charPropAssets[i].bool = !$scope.charPropAssets[i].bool;
+						return $scope.charPropAssets[i].bool;
+					}
+				}
+				break;
+			case 2://ENV
+				for(var i=0; i < $scope.envAssets.length; i++){
+					if($scope.envAssets[i].name == ass.name){
+						$scope.envAssets[i].bool = !$scope.envAssets[i].bool;
+						return $scope.envAssets[i].bool;
+					}
+				}
+				break;
+			case 3://ENV_PROP
+				for(var i=0; i < $scope.envPropAssets.length; i++){
+					if($scope.envPropAssets[i].name == ass.name){
+						$scope.envPropAssets[i].bool = !$scope.envPropAssets[i].bool;
+						return $scope.envPropAssets[i].bool;
+					}
+				}
+				break;
 		}
 	}
 
 	$scope.showSeq = function(seq){
 		for(var i=0; i < $scope.sequences.length; i++){
-			if($scope.sequences[i].name == seq.name)
-			{
+			if($scope.sequences[i].name == seq.name){
 				return $scope.sequences[i].bool;
 			}
 		}
 		return false;
 	}
 
-	$scope.showAssets = function(ass){
-		for(var i=0; i < $scope.assets.length; i++){
-			if($scope.assets[i].name == ass.name)
-			{
-				return $scope.assets[i].bool;
-			}
+	$scope.showAssets = function(ass,type){
+		switch(type){
+			case 0:
+				for(var i=0; i < $scope.charAssets.length; i++){
+					if($scope.charAssets[i].name == ass.name){
+						return $scope.charAssets[i].bool;
+					}
+				}
+				break;
+			case 1:
+				for(var i=0; i < $scope.charPropAssets.length; i++){
+					if($scope.charPropAssets[i].name == ass.name){
+						return $scope.charPropAssets[i].bool;
+					}
+				}
+				break;
+			case 2:
+				for(var i=0; i < $scope.envAssets.length; i++){
+					if($scope.envAssets[i].name == ass.name){
+						return $scope.envAssets[i].bool;
+					}
+				}
+				break;
+			case 3:
+				for(var i=0; i < $scope.envPropAssets.length; i++){
+					if($scope.envPropAssets[i].name == ass.name){
+						return $scope.envPropAssets[i].bool;
+					}
+				}
+				break;
 		}
 		return false;
 	}
@@ -636,7 +703,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getNotes = function(shot,type){
-		//alert("type:"+type);
 		$http.post('/getNotes',{
 			'shotid':shot.id,
 			'type':type
@@ -676,12 +742,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			success(function(data){
 				$scope.shotTitle = undefined;
 				$scope.shotDesc = undefined;
-				// $http.post('/getShots',{
-				// 	'projectid':$scope.projectid
-				// }).
-				// success(function(data){
-				// 	$scope.shots = orderBy(data,'name',false);
-				// });
 				$scope.shots = orderBy($scope.shots.concat([{
 				'name':title,
 				'desc':desc,
@@ -693,42 +753,40 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.deleteShot = function(seq,shotName){
-		if(confirm("Are you sure you want to delete shot "+shotName+"?")){
-			console.log("ABOUT TO SEND REQUEST");
-			$http.post("/deleteShot",{
-				'shotName':shotName
-			}).
-			success(function(){
-				$scope.shotName = undefined;
-				console.log("SUCCESS");
-				$http.post('/getShots',{
-					'projectid':$scope.projectid
+		if(shotName != undefined){
+			if(confirm("Are you sure you want to delete shot "+shotName+"?")){
+				$http.post("/deleteShot",{
+					'shotName':shotName
 				}).
-				success(function(data){
-					$scope.shots = orderBy(data,'name',false);
+				success(function(){
+					$scope.shotName = undefined;
+					$http.post('/getShots',{
+						'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.shots = orderBy(data,'name',false);
+					});
 				});
-			});
+			}
 		}
 	}
 
 	$scope.getShotById = function(shotId)
 	{
-		for(var i=0; i < $scope.shots.length; ++i)
-		{
-			if($scope.shots[i].id == shotId)
+		for(var i=0; i < $scope.shots.length; ++i){
+			if($scope.shots[i].id == shotId){
 				$scope.currentShot=$scope.shots[i];
+			}
 		}
 	}
 
 	$scope.setFrameCt = function(frames)
 	{
-		if(frames === null || frames === undefined)
-		{
+		if(frames === null || frames === undefined){
 			$scope.framesAttempted = true;
 			return frames;
 		}
-		else
-		{
+		else{
 			$scope.framesAttempted = false
 			$http.post("/setFrames",{
 				'frames':frames,
@@ -798,7 +856,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
   			'text': $scope.emailBody  
   		}).
   		success(function(data){
-  			//alert("Your message was successfully sent");
   			$scope.emailSubject = null;
   			$scope.emailBody = null;
   		}).
@@ -847,27 +904,27 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 			}).
 			success(function(data){
 				// if project title is unique
-			    	if(JSON.stringify(data) === '[]'){
-				    	$http.post("/createProject",{
-					    'name': $scope.titleC,
-					    'userid': $cookieStore.get('userInfo').id,
-					    'passkey': $scope.passcodeC
-						}).
-				    	success(function(data){
-				    		$scope.attempted = false;
-				    		if(data.affectedRows == 0){
-				    			$scope.fail = true;
+		    	if(JSON.stringify(data) === '[]'){
+			    	$http.post("/createProject",{
+				    'name': $scope.titleC,
+				    'userid': $cookieStore.get('userInfo').id,
+				    'passkey': $scope.passcodeC
+					}).
+			    	success(function(data){
+			    		$scope.attempted = false;
+			    		if(data.affectedRows == 0){
+			    			$scope.fail = true;
 							$scope.success = false;
-				    		}
-				    		else{
-								$scope.fail = false;
-								$scope.success = true;
-								window.location.href='/home';
-				    		}
-				    	}).
-				    	error(function(){
-				    		alert("error");
-				    	});
+			    		}
+			    		else{
+							$scope.fail = false;
+							$scope.success = true;
+							window.location.href='/home';
+			    		}
+			    	}).
+			    	error(function(){
+			    		alert("error");
+			    	});
 				}
 				// project title taken
 				else {
@@ -878,7 +935,6 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 			error(function(){
 				alert("error");
 			});
-
 		}
 		else {
 			$scope.attempted = true;
@@ -887,25 +943,25 @@ app.controller('navbarController', function($scope, $http, $cookieStore){
 	}
 	$scope.addProjectButton = function(valid) {
 		if(valid){
-		    	$http.post("/addProject",{
+	    	$http.post("/addProject",{
 			    'name': $scope.titleA,
 			    'userid': $cookieStore.get('userInfo').id,
 			    'passkey': $scope.passcodeA
 			}).
-		    	success(function(data){
-		    		$scope.attemptAdd = false;
-		    		//check if project was found
-		    		if(data.affectedRows == 0){
-		    			$scope.addProjectFail = true;
+	    	success(function(data){
+	    		$scope.attemptAdd = false;
+	    		//check if project was found
+	    		if(data.affectedRows == 0){
+	    			$scope.addProjectFail = true;
 					$scope.addProjectSuccess = false;
-		    		}
-		    		else{
+	    		}
+	    		else{
 					$scope.addProjectFail = false;
 					$scope.addProjectSuccess = true;
 					window.location.href='/home';
-		    		}
-		    	}).
-		    	error(function(){
+	    		}
+	    	}).
+	    	error(function(){
 		    		// alert("error");
 		   	});
 		}
@@ -961,8 +1017,7 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    });
    	}
 
-   	$scope.signUp =function() 
-   	{
+   	$scope.signUp =function(){
    		window.location.href = '/createUser';
    	}
 
@@ -997,12 +1052,7 @@ app.controller('homeController',function($scope,$http,$cookieStore){
 
 	$scope.getProjects();
 
-	$scope.createProject = function(){
-
-	}
-
 	$scope.buttonClicked = function(project){
-		//alert(JSON.stringify(project));
 		$cookieStore.put('projectInfo',project);
 		window.location.href = '/project';
 	}
