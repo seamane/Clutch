@@ -340,7 +340,7 @@ exports.deleteSequence = function(req, res){
 			}
 			connection.query(
 				'select id from shots where sequenceid='+seqid+';'
-				'delete from shots where sequenceid='+seqid+';',
+				+ 'delete from shots where sequenceid='+seqid+';',
 				function(err,shotid){
 					if(err){
 						console.log('error deleteSequence query');
