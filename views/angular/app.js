@@ -105,6 +105,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
     $scope.projectName = $cookieStore.get('projectInfo').name;
 	var orderBy = $filter('orderBy');
 	$scope.shots = [];
+	$scope.sequences = [];
 	$scope.projectid = $cookieStore.get('projectInfo').id;
 	$scope.addVisible = false;
 	$scope.deleteVisible = false;
@@ -237,17 +238,20 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}
 	}
 
-	$scope.deleteAsset = function(){
-		if(confirm("Are you sure you want to delete asset "+$scope.assetName+"?")){
+	$scope.deleteAsset = function(ass){
+		if(confirm("Are you sure you want to delete asset "+ass+"?")){
 			$http.post('/deleteAsset',{
-				'name':$scope.assetName
+				'name':ass
 			}).
 			success(function(data){
 				$http.post('/getAssets',{
 					'projectid':$scope.projectid
 				}).
 				success(function(data){
-					$scope.assets = orderBy(data,'name',false);
+					$scope.charAssets = orderBy(data[0],'name',false);
+					$scope.charPropAssets = orderBy(data[1],'name',false);
+					$scope.envAssets = orderBy(data[2],'name',false);
+					$scope.envPropAssets = orderBy(data[3],'name',false);
 				});
 			});
 		}
@@ -481,93 +485,51 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	$scope.getInfo();
 
 	$scope.toggleSeq = function(index){
-		// for(var i=0; i < $scope.sequences.length; i++){
-		// 	if($scope.sequences[i].name == seq.name){
-		// 		$scope.sequences[i].bool = !$scope.sequences[i].bool;
-		// 		return $scope.sequences[i].bool;
-		// 	}
-		// }
 		$scope.sequences[index].bool = !$scope.sequences[index].bool;
-		//return $scope.sequences[index].bool;
 	}
 
 	$scope.toggleAsset = function(index,type){
 		switch(type){
 			case 0://CHAR
-				// for(var i=0; i < $scope.charAssets.length; i++){
-				// 	if($scope.charAssets[i].name == ass.name){
-				// 		$scope.charAssets[i].bool = !$scope.charAssets[i].bool;
-				// 		return $scope.charAssets[i].bool;
-				// 	}
-				// }
 				$scope.charAssets[index].bool = !$scope.charAssets[index].bool;
-				return $scope.charAssets[index].bool;
 				break;
 			case 1://CHAR_PROP
-				for(var i=0; i < $scope.charPropAssets.length; i++){
-					if($scope.charPropAssets[i].name == ass.name){
-						$scope.charPropAssets[i].bool = !$scope.charPropAssets[i].bool;
-						return $scope.charPropAssets[i].bool;
-					}
-				}
+				$scope.charPropAssets[index].bool = !$scope.charPropAssets[index].bool;
 				break;
 			case 2://ENV
-				for(var i=0; i < $scope.envAssets.length; i++){
-					if($scope.envAssets[i].name == ass.name){
-						$scope.envAssets[i].bool = !$scope.envAssets[i].bool;
-						return $scope.envAssets[i].bool;
-					}
-				}
+				$scope.envAssets[index].bool = !$scope.envAssets[index].bool;
 				break;
 			case 3://ENV_PROP
-				for(var i=0; i < $scope.envPropAssets.length; i++){
-					if($scope.envPropAssets[i].name == ass.name){
-						$scope.envPropAssets[i].bool = !$scope.envPropAssets[i].bool;
-						return $scope.envPropAssets[i].bool;
-					}
-				}
+				$scope.envPropAssets[index].bool = !$scope.envPropAssets[index].bool;
 				break;
 		}
 	}
 
-	$scope.showSeq = function(seq){
-		for(var i=0; i < $scope.sequences.length; i++){
-			if($scope.sequences[i].name == seq.name){
-				return $scope.sequences[i].bool;
-			}
+	$scope.showSeq = function(index){
+		if($scope.sequences != undefined && index != undefined){
+			return $scope.sequences[index].bool;
 		}
 		return false;
 	}
 
-	$scope.showAssets = function(ass,type){
+	$scope.showAssets = function(type,index){
+		if(index == undefined || $scope.charAssets == undefined
+			|| $scope.charPropAssets == undefined || $scope.envAssets == undefined
+			|| $scope.envPropAssets == undefined){
+			return false;
+		}
 		switch(type){
 			case 0:
-				for(var i=0; i < $scope.charAssets.length; i++){
-					if($scope.charAssets[i].name == ass.name){
-						return $scope.charAssets[i].bool;
-					}
-				}
+				return $scope.charAssets[index].bool;
 				break;
 			case 1:
-				for(var i=0; i < $scope.charPropAssets.length; i++){
-					if($scope.charPropAssets[i].name == ass.name){
-						return $scope.charPropAssets[i].bool;
-					}
-				}
+				return $scope.charPropAssets[index].bool;
 				break;
 			case 2:
-				for(var i=0; i < $scope.envAssets.length; i++){
-					if($scope.envAssets[i].name == ass.name){
-						return $scope.envAssets[i].bool;
-					}
-				}
+				return $scope.envAssets[index].bool;
 				break;
 			case 3:
-				for(var i=0; i < $scope.envPropAssets.length; i++){
-					if($scope.envPropAssets[i].name == ass.name){
-						return $scope.envPropAssets[i].bool;
-					}
-				}
+				return $scope.envPropAssets[index].bool;
 				break;
 		}
 		return false;
@@ -719,8 +681,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	$scope.showShotForm = function(){
 		$scope.shotVisible = !$scope.shotVisible;
 		$scope.shotAttempted = false;
-		// $scope.shotTitle = undefined;
-		// $scope.shotDesc = undefined;
 	}
 
 	$scope.showShotDeleteForm = function(){
@@ -795,7 +755,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			success(function(data){
 				$scope.currentShot.frames = frames;
 			});
-
 			return null;
 		}
 	}

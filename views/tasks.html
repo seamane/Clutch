@@ -114,17 +114,17 @@
             </table>
             <ul>
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq($index)'>
-                <button ng-show='showSeq(seq)' class="small round button shot-button dropdown" ng-click='getShotById(shot.id)' data-dropdown="shotinfo">{{shot.name}}</button>
-                <button ng-show='showSeq(seq)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button ng-show='showSeq(seq)' style="width:121px"class="shot-button-others button" ng-click="getNotes(shot,'previs');enablePopup(null,popupEnum.ASSIGN,shot.id,'previs');">{{getPrevis(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:133px" ng-show='showSeq(seq)' class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'fx')">{{getFX(shot.id)}}</button>
-                <button ng-show='showSeq(seq)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'compositing')">{{getCompositing(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' class="small round button shot-button dropdown" ng-click='getShotById(shot.id)' data-dropdown="shotinfo">{{shot.name}}</button>
+                <button ng-show='showSeq($parent.$index)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
+                <button ng-show='showSeq($parent.$index)' style="width:121px"class="shot-button-others button" ng-click="getNotes(shot,'previs');enablePopup(null,popupEnum.ASSIGN,shot.id,'previs');">{{getPrevis(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:133px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'fx')">{{getFX(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'compositing')">{{getCompositing(shot.id)}}</button>
               </div>
             </ul>
-            <div ng-show='showSeq(seq)' class="row">
+            <div ng-show='showSeq($index)' class="row">
               <div class="large-2 columns right">
                   <button class="tiny expand button navbar-button" ng-click="showShotForm();toggleSeq($index)">Add Shot</button>
                   <button class="tiny expand button navbar-button" ng-click="showShotDeleteForm();toggleSeq($index)">Delete Shot</button>
@@ -194,7 +194,7 @@
           <div class="large-2 columns left" ng-class="{'fadein':deleteVisibleChar , 'fadeout':!deleteVisibleChar}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset(CharAssetName)">-</a>
               </div>
               <div class="small-9 columns">
                 <select ng-model="CharAssetName">
@@ -207,15 +207,15 @@
         <hr class="lineBreak" noshade="true">
 
         <div class="row">
-          <a class='accordion row' ng-repeat="ass in charAssets" ng-click="toggleAsset(ass,0)">
+          <a class='accordion row' ng-repeat="ass in charAssets" ng-click="toggleAsset($index,0)">
             <table class="asset-table" >
               <th>  {{ass.name}}: </th>
               <th>  Modeling</th>
               <th>  Shading</th>
               <th>  Rigging</th>
             </table>
-            <ul ng-show="showAssets(ass,0)" >
-              <div ng-click='toggleAsset(ass,0)'>
+            <ul ng-show="showAssets(0,$index)" >
+              <div ng-click='toggleAsset($index,0)'>
                 <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
                 <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
@@ -252,7 +252,7 @@
           <div class="large-2 columns left" ng-class="{'fadein':deleteVisibleCharProp , 'fadeout':!deleteVisibleCharProp}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset(CharPropAssetName)">-</a>
               </div>
               <div class="small-9 columns">
                 <select ng-model="CharPropAssetName">
@@ -264,15 +264,15 @@
         </div>
         <hr class="lineBreak-props" noshade="true">
         <div class="row">
-          <a class='accordion row' ng-repeat="ass in charPropAssets" ng-click="toggleAsset(ass,1)">
+          <a class='accordion row' ng-repeat="ass in charPropAssets" ng-click="toggleAsset($index,1)">
             <table class="asset-table" >
               <th>  {{ass.name}}: </th>
               <th>  Modeling</th>
               <th>  Shading</th>
               <th>  Rigging</th>
             </table>
-            <ul ng-show="showAssets(ass,1)" >
-              <div ng-click='toggleAsset(ass,1)'>
+            <ul ng-show="showAssets(1,$index)" >
+              <div ng-click='toggleAsset($index,1)'>
                 <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
                 <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
@@ -309,7 +309,7 @@
           <div class="large-2 columns left" ng-class="{'fadein':deleteVisibleEnv , 'fadeout':!deleteVisibleEnv}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset(envAssetName)">-</a>
               </div>
               <div class="small-9 columns">
                 <select ng-model="envAssetName">
@@ -321,15 +321,15 @@
         </div>
         <hr class="lineBreak" noshade="true">
         <div class="row">
-          <a class='accordion row' ng-repeat="ass in envAssets" ng-click="toggleAsset(ass,2)">
+          <a class='accordion row' ng-repeat="ass in envAssets" ng-click="toggleAsset($index,2)">
             <table class="asset-table" >
               <th>  {{ass.name}}: </th>
               <th>  Modeling</th>
               <th>  Shading</th>
               <th>  Rigging</th>
             </table>
-            <ul ng-show="showAssets(ass,2)" >
-              <div ng-click='toggleAsset(ass,2)'>
+            <ul ng-show="showAssets(2,$index)" >
+              <div ng-click='toggleAsset($index,2)'>
                 <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
                 <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
@@ -366,7 +366,7 @@
           <div class="large-2 columns left" ng-class="{'fadein':deleteVisibleEnvProp , 'fadeout':!deleteVisibleEnvProp}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset()">-</a>
+                <a href="#" class="button postfix signUp-button" ng-click="deleteAsset(envPropAssetName)">-</a>
               </div>
               <div class="small-9 columns">
                 <select ng-model="envPropAssetName">
@@ -378,15 +378,15 @@
         </div>
         <hr class="lineBreak-props" noshade="true">
         <div class="row">
-          <a class='accordion row' ng-repeat="ass in envPropAssets" ng-click="toggleAsset(ass,3)">
+          <a class='accordion row' ng-repeat="ass in envPropAssets" ng-click="toggleAsset($index,3)">
             <table class="asset-table" >
               <th>  {{ass.name}}: </th>
               <th>  Modeling</th>
               <th>  Shading</th>
               <th>  Rigging</th>
             </table>
-            <ul ng-show="showAssets(ass,3)">
-              <div ng-click='toggleAsset(ass,3)'>
+            <ul ng-show="showAssets(3,$index)">
+              <div ng-click='toggleAsset($index,3)'>
                 <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
                 <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
