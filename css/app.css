@@ -15,6 +15,7 @@
 .black-button{
 	background-color: #333;
 	color: #008CBA;
+	z-index:-1;
 }
 
 .shot{

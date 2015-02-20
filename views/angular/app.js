@@ -548,11 +548,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getPrevis = function(shotid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.previs != undefined){
 			for(var i = 0; i < $scope.previs.length; ++i){
 				if($scope.previs[i].shotid == shotid){
-					label = $scope.previs[i].fname + ' ' + $scope.previs[i].lname[0] + '.';
+					label = $scope.previs[i];//.fname + ' ' + $scope.previs[i].lname[0] + '.';
 					break;
 				}
 			}
@@ -561,11 +561,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getAnimator = function(shotid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.animators != undefined){
 			for(var i = 0; i < $scope.animators.length; ++i){
 				if($scope.animators[i].shotid == shotid){
-					label = $scope.animators[i].fname + ' ' + $scope.animators[i].lname[0] + '.';
+					label = $scope.animators[i];//.fname + ' ' + $scope.animators[i].lname[0] + '.';
 					break;
 				}
 			}
@@ -574,7 +574,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getLighter = function(shotid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.lighters != undefined){
 			for(var i = 0; i < $scope.lighters.length; ++i){
 				if($scope.lighters[i].shotid == shotid){
@@ -587,7 +587,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getFX = function(shotid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.fx != undefined){
 			for(var i = 0; i < $scope.fx.length; ++i){
 				if($scope.fx[i].shotid == shotid){
@@ -600,7 +600,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getCompositing = function(shotid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.compositing != undefined){
 			for(var i = 0; i < $scope.compositing.length; ++i){
 				if($scope.compositing[i].shotid == shotid){
@@ -613,7 +613,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getWrangler = function(shotid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.wranglers != undefined){
 			for(var i = 0; i < $scope.wranglers.length; ++i){
 				if($scope.wranglers[i].shotid == shotid){
@@ -626,7 +626,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getRigging = function(assid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.rigging != undefined){
 			for(var i = 0; i < $scope.rigging.length; ++i){
 				if($scope.rigging[i].assid == assid){
@@ -639,7 +639,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getModeling = function(assid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.modeling != undefined){
 			for(var i = 0; i < $scope.modeling.length; ++i){
 				if($scope.modeling[i].assid == assid){
@@ -652,7 +652,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getShading = function(assid){
-		var label = '+ Assign';
+		var label = {"fname":"+ Assign","lname":" "};
 		if($scope.shading != undefined){
 			for(var i = 0; i < $scope.shading.length; ++i){
 				if($scope.shading[i].assid == assid){
@@ -771,7 +771,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
-		//console.log(popupType);
 		$scope.currentShotId = currentShot;
 		$scope.department = department;
 		if(!$scope.popup){

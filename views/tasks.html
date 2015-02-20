@@ -20,7 +20,7 @@
     <script type = 'text/javascript' src="angular/app.js"></script>  
 
   </head>
-  <body ng-controller="taskController" class='offwhite-background'>
+  <body ng-controller="taskController" ng-init="getInfo()" class='offwhite-background'>
     <!-- Include Navbar -->
     <div loadnavbar></div>  
 
@@ -115,13 +115,13 @@
             <ul>
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq($index)'>
                 <button ng-show='showSeq($parent.$index)' class="small round button shot-button dropdown" ng-click='getShotById(shot.id)' data-dropdown="shotinfo">{{shot.name}}</button>
-                <button ng-show='showSeq($parent.$index)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button ng-show='showSeq($parent.$index)' style="width:121px"class="shot-button-others button" ng-click="getNotes(shot,'previs');enablePopup(null,popupEnum.ASSIGN,shot.id,'previs');">{{getPrevis(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:133px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'fx')">{{getFX(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'compositing')">{{getCompositing(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' class="notes-button">Notes</button>
+                <button ng-show='showSeq($parent.$index)' style="width:121px"class="shot-button-others button" ng-click="getNotes(shot,'previs');enablePopup(null,popupEnum.ASSIGN,shot.id,'previs');" ng-init="previsName=getPrevis(shot.id)">{{previsName.fname}} {{previsName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:128px" class="shot-button-others button"ng-click="getNotes(shot,'animator');enablePopup(null,popupEnum.ASSIGN,shot.id,'animator');" ng-init="animatorName=getAnimator(shot.id)">{{animatorName.fname}} {{animatorName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:124px" class="shot-button-others button" ng-click="getNotes(shot,'lighter');enablePopup(null,popupEnum.ASSIGN,shot.id,'lighter');" ng-init="lighterName=getLighter(shot.id)">{{lighterName.fname}} {{lighterName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:133px" class="shot-button-others button" ng-click="getNotes(shot,'wrangler');enablePopup(null,popupEnum.ASSIGN,shot.id,'wrangler');" ng-init="wranglerName=getWrangler(shot.id)">{{wranglerName.fname}} {{wranglerName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:110px;padding-right:5px;" class="shot-button-others button" ng-click="getNotes(shot,'fx');enablePopup(null,popupEnum.ASSIGN,shot.id,'fx');" ng-init="fxName=getFX(shot.id)">{{fxName.fname}} {{fxName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:141px" class="shot-button-others button" ng-click="getNotes(shot,'compositing');enablePopup(null,popupEnum.ASSIGN,shot.id,'compositing');" ng-init="compositingName=getCompositing(shot.id)">{{compositingName.fname}} {{compositingName.lname[0]}}</button>
               </div>
             </ul>
             <div ng-show='showSeq($index)' class="row">
@@ -216,10 +216,10 @@
             </table>
             <ul ng-show="showAssets(0,$index)" >
               <div ng-click='toggleAsset($index,0)'>
-                <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
-                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
-                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getRigging(ass.id)}}</button>
+                <button class="asset-note-button">Notes</button>
+                <button style="width:128px"class="asset-other-button button" ng-init="charModel=getModeling(ass.id)" ng-click=''>{{charModel.fname}} {{charModel.lname[0]}}</button>
+                <button style="width:126px" class="asset-other-button button" ng-init="charShading=getShading(ass.id)" ng-click=''>{{charShading.fname}} {{charShading.lname[0]}}</button>
+                <button style="width:128px" class="asset-other-button button" ng-init="charRigging=getRigging(ass.id)" ng-click=''>{{charRigging.fname}} {{charRigging.lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -273,10 +273,10 @@
             </table>
             <ul ng-show="showAssets(1,$index)" >
               <div ng-click='toggleAsset($index,1)'>
-                <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
-                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
-                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getRigging(ass.id)}}</button>
+                <button class="asset-note-button">Notes</button>
+                <button style="width:128px"class="asset-other-button button" ng-init="charPropModel=getModeling(ass.id)" ng-click=''>{{charPropModel.fname}} {{charPropModel.lname}}</button>
+                <button style="width:126px" class="asset-other-button button" ng-init="charPropShading=getShading(ass.id)" ng-click=''>{{charPropShading.fname}} {{charPropShading.lname}}</button>
+                <button style="width:128px" class="asset-other-button button" ng-init="charPropRigging=getRigging(ass.id)" ng-click=''>{{charPropRigging.fname}} {{charPropRigging.lname}}</button>
               </div>
             </ul>
           </a>
@@ -330,10 +330,10 @@
             </table>
             <ul ng-show="showAssets(2,$index)" >
               <div ng-click='toggleAsset($index,2)'>
-                <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
-                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
-                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getRigging(ass.id)}}</button>
+                <button class="asset-note-button">Notes</button>
+                <button style="width:128px"class="asset-other-button button" ng-init="envModel=getModeling(ass.id)" ng-click=''>{{envModel.fname}} {{envModel.lname}}</button>
+                <button style="width:126px" class="asset-other-button button" ng-init="envShading=getShading(ass.id)" ng-click=''>{{envShading.fname}} {{envShading.lname}}</button>
+                <button style="width:128px" class="asset-other-button button" ng-init="envRigging=getRigging(ass.id)" ng-click=''>{{envRigging.fname}} {{envRigging.lname}}</button>
               </div>
             </ul>
           </a>
@@ -387,10 +387,10 @@
             </table>
             <ul ng-show="showAssets(3,$index)">
               <div ng-click='toggleAsset($index,3)'>
-                <button class="asset-note-button dropdown" data-dropdown='notesDrop'>Notes</button>
-                <button style="width:128px"class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getModeling(ass.id)}}</button>
-                <button style="width:126px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getShading(ass.id)}}</button>
-                <button style="width:128px" class="asset-other-button button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click=''>{{getRigging(ass.id)}}</button>
+                <button class="asset-note-button">Notes</button>
+                <button style="width:128px"class="asset-other-button button" ng-init="envPropModel=getModeling(ass.id)" ng-click=''>{{envPropModel.fname}} {{envPropModel.lname}}</button>
+                <button style="width:126px" class="asset-other-button button" ng-init="envPropShading=getShading(ass.id)" ng-click=''>{{envPropShading.fname}} {{envPropShading.lname}}</button>
+                <button style="width:128px" class="asset-other-button button" ng-init="envPropRigging=getRigging(ass.id)" ng-click=''>{{envPropRigging.fname}} {{envPropRiggin.lname}}</button>
               </div>
             </ul>
           </a>
@@ -420,22 +420,22 @@
         </div>
       </div>
 
-    <ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
+ <!--    <ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
 
 
 
-      <li>
+      <li> -->
         <!-- <input type="text" placeholder="Assign to"> -->
-        <autocomplete ng-model="result" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+      <!--   <autocomplete ng-model="result" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
 
-        <a href="" class="button postfix black-button">Assign</a>
+        <a href="" class="button postfix black-button" ng-click='assign()'>Assign</a>
       </li>
       <div class='panel' ng-repeat="note in notes">
         <p>{{note.note}}</p>
         <p class="right">~{{note.fname}} {{note.lname}}</p>
         <p class="right">{{note.time}}</p>
       </div>
-    </ul>
+    </ul> -->
 
     <div id="shotinfo" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
       <table>
@@ -480,17 +480,19 @@
       </form>
     </div>
     <div id="noteBox">
-      <autocomplete ng-model="result" ng-click="" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+      <div ng-show="true">
+        <autocomplete ng-model="result" attr-placeholder="type member name..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
 
-        <a href="" class="button postfix black-button">Assign</a>
-        <hr>
-        <div class='panel' ng-repeat="note in notes">
-          <p>{{note.note}}</p>
-          <p class="right">~{{note.fname}} {{note.lname}}</p>
-          <p class="right">{{note.time}}</p>
-        </div>
-        <textarea placeholder="notes" ng-model="noteField"></textarea>
-        <button ng-click="addNote();">Add Note</button>
+        <a href="" class="button postfix black-button" ng-click="">Assign</a>
+      </div>
+      <hr>
+      <div class='panel' ng-repeat="note in notes">
+        <p>{{note.note}}</p>
+        <p class="right">~{{note.fname}} {{note.lname}}</p>
+        <p class="right">{{note.time}}</p>
+      </div>
+      <textarea placeholder="notes" ng-model="noteField"></textarea>
+      <button ng-click="addNote();">Add Note</button>
     </div>
 
 
