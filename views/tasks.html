@@ -117,11 +117,11 @@
                 <button ng-show='showSeq($parent.$index)' class="small round button shot-button dropdown" ng-click='getShotById(shot.id)' data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq($parent.$index)' class="notes-button dropdown" data-dropdown='notesDrop'>Notes</button>
                 <button ng-show='showSeq($parent.$index)' style="width:121px"class="shot-button-others button" ng-click="getNotes(shot,'previs');enablePopup(null,popupEnum.ASSIGN,shot.id,'previs');">{{getPrevis(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:128px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'animator')">{{getAnimator(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:124px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'lighter')">{{getLighter(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:133px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'wrangler')">{{getWrangler(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:110px;padding-right:5px;" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'fx')">{{getFX(shot.id)}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:141px" class="shot-button-others button dropdown" data-dropdown="drop" aria-controls="drop", aria-expanded="false" ng-click="getNotes(shot,'compositing')">{{getCompositing(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:128px" class="shot-button-others button" ng-click="getNotes(shot,'animator');enablePopup(null,popupEnum.ASSIGN,shot.id,'animator');">{{getAnimator(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:124px" class="shot-button-others button" ng-click="getNotes(shot,'lighter');enablePopup(null,popupEnum.ASSIGN,shot.id,'lighter');">{{getLighter(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:133px" class="shot-button-others button" ng-click="getNotes(shot,'wrangler');enablePopup(null,popupEnum.ASSIGN,shot.id,'wrangler');">{{getWrangler(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:110px;padding-right:5px;" class="shot-button-others button" ng-click="getNotes(shot,'fx');enablePopup(null,popupEnum.ASSIGN,shot.id,'fx');">{{getFX(shot.id)}}</button>
+                <button ng-show='showSeq($parent.$index)' style="width:141px" class="shot-button-others button" ng-click="getNotes(shot,'compositing');enablePopup(null,popupEnum.ASSIGN,shot.id,'compositing');">{{getCompositing(shot.id)}}</button>
               </div>
             </ul>
             <div ng-show='showSeq($index)' class="row">
