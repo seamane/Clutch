@@ -548,7 +548,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getPrevis = function(shotid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.previs != undefined){
 			for(var i = 0; i < $scope.previs.length; ++i){
 				if($scope.previs[i].shotid == shotid){
@@ -561,7 +561,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getAnimator = function(shotid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.animators != undefined){
 			for(var i = 0; i < $scope.animators.length; ++i){
 				if($scope.animators[i].shotid == shotid){
@@ -574,7 +574,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getLighter = function(shotid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.lighters != undefined){
 			for(var i = 0; i < $scope.lighters.length; ++i){
 				if($scope.lighters[i].shotid == shotid){
@@ -587,7 +587,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getFX = function(shotid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.fx != undefined){
 			for(var i = 0; i < $scope.fx.length; ++i){
 				if($scope.fx[i].shotid == shotid){
@@ -600,7 +600,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getCompositing = function(shotid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.compositing != undefined){
 			for(var i = 0; i < $scope.compositing.length; ++i){
 				if($scope.compositing[i].shotid == shotid){
@@ -613,7 +613,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getWrangler = function(shotid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.wranglers != undefined){
 			for(var i = 0; i < $scope.wranglers.length; ++i){
 				if($scope.wranglers[i].shotid == shotid){
@@ -626,7 +626,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getRigging = function(assid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.rigging != undefined){
 			for(var i = 0; i < $scope.rigging.length; ++i){
 				if($scope.rigging[i].assid == assid){
@@ -639,7 +639,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getModeling = function(assid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.modeling != undefined){
 			for(var i = 0; i < $scope.modeling.length; ++i){
 				if($scope.modeling[i].assid == assid){
@@ -652,7 +652,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getShading = function(assid){
-		var label = {"fname":"+ Assign","lname":" "};
+		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.shading != undefined){
 			for(var i = 0; i < $scope.shading.length; ++i){
 				if($scope.shading[i].assid == assid){
@@ -964,7 +964,7 @@ app.controller('indexController', function($scope, $http,$cookieStore){
 	    		$scope.password = '';
 	    	}
 	    	else{
-	    		alert("cookie:"+JSON.stringify(data[0]));
+	    		// alert("cookie:"+JSON.stringify(data[0]));
 	    		$cookieStore.put('userInfo',data[0]);
 	    		$scope.failLogin = false;
 	    		window.location.href = '/home';
