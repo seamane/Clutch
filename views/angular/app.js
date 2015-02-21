@@ -259,7 +259,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.addNote = function(){
-		if ($scope.noteFied != "" && $scope.noteField != undefined){
+		if ($scope.noteField != "" && $scope.noteField != undefined){
 			console.log($scope.currentShotId);
 			 $http.post('createNote',{
 				'note': $scope.noteField,
@@ -268,6 +268,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				'userid' : $cookieStore.get("userInfo").id
 			}).
 			success(function(data){
+				//TODO Send email
+				$scope.emailBody = $scope.noteField;
+				$scope.emailSubject = "CLUTCH | "; //TODO make a better subject line and who the email is from
+				$scope.sendMessage();
+				//console.log($scope.noteField+"\r"+"-"+cookieStore.get('userInfo').fname+" "+$cookieStore.get('userInfo').lname);
+		  		//TODO append new note rather than query db again
 				$http.post('/getNotes',{
 				'shotid':$scope.currentShotId,
 				'type':$scope.department
@@ -276,7 +282,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					$scope.notes = orderBy(data,'time',true);
 				});
 				$scope.noteField = undefined;
-				$scope.disablePopup();
+				//$scope.disablePopup();
 			});
 		}
 	}
@@ -788,6 +794,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			$scope.popup = true;
 		}
 		$scope.recipient = recipientEmail;
+		console.log($scope.recipient);
 	}
 
 	$scope.disablePopup = function(){
@@ -821,7 +828,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
   		{
   			'to': $scope.recipient,
   			'subject': $scope.emailSubject,
-  			'text': $scope.emailBody  
+  			'text': $scope.emailBody+"\r"+"-"+$cookieStore.get("userInfo").fname+" "+$cookieStore.get("userInfo").lname
   		}).
   		success(function(data){
   			$scope.emailSubject = null;
