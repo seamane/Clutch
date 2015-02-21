@@ -130,6 +130,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.popup = false;
 	$scope.recipient = "";
+	$scope.popupMember = undefined;
 
 	$scope.assignMembers = AssignMember.getmembers("...");
   	$scope.assignMembers.then(function(data){
@@ -795,7 +796,16 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			$("#shadowBox").fadeOut(0500);
 			$("#noteBox").fadeOut(0500);
 			$scope.popup = false;
+			$scope.popupMember = undefined;
 		}
+	}
+
+	$scope.showAutoComplete = function(){
+		console.log(JSON.stringify($scope.popupMember));
+		if($scope.popupMember == undefined){
+			return true;
+		}
+		return $scope.popupMember.fname == "+ Assign";
 	}
 
 	$scope.sendMessage = function(){

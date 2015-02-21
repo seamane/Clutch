@@ -492,7 +492,7 @@ exports.getAssets = function(req,res){
 
 exports.getPrevis = function(req,res){
 	connection.query(
-		'select previs.shotid,users.fname,users.lname,users.id from users inner join previs inner join shots inner join sequences '
+		'select previs.shotid,users.fname,users.lname,users.id,users.email from users inner join previs inner join shots inner join sequences '
 		+ 'on previs.shotid=shots.id and users.id=previs.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,animators){
 			if(err){
@@ -506,7 +506,7 @@ exports.getPrevis = function(req,res){
 
 exports.getAnimators = function(req,res){
 	connection.query(
-		'select animators.shotid,users.fname,users.lname,users.id from users inner join animators inner join shots inner join sequences '
+		'select animators.shotid,users.fname,users.lname,users.id,users.email from users inner join animators inner join shots inner join sequences '
 		+ 'on animators.shotid=shots.id and users.id=animators.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,animators){
 			if(err){
@@ -520,7 +520,7 @@ exports.getAnimators = function(req,res){
 
 exports.getLighters = function(req,res){
 	connection.query(
-		'select lighters.shotid,users.fname,users.lname,users.id from users inner join lighters inner join shots inner join sequences '
+		'select lighters.shotid,users.fname,users.lname,users.id,users.email from users inner join lighters inner join shots inner join sequences '
 		+ 'on lighters.shotid=shots.id and users.id=lighters.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,lighters){
 			if(err){
@@ -534,7 +534,7 @@ exports.getLighters = function(req,res){
 
 exports.getWranglers = function(req,res){
 	connection.query(
-		'select renderwranglers.shotid,users.fname,users.lname,users.id from users inner join renderwranglers inner join shots inner join sequences '
+		'select renderwranglers.shotid,users.fname,users.lname,users.id,users.email from users inner join renderwranglers inner join shots inner join sequences '
 		+ 'on renderwranglers.shotid=shots.id and users.id=renderwranglers.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,renderwranglers){
 			if(err){
@@ -548,7 +548,7 @@ exports.getWranglers = function(req,res){
 
 exports.getFX = function(req,res){
 	connection.query(
-		'select vfx.shotid,users.fname,users.lname,users.id from users inner join vfx inner join shots inner join sequences '
+		'select vfx.shotid,users.fname,users.lname,users.id,users.email from users inner join vfx inner join shots inner join sequences '
 		+ 'on vfx.shotid=shots.id and users.id=vfx.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,vfx){
 			if(err){
@@ -562,7 +562,7 @@ exports.getFX = function(req,res){
 
 exports.getCompositing = function(req,res){
 	connection.query(
-		'select compositing.shotid,users.fname,users.lname,users.id from users inner join compositing inner join shots inner join sequences '
+		'select compositing.shotid,users.fname,users.lname,users.id,users.email from users inner join compositing inner join shots inner join sequences '
 		+ 'on compositing.shotid=shots.id and users.id=compositing.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
 		function(err,compositing){
 			if(err){
@@ -576,7 +576,7 @@ exports.getCompositing = function(req,res){
 
 exports.getRigging = function(req,res){
 	connection.query(
-		'select rigging.assetid,users.fname,users.lname,users.id from users inner join rigging inner join assets '
+		'select rigging.assetid,users.fname,users.lname,users.id,users.email from users inner join rigging inner join assets '
 		+ 'on rigging.assetid=assets.id and users.id=rigging.userid and assets.projectid='+ req.body.projectid +';',
 		function(err,rigging){
 			if(err){
@@ -590,7 +590,7 @@ exports.getRigging = function(req,res){
 
 exports.getModeling = function(req,res){
 	connection.query(
-		'select modeling.assetid,users.fname,users.lname,users.id from users inner join modeling inner join assets '
+		'select modeling.assetid,users.fname,users.lname,users.id,users.email from users inner join modeling inner join assets '
 		+ 'on modeling.assetid=assets.id and users.id=modeling.userid and assets.projectid='+ req.body.projectid +';',
 		function(err,modeling){
 			if(err){
@@ -604,7 +604,7 @@ exports.getModeling = function(req,res){
 
 exports.getShading = function(req,res){
 	connection.query(
-		'select shading.assetid,users.fname,users.lname,users.id from users inner join shading inner join assets '
+		'select shading.assetid,users.fname,users.lname,users.id,users.email from users inner join shading inner join assets '
 		+ 'on shading.assetid=assets.id and users.id=shading.userid and assets.projectid='+ req.body.projectid +';',
 		function(err,shading){
 			if(err){
