@@ -618,7 +618,7 @@ exports.getShading = function(req,res){
 
 exports.getNotes = function(req,res){
 	connection.query(
-		'select users.fname,users.lname,notes.note from notes inner join users '
+		'select users.fname,users.lname,notes.note,notes.id from notes inner join users '
 		+ 'on notes.userid=users.id and notes.type=\'' + req.body.type +'\' and shotid=' + req.body.shotid + ';',
 		function(err,notes){
 			if(err){
@@ -763,6 +763,19 @@ exports.createNote = function(req,res){
 		function (err,rows,fields){
 			if(err){
 				console.log('error createNote query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
+exports.deleteNote = function(req,res){
+	connection.query(
+		'DELETE FROM notes WHERE id='+req.body.id+';',
+		function(err){
+			if(err){
+				console.log('err deleteNote query');
 				throw err;
 			}
 			res.end("success");

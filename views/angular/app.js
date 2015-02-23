@@ -287,6 +287,24 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}
 	}
 
+	$scope.deleteNote = function(noteId){
+		//console.log(noteId);
+		if(noteId != undefined){
+			$http.post('/deleteNote',{
+				'id': noteId
+			}).
+			success(function(data){
+				$http.post('/getNotes',{
+					'shotid':$scope.currentShotId,
+					'type':$scope.department
+				}).
+				success(function(data){
+					$scope.notes = orderBy(data,'time',true);
+				});
+			});
+		}
+	}
+
 	$scope.showForm = function(form){
 		switch(form){
 			case 1:
@@ -808,7 +826,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.showAutoComplete = function(){
-		console.log(JSON.stringify($scope.popupMember));
+		//console.log(JSON.stringify($scope.popupMember));
 		if($scope.popupMember == undefined){
 			return true;
 		}

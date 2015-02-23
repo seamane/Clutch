@@ -488,6 +488,7 @@
       <hr>
       <div class='panel' ng-repeat="note in notes">
         <p>{{note.note}}</p>
+        <img class="right" src="trash.png" ng-click="deleteNote(note.id)" />
         <p class="right">~{{note.fname}} {{note.lname}}</p>
         <p class="right">{{note.time}}</p>
       </div>
