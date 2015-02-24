@@ -261,7 +261,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	$scope.addNote = function(){
 		if ($scope.noteField != "" && $scope.noteField != undefined){
 			console.log($scope.currentShotId);
-			 $http.post('createNote',{
+			$http.post('createNote',{
 				'note': $scope.noteField,
 				'shotid' : $scope.currentShotId,
 				'type' : $scope.department,
