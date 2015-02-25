@@ -155,8 +155,156 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	    });
 	}
 
-	$scope.doSomethingElse = function(suggestion){
-	    console.log("Suggestion selected: " + suggestion);
+	// $scope.doSomethingElse = function(suggestion){
+	//     console.log("Suggestion selected: " + suggestion);
+	// }
+
+	$scope.assignMember = function(assignedMember){
+		if(assignedMember == undefined){
+			return;
+		}
+		var fname = assignedMember.split(" ")[0];
+		var lname = assignedMember.split(" ")[1];
+		switch($scope.department){
+		 	case "previs":
+		 		$http.post('/addPrevis',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getPrevis',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.previs = data;
+					});
+		 		});
+		 		break;
+		 	case "animator":
+		 		$http.post('/addAnimator',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getAnimators',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.animators = data;
+					});
+		 		});
+		 		break;
+		 	case "compositing":
+		 		$http.post('/addCompositing',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getCompositing',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.compositing = data;
+					});
+		 		});
+		 		break;
+		 	case "fx":
+		 		$http.post('/addFX',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getFX',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.fx = data;
+					});
+		 		});
+		 		break;
+		 	case "wrangler":
+		 		$http.post('/addWrangler',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getWranglers',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.wranglers = data;
+					});
+		 		});
+		 		break;
+		 	case "lighter":
+		 		$http.post('/addLighter',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getLighters',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.lighters = data;
+					});
+		 		});
+		 		break;
+		 	case "modeler":
+		 		$http.post('/addModeler',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getModeling',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.modeling = data;
+					});
+		 		});
+		 		break;
+		 	case "shader":
+		 		$http.post('/addShader',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getShading',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.shading = data;
+					});
+		 		});
+		 		break;
+		 	case "rigger":
+		 		$http.post('/addRigger',{
+		 			"fname":fname,
+		 			"lname":lname,
+		 			"id":$scope.currentShotId
+		 		}).
+		 		success(function(data){
+		 			$http.post('/getRigging',{
+		 				'projectid':$scope.projectid
+					}).
+					success(function(data){
+						$scope.rigging = data;
+					});
+		 		});
+		 		break;
+		 	default:
+		 		console.log("ERROR: assignMember function. Should never get here.");
+		 		break;
+		}
 	}
 
 	$scope.addSequence  = function(){
@@ -603,11 +751,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		if($scope.lighters != undefined){
 			for(var i = 0; i < $scope.lighters.length; ++i){
 				if($scope.lighters[i].shotid == shotid){
-					label = $scope.lighters[i].fname + ' ' + $scope.lighters[i].lname;
+					label = $scope.lighters[i];//.fname + ' ' + $scope.lighters[i].lname;
 					break;
 				}
 			}
 		}
+		// alert("shotid:"+shotid+"\n"+JSON.stringify(label));
 		return label;
 	}
 
@@ -616,7 +765,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		if($scope.fx != undefined){
 			for(var i = 0; i < $scope.fx.length; ++i){
 				if($scope.fx[i].shotid == shotid){
-					label = $scope.fx[i].fname + ' ' + $scope.fx[i].lname;
+					label = $scope.fx[i];//.fname + ' ' + $scope.fx[i].lname;
 					break;
 				}
 			}
@@ -629,7 +778,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		if($scope.compositing != undefined){
 			for(var i = 0; i < $scope.compositing.length; ++i){
 				if($scope.compositing[i].shotid == shotid){
-					label = $scope.compositing[i].fname + ' ' + $scope.compositing[i].lname;
+					label = $scope.compositing[i];//.fname + ' ' + $scope.compositing[i].lname;
 					break;
 				}
 			}
@@ -642,7 +791,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		if($scope.wranglers != undefined){
 			for(var i = 0; i < $scope.wranglers.length; ++i){
 				if($scope.wranglers[i].shotid == shotid){
-					label = $scope.wranglers[i].fname + ' ' + $scope.wranglers[i].lname;
+					label = $scope.wranglers[i];//.fname + ' ' + $scope.wranglers[i].lname;
 					break;
 				}
 			}
@@ -655,7 +804,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		if($scope.rigging != undefined){
 			for(var i = 0; i < $scope.rigging.length; ++i){
 				if($scope.rigging[i].assid == assid){
-					label = $scope.rigging[i].fname + ' ' + $scope.rigging[i].lname;
+					label = $scope.rigging[i];//.fname + ' ' + $scope.rigging[i].lname;
 					break;
 				}
 			}
@@ -668,7 +817,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		if($scope.modeling != undefined){
 			for(var i = 0; i < $scope.modeling.length; ++i){
 				if($scope.modeling[i].assid == assid){
-					label = $scope.modeling[i].fname + ' ' + $scope.modeling[i].lname;
+					label = $scope.modeling[i];//.fname + ' ' + $scope.modeling[i].lname;
 					break;
 				}
 			}
@@ -681,7 +830,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		if($scope.shading != undefined){
 			for(var i = 0; i < $scope.shading.length; ++i){
 				if($scope.shading[i].assid == assid){
-					label = $scope.shading[i].fname + ' ' + $scope.shading[i].lname;
+					label = $scope.shading[i];//.fname + ' ' + $scope.shading[i].lname;
 					break;
 				}
 			}

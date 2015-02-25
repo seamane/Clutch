@@ -78,6 +78,15 @@ app.post('/deleteAsset',database.deleteAsset);
 app.post('/createNote',database.createNote);
 app.post('/deleteNote',database.deleteNote);
 app.post('/getUsers',database.getUsers);
+app.post('/addPrevis',database.addPrevis);
+app.post('/addAnimator',database.addAnimator);
+app.post('/addLighter',database.addLighter);
+app.post('/addModeler',database.addModeler);
+app.post('/addFX',database.addFX);
+app.post('/addCompositing',database.addCompositing);
+app.post('/addWrangler',database.addWrangler);
+app.post('/addRigger',database.addRigger);
+app.post('/addShader',database.addShader);
 // app.post('/getShotInfo',database.getShotInfo);
 
 // app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
@@ -91,6 +100,7 @@ app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
 app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
 app.get('/createUser',function(req,res){res.sendFile(__dirname+'/views/createUser.html');});
+app.get('/trash.png',function(req,res){res.sendFile(__dirname+'/views/images/trash.png');});
 
 //testing stuff
 app.get('/test',function(req,res){res.sendFile(__dirname+'/views/test.html');});

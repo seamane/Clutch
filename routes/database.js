@@ -797,3 +797,201 @@ exports.getUsers = function(req,res){
 		 }
 	);
 }
+
+exports.addPrevis = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addPrevis query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO previs(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addPrevis query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
+exports.addAnimator = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addAnimator query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO animators(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addAnimator query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
+exports.addLighter = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addLighter query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO lighters(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addLighter query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
+exports.addFX = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addFX query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO vfx(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addFX query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
+exports.addCompositing = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addCompositing query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO compositing(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addCompositing query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
+exports.addWrangler = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addWrangler query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO renderwranglers(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addWrangler query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
+exports.addModeler = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addModeler query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO modeling(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addModeler query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
+exports.addShader = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addShader query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO shading(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addShader query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
+exports.addRigger = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addRigger query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO rigging(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addRigger query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}

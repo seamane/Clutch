@@ -114,14 +114,41 @@
             </table>
             <ul>
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq($index)'>
-                <button ng-show='showSeq($parent.$index)' class="small round button shot-button dropdown" ng-click='getShotById(shot.id)' data-dropdown="shotinfo">{{shot.name}}</button>
+                <button ng-show='showSeq($parent.$index)' 
+                  class="small round button shot-button dropdown" 
+                  ng-click='getShotById(shot.id)' 
+                  data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq($parent.$index)' class="notes-button">Notes</button>
-                <button ng-show='showSeq($parent.$index)' style="width:121px"class="shot-button-others button" ng-click="getNotes(shot,'previs');enablePopup(previsName.email,popupEnum.ASSIGN,shot.id,'previs');popupMember=previsName;" ng-init="previsName=getPrevis(shot.id)">{{previsName.fname}} {{previsName.lname[0]}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:128px" class="shot-button-others button"ng-click="getNotes(shot,'animator');enablePopup(animatorName.email,popupEnum.ASSIGN,shot.id,'animator');popupMember=animatorName;" ng-init="animatorName=getAnimator(shot.id)">{{animatorName.fname}} {{animatorName.lname[0]}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:124px" class="shot-button-others button" ng-click="getNotes(shot,'lighter');enablePopup(lighterName.email,popupEnum.ASSIGN,shot.id,'lighter');popupMember=lighterName;" ng-init="lighterName=getLighter(shot.id)">{{lighterName.fname}} {{lighterName.lname[0]}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:133px" class="shot-button-others button" ng-click="getNotes(shot,'wrangler');enablePopup(wranglerName.email,popupEnum.ASSIGN,shot.id,'wrangler');popupMember=wranglerName;" ng-init="wranglerName=getWrangler(shot.id)">{{wranglerName.fname}} {{wranglerName.lname[0]}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:110px;padding-right:5px;" class="shot-button-others button" ng-click="getNotes(shot,'fx');enablePopup(fxName.email,popupEnum.ASSIGN,shot.id,'fx');popupMember=fxName;" ng-init="fxName=getFX(shot.id)">{{fxName.fname}} {{fxName.lname[0]}}</button>
-                <button ng-show='showSeq($parent.$index)' style="width:141px" class="shot-button-others button" ng-click="getNotes(shot,'compositing');enablePopup(compositingName.email,popupEnum.ASSIGN,shot.id,'compositing');popupMember=compositingName;" ng-init="compositingName=getCompositing(shot.id)">{{compositingName.fname}} {{compositingName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' 
+                  style="width:121px"
+                  class="shot-button-others button" 
+                  ng-click="getNotes(shot,'previs');enablePopup(previsName.email,popupEnum.ASSIGN,shot.id,'previs');popupMember=previsName;" 
+                  ng-init="previsName=getPrevis(shot.id)">{{previsName.fname}} {{previsName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' 
+                  style="width:128px" 
+                  class="shot-button-others button"
+                  ng-click="getNotes(shot,'animator');enablePopup(animatorName.email,popupEnum.ASSIGN,shot.id,'animator');popupMember=animatorName;" 
+                  ng-init="animatorName=getAnimator(shot.id)">{{animatorName.fname}} {{animatorName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' 
+                  style="width:124px" 
+                  class="shot-button-others button" 
+                  ng-click="getNotes(shot,'lighter');enablePopup(lighterName.email,popupEnum.ASSIGN,shot.id,'lighter');popupMember=lighterName;" 
+                  ng-init="lighterName=getLighter(shot.id)">{{lighterName.fname}} {{lighterName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' 
+                  style="width:133px" 
+                  class="shot-button-others button" 
+                  ng-click="getNotes(shot,'wrangler');enablePopup(wranglerName.email,popupEnum.ASSIGN,shot.id,'wrangler');popupMember=wranglerName;" 
+                  ng-init="wranglerName=getWrangler(shot.id)">{{wranglerName.fname}} {{wranglerName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' 
+                  style="width:110px;padding-right:5px;" 
+                  class="shot-button-others button" 
+                  ng-click="getNotes(shot,'fx');enablePopup(fxName.email,popupEnum.ASSIGN,shot.id,'fx');popupMember=fxName;" 
+                  ng-init="fxName=getFX(shot.id)">{{fxName.fname}} {{fxName.lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)' 
+                  style="width:141px" 
+                  class="shot-button-others button" 
+                  ng-click="getNotes(shot,'compositing');enablePopup(compositingName.email,popupEnum.ASSIGN,shot.id,'compositing');popupMember=compositingName;" 
+                  ng-init="compositingName=getCompositing(shot.id)">{{compositingName.fname}} {{compositingName.lname[0]}}</button>
               </div>
             </ul>
             <div ng-show='showSeq($index)' class="row">
@@ -481,9 +508,9 @@
     </div>
     <div id="noteBox">
       <div ng-show="showAutoComplete()">
-        <autocomplete ng-model="result" attr-placeholder="type member name..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
+        <autocomplete ng-model="assignedMember" attr-placeholder="type member name..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select=""></autocomplete>
 
-        <a href="" class="button postfix black-button" ng-click="">Assign</a>
+        <button  ng-click="assignMember(assignedMember)">Assign</button>
       </div>
       <hr>
       <div class='panel' ng-repeat="note in notes">
