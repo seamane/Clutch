@@ -146,6 +146,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
     // Popup stuff
     $scope.currentShotId = undefined;
+    $scope.currentAssetId = undefined;
     $scope.department = undefined;
 
     $scope.updateSuggestions = function(typedthings){
