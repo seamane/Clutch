@@ -178,6 +178,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.previs = data;
+		 				$scope.setPopupMember($scope.getPrevis($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -193,6 +194,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.animators = data;
+		 				$scope.setPopupMember($scope.getAnimator($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -208,6 +210,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.compositing = data;
+		 				$scope.setPopupMember($scope.getCompositing($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -223,6 +226,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.fx = data;
+		 				$scope.setPopupMember($scope.getFX($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -238,6 +242,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.wranglers = data;
+		 				$scope.setPopupMember($scope.getWrangler($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -253,6 +258,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.lighters = data;
+		 				$scope.setPopupMember($scope.getLighter($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -268,6 +274,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.modeling = data;
+		 				$scope.setPopupMember($scope.getModeling($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -283,6 +290,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.shading = data;
+		 				$scope.setPopupMember($scope.getShading($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -298,6 +306,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					}).
 					success(function(data){
 						$scope.rigging = data;
+		 				$scope.setPopupMember($scope.getRigging($scope.currentShotId));
 					});
 		 		});
 		 		break;
@@ -974,8 +983,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}
 	}
 
+	$scope.setPopupMember = function(member){
+		console.log("setPopupMember: "+JSON.stringify(member));
+		$scope.popupMember = member;
+	}
+
 	$scope.showAutoComplete = function(){
-		//console.log(JSON.stringify($scope.popupMember));
+		console.log("showAutoComlete: "+JSON.stringify($scope.popupMember));
 		if($scope.popupMember == undefined){
 			return true;
 		}

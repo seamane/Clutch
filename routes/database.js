@@ -120,7 +120,8 @@ createTables = function()
 		+ 'note VARCHAR(500),'
 		+ 'shotid INT,'
 		+ 'type VARCHAR(20),'
-		+ 'userid INT'
+		+ 'userid INT,'
+		+ 'time DATETIME'
 		+ ');',function (err){
 		if(err){
 			throw err;
@@ -618,7 +619,7 @@ exports.getShading = function(req,res){
 
 exports.getNotes = function(req,res){
 	connection.query(
-		'select users.fname,users.lname,notes.note,notes.id from notes inner join users '
+		'select users.fname,users.lname,notes.note,notes.id,notes.time from notes inner join users '
 		+ 'on notes.userid=users.id and notes.type=\'' + req.body.type +'\' and shotid=' + req.body.shotid + ';',
 		function(err,notes){
 			if(err){
@@ -758,8 +759,8 @@ exports.deleteAsset = function(req,res){
 
 exports.createNote = function(req,res){
 	connection.query(
-		'INSERT INTO notes (note, shotid, type, userid)' +
-		'VALUES (\''+req.body.note+'\', \''+req.body.shotid+'\', \''+req.body.type+'\', \''+req.body.userid+'\');',
+		'INSERT INTO notes (note, shotid, type, userid,time)' +
+		'VALUES (\''+req.body.note+'\', \''+req.body.shotid+'\', \''+req.body.type+'\', \''+req.body.userid+'\',NOW());',
 		function (err,rows,fields){
 			if(err){
 				console.log('error createNote query');

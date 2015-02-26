@@ -87,9 +87,7 @@ app.post('/addCompositing',database.addCompositing);
 app.post('/addWrangler',database.addWrangler);
 app.post('/addRigger',database.addRigger);
 app.post('/addShader',database.addShader);
-// app.post('/getShotInfo',database.getShotInfo);
 
-// app.get('/tasks',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
 app.get('/loginpage',function(req,res){res.sendFile(__dirname + '/views/index.html');});
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js');});

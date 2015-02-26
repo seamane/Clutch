@@ -113,7 +113,7 @@
               <th> Compositing</th>
             </table>
             <ul>
-              <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq($index)'>
+              <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq($parent.$index)'>
                 <button ng-show='showSeq($parent.$index)' 
                   class="small round button shot-button dropdown" 
                   ng-click='getShotById(shot.id)' 
@@ -122,33 +122,33 @@
                 <button ng-show='showSeq($parent.$index)' 
                   style="width:121px"
                   class="shot-button-others button" 
-                  ng-click="getNotes(shot,'previs');enablePopup(previsName.email,popupEnum.ASSIGN,shot.id,'previs');popupMember=previsName;" 
-                  ng-init="previsName=getPrevis(shot.id)">{{previsName.fname}} {{previsName.lname[0]}}</button>
+                  ng-click="getNotes(shot,'previs');enablePopup(previsName.email,popupEnum.ASSIGN,shot.id,'previs');setPopupMember(previsName);" 
+                  ng-init="previsName=getPrevis(shot.id)">{{getPrevis(shot.id).fname}} {{getPrevis(shot.id).lname[0]}}</button>
                 <button ng-show='showSeq($parent.$index)' 
                   style="width:128px" 
                   class="shot-button-others button"
-                  ng-click="getNotes(shot,'animator');enablePopup(animatorName.email,popupEnum.ASSIGN,shot.id,'animator');popupMember=animatorName;" 
-                  ng-init="animatorName=getAnimator(shot.id)">{{animatorName.fname}} {{animatorName.lname[0]}}</button>
+                  ng-click="getNotes(shot,'animator');enablePopup(animatorName.email,popupEnum.ASSIGN,shot.id,'animator');setPopupMember(animatorName);" 
+                  ng-init="animatorName=getAnimator(shot.id)">{{getAnimator(shot.id).fname}} {{getAnimator(shot.id).lname[0]}}</button>
                 <button ng-show='showSeq($parent.$index)' 
                   style="width:124px" 
                   class="shot-button-others button" 
-                  ng-click="getNotes(shot,'lighter');enablePopup(lighterName.email,popupEnum.ASSIGN,shot.id,'lighter');popupMember=lighterName;" 
-                  ng-init="lighterName=getLighter(shot.id)">{{lighterName.fname}} {{lighterName.lname[0]}}</button>
+                  ng-click="getNotes(shot,'lighter');enablePopup(lighterName.email,popupEnum.ASSIGN,shot.id,'lighter');setPopupMember(lighterName);" 
+                  ng-init="lighterName=getLighter(shot.id)">{{getLighter(shot.id).fname}} {{getLighter(shot.id).lname[0]}}</button>
                 <button ng-show='showSeq($parent.$index)' 
                   style="width:133px" 
                   class="shot-button-others button" 
-                  ng-click="getNotes(shot,'wrangler');enablePopup(wranglerName.email,popupEnum.ASSIGN,shot.id,'wrangler');popupMember=wranglerName;" 
-                  ng-init="wranglerName=getWrangler(shot.id)">{{wranglerName.fname}} {{wranglerName.lname[0]}}</button>
+                  ng-click="getNotes(shot,'wrangler');enablePopup(wranglerName.email,popupEnum.ASSIGN,shot.id,'wrangler');setPopupMember(wranglerName);" 
+                  ng-init="wranglerName=getWrangler(shot.id)">{{getWrangler(shot.id).fname}} {{getWrangler(shot.id).lname[0]}}</button>
                 <button ng-show='showSeq($parent.$index)' 
                   style="width:110px;padding-right:5px;" 
                   class="shot-button-others button" 
-                  ng-click="getNotes(shot,'fx');enablePopup(fxName.email,popupEnum.ASSIGN,shot.id,'fx');popupMember=fxName;" 
-                  ng-init="fxName=getFX(shot.id)">{{fxName.fname}} {{fxName.lname[0]}}</button>
-                <button ng-show='showSeq($parent.$index)' 
+                  ng-click="getNotes(shot,'fx');enablePopup(fxName.email,popupEnum.ASSIGN,shot.id,'fx');setPopupMember(fxName);" 
+                  ng-init="fxName=getFX(shot.id)">{{getFX(shot.id).fname}} {{getFX(shot.id).lname[0]}}</button>
+                <button ng-show='showSeq($parent.$index)'
                   style="width:141px" 
                   class="shot-button-others button" 
-                  ng-click="getNotes(shot,'compositing');enablePopup(compositingName.email,popupEnum.ASSIGN,shot.id,'compositing');popupMember=compositingName;" 
-                  ng-init="compositingName=getCompositing(shot.id)">{{compositingName.fname}} {{compositingName.lname[0]}}</button>
+                  ng-click="getNotes(shot,'compositing');enablePopup(compositingName.email,popupEnum.ASSIGN,shot.id,'compositing');setPopupMember(compositingName);" 
+                  ng-init="compositingName=getCompositing(shot.id)">{{getCompositing(shot.id).fname}} {{getCompositing(shot.id).lname[0]}}</button>
               </div>
             </ul>
             <div ng-show='showSeq($index)' class="row">
@@ -244,9 +244,18 @@
             <ul ng-show="showAssets(0,$index)" >
               <div ng-click='toggleAsset($index,0)'>
                 <button class="asset-note-button">Notes</button>
-                <button style="width:128px"class="asset-other-button button" ng-init="charModel=getModeling(ass.id)" ng-click="popupMember=charModel">{{charModel.fname}} {{charModel.lname[0]}}</button>
-                <button style="width:126px" class="asset-other-button button" ng-init="charShading=getShading(ass.id)" ng-click='popupMember=charShading'>{{charShading.fname}} {{charShading.lname[0]}}</button>
-                <button style="width:128px" class="asset-other-button button" ng-init="charRigging=getRigging(ass.id)" ng-click='popupMember=charRigging'>{{charRigging.fname}} {{charRigging.lname[0]}}</button>
+                <button style="width:128px"
+                  class="asset-other-button button" 
+                  ng-init="charModel=getModeling(ass.id)" 
+                  ng-click="setPopupMember(charModel)">{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                <button style="width:126px" 
+                  class="asset-other-button button"
+                  ng-init="charShading=getShading(ass.id)" 
+                  ng-click='setPopupMember(charShading)'>{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                <button style="width:128px" 
+                class="asset-other-button button" 
+                ng-init="charRigging=getRigging(ass.id)" 
+                ng-click='setPopupMember(charRigging)'>{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -301,9 +310,18 @@
             <ul ng-show="showAssets(1,$index)" >
               <div ng-click='toggleAsset($index,1)'>
                 <button class="asset-note-button">Notes</button>
-                <button style="width:128px"class="asset-other-button button" ng-init="charPropModel=getModeling(ass.id)" ng-click='popupMember=charPropModel'>{{charPropModel.fname}} {{charPropModel.lname}}</button>
-                <button style="width:126px" class="asset-other-button button" ng-init="charPropShading=getShading(ass.id)" ng-click='popupMember=charPropShading'>{{charPropShading.fname}} {{charPropShading.lname}}</button>
-                <button style="width:128px" class="asset-other-button button" ng-init="charPropRigging=getRigging(ass.id)" ng-click='popupMember=charPropRigging'>{{charPropRigging.fname}} {{charPropRigging.lname}}</button>
+                <button style="width:128px"
+                  class="asset-other-button button" 
+                  ng-init="charPropModel=getModeling(ass.id)" 
+                  ng-click='setPopupMember(charPropModel)'>{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                <button style="width:126px" 
+                  class="asset-other-button button" 
+                  ng-init="charPropShading=getShading(ass.id)" 
+                  ng-click='setPopupMember(charPropShading)'>{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                <button style="width:128px" 
+                  class="asset-other-button button" 
+                  ng-init="charPropRigging=getRigging(ass.id)" 
+                  ng-click='setPopupMember(charPropRigging)'>{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -358,9 +376,18 @@
             <ul ng-show="showAssets(2,$index)" >
               <div ng-click='toggleAsset($index,2)'>
                 <button class="asset-note-button">Notes</button>
-                <button style="width:128px"class="asset-other-button button" ng-init="envModel=getModeling(ass.id)" ng-click='popupMember=envModel'>{{envModel.fname}} {{envModel.lname}}</button>
-                <button style="width:126px" class="asset-other-button button" ng-init="envShading=getShading(ass.id)" ng-click='popupMember=envShading'>{{envShading.fname}} {{envShading.lname}}</button>
-                <button style="width:128px" class="asset-other-button button" ng-init="envRigging=getRigging(ass.id)" ng-click='popupMember=envRigging'>{{envRigging.fname}} {{envRigging.lname}}</button>
+                <button style="width:128px"
+                  class="asset-other-button button" 
+                  ng-init="envModel=getModeling(ass.id)" 
+                  ng-click='setPopupMember(envModel)'>{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                <button style="width:126px" 
+                  class="asset-other-button button" 
+                  ng-init="envShading=getShading(ass.id)" 
+                  ng-click='setPopupMember(envShading)'>{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                <button style="width:128px" 
+                  class="asset-other-button button" 
+                  ng-init="envRigging=getRigging(ass.id)" 
+                  ng-click='setPopupMember(envRigging)'>{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -415,9 +442,18 @@
             <ul ng-show="showAssets(3,$index)">
               <div ng-click='toggleAsset($index,3)'>
                 <button class="asset-note-button">Notes</button>
-                <button style="width:128px"class="asset-other-button button" ng-init="envPropModel=getModeling(ass.id)" ng-click='popupMember=envPropModel'>{{envPropModel.fname}} {{envPropModel.lname}}</button>
-                <button style="width:126px" class="asset-other-button button" ng-init="envPropShading=getShading(ass.id)" ng-click='popupMember=envPropShading'>{{envPropShading.fname}} {{envPropShading.lname}}</button>
-                <button style="width:128px" class="asset-other-button button" ng-init="envPropRigging=getRigging(ass.id)" ng-click='popupMember=envPropRigging'>{{envPropRigging.fname}} {{envPropRiggin.lname}}</button>
+                <button style="width:128px"
+                  class="asset-other-button button" 
+                  ng-init="envPropModel=getModeling(ass.id)" 
+                  ng-click='setPopupMember(envPropModel)'>{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                <button style="width:126px" 
+                  class="asset-other-button button" 
+                  ng-init="envPropShading=getShading(ass.id)" 
+                  ng-click='setPopupMember(envPropShading)'>{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                <button style="width:128px" 
+                  class="asset-other-button button" 
+                  ng-init="envPropRigging=getRigging(ass.id)" 
+                  ng-click='setPopupMember(envPropRigging)'>{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -507,15 +543,22 @@
       </form>
     </div>
     <div id="noteBox">
-      <div ng-show="showAutoComplete()">
-        <autocomplete ng-model="assignedMember" attr-placeholder="type member name..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select=""></autocomplete>
-
+      <div ng-if="showAutoComplete()">
+        <autocomplete ng-model="assignedMember" 
+          attr-placeholder="type member name..." 
+          click-activation="true" 
+          data="assignMembers" 
+          on-type="updateSuggestions" 
+          on-select=""></autocomplete>
         <button  ng-click="assignMember(assignedMember)">Assign</button>
+      </div>
+      <div ng-if="!showAutoComplete()">
+        <p><b>Assigned To:</b> {{popupMember.fname}} {{popupMember.lname}}</p>
       </div>
       <hr>
       <div class='panel' ng-repeat="note in notes">
         <p>{{note.note}}</p>
-        <img class="right" src="trash.png" ng-click="deleteNote(note.id)" />
+        <img class="right" width="18"src="trash.png" ng-click="deleteNote(note.id)" />
         <p class="right">~{{note.fname}} {{note.lname}}</p>
         <p class="right">{{note.time}}</p>
       </div>
