@@ -945,16 +945,20 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
+		console.log("HERE");
 		$scope.currentShotId = currentShot;
 		$scope.department = department;
 		if(!$scope.popup){
 			$("#shadow").fadeIn(0500);
 			switch(popupType){
 				case 0: 
-					$("#shadowBox").fadeIn(0500);
+					$("#emailBox").fadeIn(0500);
 					break;
 				case 1:
 					$("#noteBox").fadeIn(0500);
+					break;
+				case 2:
+					$("#genericNoteBox").fadeIn(0500);
 					break;
 				default:
 			}
@@ -969,6 +973,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			$("#shadow").fadeOut(0500);
 			$("#shadowBox").fadeOut(0500);
 			$("#noteBox").fadeOut(0500);
+			$("#genericNoteBox").fadeOut(0500);
 			$scope.popup = false;
 			$scope.popupMember = undefined;
 		}

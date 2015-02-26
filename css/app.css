@@ -217,7 +217,7 @@ th{
 	left:0px;
 }
 
-#shadowBox, #noteBox{
+#emailBox, #noteBox, #genericNoteBox{
 	width: 50%;
 	margin: 0px auto;
 	z-index: 3;
@@ -228,6 +228,11 @@ th{
 	left:50%;
 	margin-left: -25%;
 	padding: 50px;
+}
+
+.trashIcon{
+	width: 18px;
+	margin-top: -35px;
 }
 
 form .row{

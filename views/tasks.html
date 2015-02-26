@@ -113,16 +113,18 @@
               <th> Compositing</th>
             </table>
             <ul>
-              <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq($index)'>
+              <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq($parent.$index)'>
                 <button ng-show='showSeq($parent.$index)' 
                   class="small round button shot-button dropdown" 
                   ng-click='getShotById(shot.id)' 
                   data-dropdown="shotinfo">{{shot.name}}</button>
-                <button ng-show='showSeq($parent.$index)' class="notes-button">Notes</button>
+                <button ng-show='showSeq($parent.$index)' 
+                class="notes-button" 
+                ng-click="getNotes(shot,'generic');enablePopup(previsName.email,popupEnum.NOTES,shot.id,'generic');">Notes</button>
                 <button ng-show='showSeq($parent.$index)' 
                   style="width:121px"
                   class="shot-button-others button" 
-                  ng-click="getNotes(shot,'previs');enablePopup(previsName.email,popupEnum.ASSIGN,shot.id,'previs');popupMember=previsName;" 
+                  ng-click="getNotes(shot,'previs');enablePopup(previsName.email,popupEnum.ASSIGN,shot.id,'previs');popupMember=previsName;"
                   ng-init="previsName=getPrevis(shot.id)">{{previsName.fname}} {{previsName.lname[0]}}</button>
                 <button ng-show='showSeq($parent.$index)' 
                   style="width:128px" 
@@ -495,7 +497,7 @@
     </ul>
   
     <div id="shadow" ng-click="disablePopup()"></div>
-    <div id="shadowBox">
+    <div id="emailBox">
       <form>
         <label>Subject:
           <input type="text" ng-model="emailSubject"/>
@@ -515,7 +517,17 @@
       <hr>
       <div class='panel' ng-repeat="note in notes">
         <p>{{note.note}}</p>
-        <img class="right" src="trash.png" ng-click="deleteNote(note.id)" />
+        <img class="right trashIcon" src="trash.png" ng-click="deleteNote(note.id)" />
+        <p class="right">~{{note.fname}} {{note.lname}}</p>
+        <p class="right">{{note.time}}</p>
+      </div>
+      <textarea placeholder="notes" ng-model="noteField"></textarea>
+      <button ng-click="addNote();">Add Note</button>
+    </div>
+    <div id="genericNoteBox">
+      <div class='panel' ng-repeat="note in notes">
+        <p>{{note.note}}</p>
+        <img class="right trashIcon" src="trash.png" ng-click="deleteNote(note.id)" />
         <p class="right">~{{note.fname}} {{note.lname}}</p>
         <p class="right">{{note.time}}</p>
       </div>
