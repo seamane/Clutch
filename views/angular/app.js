@@ -131,6 +131,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	$scope.popup = false;
 	$scope.recipient = "";
 	$scope.popupMember = undefined;
+	$scope.edit = false;
 
 	$scope.assignMembers = AssignMember.getmembers("...");
   	$scope.assignMembers.then(function(data){
@@ -994,11 +995,15 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.showAutoComplete = function(){
-		console.log("showAutoComlete: "+JSON.stringify($scope.popupMember));
+		// console.log("showAutoComlete: "+JSON.stringify($scope.popupMember));
 		if($scope.popupMember == undefined){
 			return true;
 		}
-		return $scope.popupMember.fname == "+ Assign";
+		return $scope.popupMember.fname == "+ Assign" || $scope.edit;
+	}
+
+	$scope.setEdit = function(bool){
+		$scope.edit = bool
 	}
 
 	$scope.sendMessage = function(){

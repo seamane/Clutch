@@ -555,7 +555,7 @@
         <button  ng-click="assignMember(assignedMember)">Assign</button>
       </div>
       <div ng-if="!showAutoComplete()">
-        <p><b>Assigned To:</b> {{popupMember.fname}} {{popupMember.lname}}</p>
+        <p><b>Assigned To:</b> {{popupMember.fname}} {{popupMember.lname}} <a ng-click='setEdit(true)'><font size="2.5">Edit</font></a></p>
       </div>
       <hr>
       <div class='panel' ng-repeat="note in notes">
