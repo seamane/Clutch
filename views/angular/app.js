@@ -150,7 +150,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
     $scope.department = undefined;
 
     $scope.updateSuggestions = function(typedthings){
-	    console.log("Do something like reload data with this: " + typedthings );
+	    // console.log("Do something like reload data with this: " + typedthings );
 	    $scope.newAssignMembers = AssignMember.getmembers(typedthings);
 	    $scope.newAssignMembers.then(function(data){
 	      	$scope.assignMembers = data;
@@ -329,11 +329,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				'projectid' : $scope.projectid
 			}).
 			success(function(data){
+				$http.post('/getSequences',{
+					'projectid': $scope.projectid
+				}).
+				success(function(data){
+					$scope.sequences = orderBy(data,'name',false);
+				});
 				$scope.title = null;
-				$scope.sequences = orderBy($scope.sequences.concat([{
-				'name': $scope.title,
-				'projectid' : $scope.projectid}]),
-				'name',false);
 			});
 		}
 	}
@@ -349,7 +351,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				}).
 				success(function(data){
 					$scope.sequences = orderBy(data,'name',false);
-				})
+				});
 			});
 		}
 	}
@@ -366,34 +368,15 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				'type' : type
 			}).
 			success(function(data){
-				if(type == "CHAR"){
-					$scope.charAssets = orderBy($scope.charAssets.concat([{
-						'name': assetTitle,
-						'projectid' : $scope.projectid,
-						'type' : type
-						}]),'name',false);
-				}
-				else if(type == "CHAR_PROP"){
-					$scope.charPropAssets = orderBy($scope.charPropAssets.concat([{
-						'name': assetTitle,
-						'projectid' : $scope.projectid,
-						'type' : type
-						}]),'name',false);
-				}
-				else if(type == "ENV"){
-					$scope.envAssets = orderBy($scope.envAssets.concat([{
-						'name': assetTitle,
-						'projectid' : $scope.projectid,
-						'type' : type
-						}]),'name',false);
-				}
-				else if(type == "ENV_PROP"){
-					$scope.envPropAssets = orderBy($scope.envPropAssets.concat([{
-						'name': assetTitle,
-						'projectid' : $scope.projectid,
-						'type' : type
-						}]),'name',false);
-				}
+				$http.post('/getAssets',{
+					'projectid':$scope.projectid
+				}).
+				success(function(data){
+					$scope.charAssets = orderBy(data[0],'name',false);
+					$scope.charPropAssets = orderBy(data[1],'name',false);
+					$scope.envAssets = orderBy(data[2],'name',false);
+					$scope.envPropAssets = orderBy(data[3],'name',false);
+				});
 			});
 		}
 	}
@@ -419,7 +402,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.addNote = function(){
 		if ($scope.noteField != "" && $scope.noteField != undefined){
-			console.log($scope.currentShotId);
+			// console.log($scope.currentShotId);
 			$http.post('createNote',{
 				'note': $scope.noteField,
 				'shotid' : $scope.currentShotId,
@@ -536,6 +519,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			'projectid': $scope.projectid
 		}).
 		success(function(data){
+			// console.log("getSequences:"+JSON.stringify(data));
 			$scope.sequences = orderBy(data,'name',false);
 		});
 
@@ -873,6 +857,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.addShot = function(seq,desc,title){
+		// console.log(JSON.stringify(seq));
 		if(title == undefined || desc == undefined){
 			$scope.shotAttempted = true;
 		}
@@ -956,7 +941,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
-		console.log("HERE");
+		// console.log("HERE");
 		$scope.currentShotId = currentShot;
 		$scope.department = department;
 		if(!$scope.popup){
@@ -976,7 +961,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			$scope.popup = true;
 		}
 		$scope.recipient = recipientEmail;
-		console.log($scope.recipient);
+		// console.log($scope.recipient);
 	}
 
 	$scope.disablePopup = function(){
@@ -991,7 +976,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.setPopupMember = function(member){
-		console.log("setPopupMember: "+JSON.stringify(member));
+		// console.log("setPopupMember: "+JSON.stringify(member));
 		$scope.popupMember = member;
 	}
 

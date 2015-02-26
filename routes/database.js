@@ -453,6 +453,7 @@ exports.getSequences = function (req,res) {
 				console.log('error getSequences query');
 				throw err;
 			}
+			console.log("getSequences:"+JSON.stringify(sequences));
 	 		res.end(JSON.stringify(sequences));
 		}
 	);
