@@ -533,7 +533,7 @@
 
     <ul id="notesDrop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false">
       <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
-      <div class='panel' ng-repeat="note in notes">
+      <div class='panel' ng-repeat="note in notes|limitTo:notesLimit">
         <p>{{note.note}}</p>
         <p class="right">~{{note.fname}} {{note.lname}}</p>
         <p class="right">{{note.time}}</p>
@@ -566,7 +566,7 @@
         <p><b>Assigned To:</b> {{popupMember.fname}} {{popupMember.lname}} <a ng-click='setEdit(true)'><font size="2.5">Edit</font></a></p>
       </div>
       <hr>
-      <div class='panel' ng-repeat="note in notes">
+      <div class='panel' ng-repeat="note in notes|limitTo:notesLimit">
         <p>{{note.note}}</p>
         <img class="right trashIcon" src="trash.png" ng-click="deleteNote(note.id)" />
         <p class="right">~{{note.fname}} {{note.lname}}</p>
@@ -576,7 +576,7 @@
       <button ng-click="addNote();">Add Note</button>
     </div>
     <div id="genericNoteBox">
-      <div class='panel' ng-repeat="note in notes">
+      <div class='panel' ng-repeat="note in notes|limitTo:notesLimit">
         <p>{{note.note}}</p>
         <img class="right trashIcon" src="trash.png" ng-click="deleteNote(note.id)" />
         <p class="right">~{{note.fname}} {{note.lname}}</p>

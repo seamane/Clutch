@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+ggvar mysql = require('mysql');
 var randomstring = require("randomstring");
 var sha1 = require('sha1');
 var connection = mysql.createConnection({

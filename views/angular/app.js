@@ -840,6 +840,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}).
 		success(function(data){
 			$scope.notes = orderBy(data,'time',true);
+			if($scope.notes.length < 4){
+				$scope.notesLimit = $scope.notes.length;
+			}
+			else
+				$scope.notesLimit = 4;
 		});
 	}
 
