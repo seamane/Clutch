@@ -413,8 +413,18 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				//TODO Send email
 				$scope.emailBody = $scope.noteField;
 				$scope.emailSubject = "CLUTCH | "; //TODO make a better subject line and who the email is from
+				// if($scope.recipient.constructor == Array){
+				// 	console.log("IS ARRAY");
+				// 	var recipients = $scope.recipient;
+				// 	for(var i = 0; i < recipients.length; i++){
+				// 		$scope.recipient = recipients[i].email;
+				// 		$scope.sendMessage();
+				// 		console.log("SENDING AN EMAIL TO "+$scope.recipient);
+				// 	}
+				// }
+				// else
+				// 	$scope.sendMessage();
 				$scope.sendMessage();
-				//console.log($scope.noteField+"\r"+"-"+cookieStore.get('userInfo').fname+" "+$cookieStore.get('userInfo').lname);
 		  		//TODO append new note rather than query db again
 				$http.post('/getNotes',{
 				'shotid':$scope.currentShotId,
@@ -424,7 +434,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					$scope.notes = orderBy(data,'time',true);
 				});
 				$scope.noteField = undefined;
-				//$scope.disablePopup();
 			});
 		}
 	}
@@ -948,9 +957,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
-		// console.log("HERE");
-		$scope.currentShotId = currentShot;
+		$scope.currentShotId = currentShot.id;
+
 		$scope.department = department;
+		//$scope.recipient = recipientEmail;
+		//$scope.recipient = ["tcbarrus@gmail.com","eric_ctr_seaman247@yahoo.com"];
 		if(!$scope.popup){
 			$("#shadow").fadeIn(0500);
 			switch(popupType){
@@ -962,6 +973,21 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					break;
 				case 2:
 					$("#genericNoteBox").fadeIn(0500);
+					console.log(currentShot);
+					//get all email addresses
+					$http.post('/getUsersByShot',
+					{
+						'shotId':currentShot.id
+					}).
+					success(function(data){
+						//$scope.recipient = data;
+						//console.log($scope.recipient);
+						$scope.recipient = [];
+						for(var i = 0; i < data.length; i++){
+							$scope.recipient.push(data[i].email);
+						}
+							//console.log($scope.recipient[i].email);
+					});
 					break;
 				default:
 			}
@@ -973,10 +999,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.disablePopup = function(){
 		if($scope.popup){
-			$("#shadow").fadeOut(0500);
-			$("#shadowBox").fadeOut(0500);
-			$("#noteBox").fadeOut(0500);
-			$("#genericNoteBox").fadeOut(0500);
+			$(".popup").fadeOut(0500);
 			$scope.popup = false;
 			$scope.popupMember = undefined;
 		}

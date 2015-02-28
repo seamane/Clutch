@@ -1001,3 +1001,21 @@ exports.addRigger = function(req,res){
 		}
 	);
 }
+
+exports.getUsersByShot = function(req,res){
+	connection.query(
+		'(SELECT U.email FROM users U INNER JOIN animators A ON U.id=A.userid INNER JOIN shots S ON S.id=A.shotid WHERE S.id='+req.body.shotId+') UNION '
+		+'(SELECT U.email FROM users U INNER JOIN compositing C ON U.id=C.userid INNER JOIN shots S ON s.id=C.shotid WHERE S.id='+req.body.shotId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN lighters L ON U.id=L.userid INNER JOIN shots S ON s.id=L.shotid WHERE S.id='+req.body.shotId+') UNION  '
+		+ '(SELECT U.email FROM users U INNER JOIN previs P ON U.id=P.userid INNER JOIN shots S ON s.id=P.shotid WHERE S.id='+req.body.shotId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN renderwranglers R ON U.id=R.userid INNER JOIN shots S ON s.id=R.shotid WHERE S.id='+req.body.shotId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN vfx V ON U.id=V.userid INNER JOIN shots S ON s.id=V.shotid WHERE S.id='+req.body.shotId+');',
+		 function(err,users){
+		 	if(err){
+		 		console.log('error getUsersByShot');
+		 		throw err;
+		 	}
+		 	res.end(JSON.stringify(users));
+		 }
+	);
+}
