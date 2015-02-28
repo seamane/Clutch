@@ -131,6 +131,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	$scope.popup = false;
 	$scope.recipient = "";
 	$scope.popupMember = undefined;
+	$scope.edit = false;
 
 	$scope.assignMembers = AssignMember.getmembers("...");
   	$scope.assignMembers.then(function(data){
@@ -145,10 +146,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
     // Popup stuff
     $scope.currentShotId = undefined;
+    $scope.currentAssetId = undefined;
     $scope.department = undefined;
 
     $scope.updateSuggestions = function(typedthings){
-	    console.log("Do something like reload data with this: " + typedthings );
+	    // console.log("Do something like reload data with this: " + typedthings );
 	    $scope.newAssignMembers = AssignMember.getmembers(typedthings);
 	    $scope.newAssignMembers.then(function(data){
 	      	$scope.assignMembers = data;
@@ -327,11 +329,13 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				'projectid' : $scope.projectid
 			}).
 			success(function(data){
+				$http.post('/getSequences',{
+					'projectid': $scope.projectid
+				}).
+				success(function(data){
+					$scope.sequences = orderBy(data,'name',false);
+				});
 				$scope.title = null;
-				$scope.sequences = orderBy($scope.sequences.concat([{
-				'name': $scope.title,
-				'projectid' : $scope.projectid}]),
-				'name',false);
 			});
 		}
 	}
@@ -347,7 +351,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				}).
 				success(function(data){
 					$scope.sequences = orderBy(data,'name',false);
-				})
+				});
 			});
 		}
 	}
@@ -364,34 +368,15 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				'type' : type
 			}).
 			success(function(data){
-				if(type == "CHAR"){
-					$scope.charAssets = orderBy($scope.charAssets.concat([{
-						'name': assetTitle,
-						'projectid' : $scope.projectid,
-						'type' : type
-						}]),'name',false);
-				}
-				else if(type == "CHAR_PROP"){
-					$scope.charPropAssets = orderBy($scope.charPropAssets.concat([{
-						'name': assetTitle,
-						'projectid' : $scope.projectid,
-						'type' : type
-						}]),'name',false);
-				}
-				else if(type == "ENV"){
-					$scope.envAssets = orderBy($scope.envAssets.concat([{
-						'name': assetTitle,
-						'projectid' : $scope.projectid,
-						'type' : type
-						}]),'name',false);
-				}
-				else if(type == "ENV_PROP"){
-					$scope.envPropAssets = orderBy($scope.envPropAssets.concat([{
-						'name': assetTitle,
-						'projectid' : $scope.projectid,
-						'type' : type
-						}]),'name',false);
-				}
+				$http.post('/getAssets',{
+					'projectid':$scope.projectid
+				}).
+				success(function(data){
+					$scope.charAssets = orderBy(data[0],'name',false);
+					$scope.charPropAssets = orderBy(data[1],'name',false);
+					$scope.envAssets = orderBy(data[2],'name',false);
+					$scope.envPropAssets = orderBy(data[3],'name',false);
+				});
 			});
 		}
 	}
@@ -417,7 +402,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 
 	$scope.addNote = function(){
 		if ($scope.noteField != "" && $scope.noteField != undefined){
-			console.log($scope.currentShotId);
+			// console.log($scope.currentShotId);
 			$http.post('createNote',{
 				'note': $scope.noteField,
 				'shotid' : $scope.currentShotId,
@@ -543,6 +528,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			'projectid': $scope.projectid
 		}).
 		success(function(data){
+			// console.log("getSequences:"+JSON.stringify(data));
 			$scope.sequences = orderBy(data,'name',false);
 		});
 
@@ -863,6 +849,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}).
 		success(function(data){
 			$scope.notes = orderBy(data,'time',true);
+			if($scope.notes.length < 4){
+				$scope.notesLimit = $scope.notes.length;
+			}
+			else
+				$scope.notesLimit = 4;
 		});
 	}
 
@@ -880,6 +871,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.addShot = function(seq,desc,title){
+		// console.log(JSON.stringify(seq));
 		if(title == undefined || desc == undefined){
 			$scope.shotAttempted = true;
 		}
@@ -963,7 +955,12 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
+<<<<<<< HEAD
 		$scope.currentShotId = currentShot.id;
+=======
+		// console.log("HERE");
+		$scope.currentShotId = currentShot;
+>>>>>>> origin/master
 		$scope.department = department;
 		//$scope.recipient = recipientEmail;
 		//$scope.recipient = ["tcbarrus@gmail.com","eric_ctr_seaman247@yahoo.com"];
@@ -998,6 +995,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			}
 			$scope.popup = true;
 		}
+<<<<<<< HEAD
+=======
+		$scope.recipient = recipientEmail;
+		// console.log($scope.recipient);
+>>>>>>> origin/master
 	}
 
 	$scope.disablePopup = function(){
@@ -1009,16 +1011,24 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.setPopupMember = function(member){
-		console.log("setPopupMember: "+JSON.stringify(member));
+		// console.log("setPopupMember: "+JSON.stringify(member));
 		$scope.popupMember = member;
 	}
 
 	$scope.showAutoComplete = function(){
+<<<<<<< HEAD
 		//console.log("showAutoComlete: "+JSON.stringify($scope.popupMember));
+=======
+		// console.log("showAutoComlete: "+JSON.stringify($scope.popupMember));
+>>>>>>> origin/master
 		if($scope.popupMember == undefined){
 			return true;
 		}
-		return $scope.popupMember.fname == "+ Assign";
+		return $scope.popupMember.fname == "+ Assign" || $scope.edit;
+	}
+
+	$scope.setEdit = function(bool){
+		$scope.edit = bool
 	}
 
 	$scope.sendMessage = function(){

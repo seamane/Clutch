@@ -245,19 +245,21 @@
             </table>
             <ul ng-show="showAssets(0,$index)" >
               <div ng-click='toggleAsset($index,0)'>
-                <button class="asset-note-button">Notes</button>
+                <button 
+                  class="asset-note-button"
+                  ng-click="getNotes(ass,'generic');enablePopup(charModel.email,popupEnum.NOTES,ass.id,'generic');">Notes</button>
                 <button style="width:128px"
                   class="asset-other-button button" 
                   ng-init="charModel=getModeling(ass.id)" 
-                  ng-click="setPopupMember(charModel)">{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                  ng-click="setPopupMember(charModel);enablePopup(charModel.email,popupEnum.ASSIGN,ass.id,'modeler');">{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
                 <button style="width:126px" 
                   class="asset-other-button button"
                   ng-init="charShading=getShading(ass.id)" 
-                  ng-click='setPopupMember(charShading)'>{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                  ng-click="setPopupMember(charShading);enablePopup(charShading.email,popupEnum.ASSIGN,ass.id,'shader');">{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
                 <button style="width:128px" 
                 class="asset-other-button button" 
                 ng-init="charRigging=getRigging(ass.id)" 
-                ng-click='setPopupMember(charRigging)'>{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
+                ng-click="setPopupMember(charRigging);enablePopup(charRigging.email,popupEnum.ASSIGN,ass.id,'rigger');">{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -311,19 +313,21 @@
             </table>
             <ul ng-show="showAssets(1,$index)" >
               <div ng-click='toggleAsset($index,1)'>
-                <button class="asset-note-button">Notes</button>
+                <button 
+                  class="asset-note-button"
+                  ng-click="getNotes(ass,'generic');enablePopup(charModel.email,popupEnum.NOTES,ass.id,'generic');">Notes</button>
                 <button style="width:128px"
                   class="asset-other-button button" 
-                  ng-init="charPropModel=getModeling(ass.id)" 
-                  ng-click='setPopupMember(charPropModel)'>{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                  ng-init="charModel=getModeling(ass.id)" 
+                  ng-click="setPopupMember(charModel);enablePopup(charModel.email,popupEnum.ASSIGN,ass.id,'modeler');">{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
                 <button style="width:126px" 
-                  class="asset-other-button button" 
-                  ng-init="charPropShading=getShading(ass.id)" 
-                  ng-click='setPopupMember(charPropShading)'>{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                  class="asset-other-button button"
+                  ng-init="charShading=getShading(ass.id)" 
+                  ng-click="setPopupMember(charShading);enablePopup(charShading.email,popupEnum.ASSIGN,ass.id,'shader');">{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
                 <button style="width:128px" 
-                  class="asset-other-button button" 
-                  ng-init="charPropRigging=getRigging(ass.id)" 
-                  ng-click='setPopupMember(charPropRigging)'>{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
+                class="asset-other-button button" 
+                ng-init="charRigging=getRigging(ass.id)" 
+                ng-click="setPopupMember(charRigging);enablePopup(charRigging.email,popupEnum.ASSIGN,ass.id,'rigger');">{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -377,19 +381,21 @@
             </table>
             <ul ng-show="showAssets(2,$index)" >
               <div ng-click='toggleAsset($index,2)'>
-                <button class="asset-note-button">Notes</button>
+                <button 
+                  class="asset-note-button"
+                  ng-click="getNotes(ass,'generic');enablePopup(charModel.email,popupEnum.NOTES,ass.id,'generic');">Notes</button>
                 <button style="width:128px"
                   class="asset-other-button button" 
-                  ng-init="envModel=getModeling(ass.id)" 
-                  ng-click='setPopupMember(envModel)'>{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                  ng-init="charModel=getModeling(ass.id)" 
+                  ng-click="setPopupMember(charModel);enablePopup(charModel.email,popupEnum.ASSIGN,ass.id,'modeler');">{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
                 <button style="width:126px" 
-                  class="asset-other-button button" 
-                  ng-init="envShading=getShading(ass.id)" 
-                  ng-click='setPopupMember(envShading)'>{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                  class="asset-other-button button"
+                  ng-init="charShading=getShading(ass.id)" 
+                  ng-click="setPopupMember(charShading);enablePopup(charShading.email,popupEnum.ASSIGN,ass.id,'shader');">{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
                 <button style="width:128px" 
-                  class="asset-other-button button" 
-                  ng-init="envRigging=getRigging(ass.id)" 
-                  ng-click='setPopupMember(envRigging)'>{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
+                class="asset-other-button button" 
+                ng-init="charRigging=getRigging(ass.id)" 
+                ng-click="setPopupMember(charRigging);enablePopup(charRigging.email,popupEnum.ASSIGN,ass.id,'rigger');">{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -407,7 +413,7 @@
           <div class="large-2 columns left" ng-class="{'fadein':addVisibleEnvProp , 'fadeout':!addVisibleEnvProp}">
             <div class="row collapse">
               <div class="small-3 columns">
-                <a href="#" class="button postfix signUp-button" ng-click="addAsset('ENV_PROP',evnPropAssetTitle);envPropAssetTitle=''">+</a>
+                <a href="#" class="button postfix signUp-button" ng-click="addAsset('ENV_PROP',envPropAssetTitle);envPropAssetTitle=''">+</a>
               </div>
               <div class="small-9 columns">
                 <input class="blue-input" type="text" placeholder="Title" ng-model="envPropAssetTitle" ng-class="{'has-error' : attempted}">
@@ -443,19 +449,21 @@
             </table>
             <ul ng-show="showAssets(3,$index)">
               <div ng-click='toggleAsset($index,3)'>
-                <button class="asset-note-button">Notes</button>
+                <button 
+                  class="asset-note-button"
+                  ng-click="getNotes(ass,'generic');enablePopup(charModel.email,popupEnum.NOTES,ass.id,'generic');">Notes</button>
                 <button style="width:128px"
                   class="asset-other-button button" 
-                  ng-init="envPropModel=getModeling(ass.id)" 
-                  ng-click='setPopupMember(envPropModel)'>{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                  ng-init="charModel=getModeling(ass.id)" 
+                  ng-click="setPopupMember(charModel);enablePopup(charModel.email,popupEnum.ASSIGN,ass.id,'modeler');">{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
                 <button style="width:126px" 
-                  class="asset-other-button button" 
-                  ng-init="envPropShading=getShading(ass.id)" 
-                  ng-click='setPopupMember(envPropShading)'>{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                  class="asset-other-button button"
+                  ng-init="charShading=getShading(ass.id)" 
+                  ng-click="setPopupMember(charShading);enablePopup(charShading.email,popupEnum.ASSIGN,ass.id,'shader');">{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
                 <button style="width:128px" 
-                  class="asset-other-button button" 
-                  ng-init="envPropRigging=getRigging(ass.id)" 
-                  ng-click='setPopupMember(envPropRigging)'>{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
+                class="asset-other-button button" 
+                ng-init="charRigging=getRigging(ass.id)" 
+                ng-click="setPopupMember(charRigging);enablePopup(charRigging.email,popupEnum.ASSIGN,ass.id,'rigger');">{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
@@ -525,7 +533,7 @@
 
     <ul id="notesDrop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false">
       <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
-      <div class='panel' ng-repeat="note in notes">
+      <div class='panel' ng-repeat="note in notes|limitTo:notesLimit">
         <p>{{note.note}}</p>
         <p class="right">~{{note.fname}} {{note.lname}}</p>
         <p class="right">{{note.time}}</p>
@@ -552,13 +560,16 @@
           data="assignMembers" 
           on-type="updateSuggestions" 
           on-select=""></autocomplete>
-        <button  ng-click="assignMember(assignedMember)">Assign</button>
+        <button ng-click="assignMember(assignedMember)">Assign</button>
+        <div ng-if="popupMember.fname != '+ Assign'">
+          <button ng-click="setEdit(false)">Cancel</button>
+        </div>
       </div>
       <div ng-if="!showAutoComplete()">
-        <p><b>Assigned To:</b> {{popupMember.fname}} {{popupMember.lname}}</p>
+        <p><b>Assigned To:</b> {{popupMember.fname}} {{popupMember.lname}} <a ng-click='setEdit(true)'><font size="2.5">Edit</font></a></p>
       </div>
       <hr>
-      <div class='panel' ng-repeat="note in notes">
+      <div class='panel' ng-repeat="note in notes|limitTo:notesLimit">
         <p>{{note.note}}</p>
         <img class="right trashIcon" src="trash.png" ng-click="deleteNote(note.id)" />
         <p class="right">~{{note.fname}} {{note.lname}}</p>
@@ -568,7 +579,7 @@
       <button ng-click="addNote();">Add Note</button>
     </div>
     <div id="genericNoteBox" class="popup">
-      <div class='panel' ng-repeat="note in notes">
+      <div class='panel' ng-repeat="note in notes|limitTo:notesLimit">
         <p>{{note.note}}</p>
         <img class="right trashIcon" src="trash.png" ng-click="deleteNote(note.id)" />
         <p class="right">~{{note.fname}} {{note.lname}}</p>

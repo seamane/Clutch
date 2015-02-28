@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+ggvar mysql = require('mysql');
 var randomstring = require("randomstring");
 var sha1 = require('sha1');
 var connection = mysql.createConnection({
@@ -190,9 +190,10 @@ createTables = function()
 
 	connection.query(
 		'CREATE TABLE IF NOT EXISTS previs('
-		+ 'id INT NOT NULL AUTO_INCREMENT,'
-		+ 'PRIMARY KEY(id),'
+		// + 'id INT NOT NULL AUTO_INCREMENT,'
+		// + 'PRIMARY KEY(id),'
 		+ 'shotid INT,'
+		+ 'PRIMARY KEY(shotid),'
 		+ 'userid INT'
 		+ ');',function (err){
 		if(err){
@@ -452,6 +453,7 @@ exports.getSequences = function (req,res) {
 				console.log('error getSequences query');
 				throw err;
 			}
+			console.log("getSequences:"+JSON.stringify(sequences));
 	 		res.end(JSON.stringify(sequences));
 		}
 	);
@@ -808,7 +810,8 @@ exports.addPrevis = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO previs(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO previs(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ') '+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addPrevis query2');
