@@ -1,4 +1,4 @@
-ggvar mysql = require('mysql');
+var mysql = require('mysql');
 var randomstring = require("randomstring");
 var sha1 = require('sha1');
 var connection = mysql.createConnection({
@@ -759,10 +759,12 @@ exports.deleteAsset = function(req,res){
 	);
 }
 
-exports.createNote = function(req,res){
+exports.createNote = function(req,res){	
+	var note = req.body.note;
+	note = note.replace("'","\'");
 	connection.query(
-		'INSERT INTO notes (note, shotid, type, userid,time)' +
-		'VALUES (\''+req.body.note+'\', \''+req.body.shotid+'\', \''+req.body.type+'\', \''+req.body.userid+'\',NOW());',
+		'INSERT INTO notes (note, shotid, type, userid,time) ' +
+		'VALUES (\''+note+'\', \''+req.body.shotid+'\', \''+req.body.type+'\', \''+req.body.userid+'\',NOW());',
 		function (err,rows,fields){
 			if(err){
 				console.log('error createNote query');
@@ -943,7 +945,7 @@ exports.addModeler = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO modeling(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO modeling(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
 				function(err){
 					if(err){
 						console.log('error addModeler query2');
@@ -965,7 +967,7 @@ exports.addShader = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO shading(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO shading(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
 				function(err){
 					if(err){
 						console.log('error addShader query2');
@@ -987,7 +989,7 @@ exports.addRigger = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO rigging(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO rigging(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
 				function(err){
 					if(err){
 						console.log('error addRigger query2');

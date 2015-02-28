@@ -120,7 +120,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	$scope.currentShot = null;
 	$scope.shotDelete = false;
 
-	// $scope.announcementsLimit = 5;
+	$scope.announcementsLimit = 5;
 	$scope.postAnnTextBox = false;
 	$scope.announcements = [];
 	$scope.animator = 'animator';
@@ -618,7 +618,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			'message':$scope.message
 		}).
 		success(function(data){
-			$scope.announcements = orderBy(data,'time',true);
+			$scope.announcements = orderBy(data,'time',true);	
+			$scope.seeMore();
 			$scope.recipient = $scope.getMemberEmails();
   			$scope.emailSubject = "New Announcement From Clutch";
   			$scope.emailBody = $scope.message;
@@ -798,7 +799,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.rigging != undefined){
 			for(var i = 0; i < $scope.rigging.length; ++i){
-				if($scope.rigging[i].assid == assid){
+				if($scope.rigging[i].assetid == assid){
 					label = $scope.rigging[i];//.fname + ' ' + $scope.rigging[i].lname;
 					break;
 				}
@@ -811,7 +812,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.modeling != undefined){
 			for(var i = 0; i < $scope.modeling.length; ++i){
-				if($scope.modeling[i].assid == assid){
+				if($scope.modeling[i].assetid == assid){
 					label = $scope.modeling[i];//.fname + ' ' + $scope.modeling[i].lname;
 					break;
 				}
@@ -824,7 +825,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.shading != undefined){
 			for(var i = 0; i < $scope.shading.length; ++i){
-				if($scope.shading[i].assid == assid){
+				if($scope.shading[i].assetid == assid){
 					label = $scope.shading[i];//.fname + ' ' + $scope.shading[i].lname;
 					break;
 				}
@@ -834,6 +835,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getNotes = function(shot,type){
+		$scope.notes = [];
 		$http.post('/getNotes',{
 			'shotid':shot.id,
 			'type':type
