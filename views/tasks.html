@@ -560,7 +560,10 @@
           data="assignMembers" 
           on-type="updateSuggestions" 
           on-select=""></autocomplete>
-        <button  ng-click="assignMember(assignedMember)">Assign</button>
+        <button ng-click="assignMember(assignedMember)">Assign</button>
+        <div ng-if="popupMember.fname != '+ Assign'">
+          <button ng-click="setEdit(false)">Cancel</button>
+        </div>
       </div>
       <div ng-if="!showAutoComplete()">
         <p><b>Assigned To:</b> {{popupMember.fname}} {{popupMember.lname}} <a ng-click='setEdit(true)'><font size="2.5">Edit</font></a></p>
