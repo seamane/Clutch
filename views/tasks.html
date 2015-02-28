@@ -120,7 +120,7 @@
                   data-dropdown="shotinfo">{{shot.name}}</button>
                 <button ng-show='showSeq($parent.$index)' 
                 class="notes-button" 
-                ng-click="getNotes(shot,'generic');enablePopup(previsName.email,popupEnum.NOTES,shot.id,'generic');">Notes</button>
+                ng-click="getNotes(shot,'generic');enablePopup(previsName.email,popupEnum.NOTES,shot,'generic');">Notes</button>
                 <button ng-show='showSeq($parent.$index)' 
                   style="width:121px"
                   class="shot-button-others button" 
@@ -532,8 +532,8 @@
       </div>
     </ul>
   
-    <div id="shadow" ng-click="disablePopup()"></div>
-    <div id="emailBox">
+    <div id="shadow" class="popup" ng-click="disablePopup()"></div>
+    <div id="emailBox" class="popup">
       <form>
         <label>Subject:
           <input type="text" ng-model="emailSubject"/>
@@ -544,7 +544,7 @@
         <button ng-click="sendMessage()">Send</button>
       </form>
     </div>
-    <div id="noteBox">
+    <div id="noteBox" class="popup">
       <div ng-if="showAutoComplete()">
         <autocomplete ng-model="assignedMember" 
           attr-placeholder="type member name..." 
@@ -567,7 +567,7 @@
       <textarea placeholder="notes" ng-model="noteField"></textarea>
       <button ng-click="addNote();">Add Note</button>
     </div>
-    <div id="genericNoteBox">
+    <div id="genericNoteBox" class="popup">
       <div class='panel' ng-repeat="note in notes">
         <p>{{note.note}}</p>
         <img class="right trashIcon" src="trash.png" ng-click="deleteNote(note.id)" />
