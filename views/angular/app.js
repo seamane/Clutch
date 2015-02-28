@@ -955,12 +955,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
-<<<<<<< HEAD
 		$scope.currentShotId = currentShot.id;
-=======
-		// console.log("HERE");
-		$scope.currentShotId = currentShot;
->>>>>>> origin/master
+
 		$scope.department = department;
 		//$scope.recipient = recipientEmail;
 		//$scope.recipient = ["tcbarrus@gmail.com","eric_ctr_seaman247@yahoo.com"];
@@ -995,11 +991,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			}
 			$scope.popup = true;
 		}
-<<<<<<< HEAD
-=======
 		$scope.recipient = recipientEmail;
 		// console.log($scope.recipient);
->>>>>>> origin/master
 	}
 
 	$scope.disablePopup = function(){
@@ -1016,11 +1009,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.showAutoComplete = function(){
-<<<<<<< HEAD
-		//console.log("showAutoComlete: "+JSON.stringify($scope.popupMember));
-=======
 		// console.log("showAutoComlete: "+JSON.stringify($scope.popupMember));
->>>>>>> origin/master
 		if($scope.popupMember == undefined){
 			return true;
 		}
