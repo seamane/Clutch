@@ -88,6 +88,7 @@ app.post('/addWrangler',database.addWrangler);
 app.post('/addRigger',database.addRigger);
 app.post('/addShader',database.addShader);
 app.post('/getUsersByShot',database.getUsersByShot);
+app.post('/getUsersByAsset',database.getUsersByAsset);
 
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
 app.get('/loginpage',function(req,res){res.sendFile(__dirname + '/views/index.html');});

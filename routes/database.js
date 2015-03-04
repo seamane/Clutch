@@ -80,7 +80,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'authorid INT,'
 		+ 'projectid INT,'
-		+ 'message VARCHAR(500),'
+		+ 'message VARCHAR(5000),'
 		+ 'time DATETIME'
 		+ ');',function (err){
 		if(err){
@@ -117,7 +117,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS notes('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		+ 'note VARCHAR(500),'
+		+ 'note VARCHAR(5000),'
 		+ 'shotid INT,'
 		+ 'type VARCHAR(20),'
 		+ 'userid INT,'
@@ -764,7 +764,7 @@ exports.createNote = function(req,res){
 	note = note.replace("'","\'");
 	connection.query(
 		'INSERT INTO notes (note, shotid, type, userid,time) ' +
-		'VALUES (\''+note+'\', \''+req.body.shotid+'\', \''+req.body.type+'\', \''+req.body.userid+'\',NOW());',
+		'VALUES (\''+note+'\','+req.body.shotid+', \''+req.body.type+'\', '+req.body.userid+',NOW());',
 		function (err,rows,fields){
 			if(err){
 				console.log('error createNote query');
@@ -1012,7 +1012,23 @@ exports.getUsersByShot = function(req,res){
 		+ '(SELECT U.email FROM users U INNER JOIN vfx V ON U.id=V.userid INNER JOIN shots S ON s.id=V.shotid WHERE S.id='+req.body.shotId+');',
 		 function(err,users){
 		 	if(err){
-		 		console.log('error getUsersByShot');
+		 		console.log('error getUsersByShot query');
+		 		throw err;
+		 	}
+		 	res.end(JSON.stringify(users));
+		 }
+	);
+}
+
+exports.getUsersByAsset = function(req,res){
+	console.log(JSON.stringify(req.body));
+	connection.query(
+		'(SELECT U.email FROM users U INNER JOIN modeling M ON U.id=M.userid INNER JOIN assets A ON A.id=M.assetid WHERE A.id='+req.body.assId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN shading S ON U.id=S.userid INNER JOIN assets A ON A.id=S.assetid WHERE A.id='+req.body.assId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN rigging R ON U.id=R.userid INNER JOIN assets A ON A.id=R.assetid WHERE A.id='+req.body.assId+');',
+		 function(err,users){
+		 	if(err){
+		 		console.log('error getUsersByAsset query');
 		 		throw err;
 		 	}
 		 	res.end(JSON.stringify(users));

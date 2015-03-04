@@ -141,7 +141,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
     $scope.popupEnum = {
     	MESSAGE: 0,
     	ASSIGN: 1,
-    	NOTES: 2
+    	NOTES: 2,
+    	ASSETNOTES: 3
     }
 
     // Popup stuff
@@ -181,6 +182,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.previs = data;
 		 				$scope.setPopupMember($scope.getPrevis($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -197,6 +199,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.animators = data;
 		 				$scope.setPopupMember($scope.getAnimator($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -213,6 +216,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.compositing = data;
 		 				$scope.setPopupMember($scope.getCompositing($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -229,6 +233,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.fx = data;
 		 				$scope.setPopupMember($scope.getFX($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -245,6 +250,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.wranglers = data;
 		 				$scope.setPopupMember($scope.getWrangler($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -261,6 +267,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.lighters = data;
 		 				$scope.setPopupMember($scope.getLighter($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -277,6 +284,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.modeling = data;
 		 				$scope.setPopupMember($scope.getModeling($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -293,6 +301,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.shading = data;
 		 				$scope.setPopupMember($scope.getShading($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -309,6 +318,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.rigging = data;
 		 				$scope.setPopupMember($scope.getRigging($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -316,6 +326,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		 		console.log("ERROR: assignMember function. Should never get here.");
 		 		break;
 		}
+
 	}
 
 	$scope.addSequence  = function(){
@@ -400,11 +411,29 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}
 	}
 
+	$scope.insertQuotesAndApostrophes = function(oldString){
+		var withQuotes = oldString.replace(/[?][%][*][&]/g,"\'");
+		var withApostrophes = withQuotes.replace(/[{][*][#][@]/g,"\"");
+		return withApostrophes;
+	}
+
+	$scope.replaceQuotesAndApostrophes = function(oldString){
+		var noQuotes = oldString.replace(/'/g,"?%*&");
+		var noApostrophes = noQuotes.replace(/"/g,"{*#@");
+		return noApostrophes;
+	}
+
+	$scope.normalizeNotes = function(){
+		for(var i = 0; i < $scope.notes.length; ++i){
+			$scope.notes[i].note = $scope.insertQuotesAndApostrophes($scope.notes[i].note);
+		}
+	}
+
 	$scope.addNote = function(){
 		if ($scope.noteField != "" && $scope.noteField != undefined){
-			// console.log($scope.currentShotId);
+			var noteToSend = $scope.replaceQuotesAndApostrophes($scope.noteField);
 			$http.post('createNote',{
-				'note': $scope.noteField,
+				'note': noteToSend,
 				'shotid' : $scope.currentShotId,
 				'type' : $scope.department,
 				'userid' : $cookieStore.get("userInfo").id
@@ -413,17 +442,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				//TODO Send email
 				$scope.emailBody = $scope.noteField;
 				$scope.emailSubject = "CLUTCH | "; //TODO make a better subject line and who the email is from
-				// if($scope.recipient.constructor == Array){
-				// 	console.log("IS ARRAY");
-				// 	var recipients = $scope.recipient;
-				// 	for(var i = 0; i < recipients.length; i++){
-				// 		$scope.recipient = recipients[i].email;
-				// 		$scope.sendMessage();
-				// 		console.log("SENDING AN EMAIL TO "+$scope.recipient);
-				// 	}
-				// }
-				// else
-				// 	$scope.sendMessage();
 				$scope.sendMessage();
 		  		//TODO append new note rather than query db again
 				$http.post('/getNotes',{
@@ -432,6 +450,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				}).
 				success(function(data){
 					$scope.notes = orderBy(data,'time',true);
+					$scope.normalizeNotes();
 				});
 				$scope.noteField = undefined;
 			});
@@ -439,7 +458,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.deleteNote = function(noteId){
-		//console.log(noteId);
 		if(noteId != undefined){
 			$http.post('/deleteNote',{
 				'id': noteId
@@ -451,6 +469,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				}).
 				success(function(data){
 					$scope.notes = orderBy(data,'time',true);
+					$scope.normalizeNotes();
 				});
 			});
 		}
@@ -621,10 +640,11 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.postAnnouncement = function(){
+		var messageToSend = $scope.replaceQuotesAndApostrophes($scope.message);
 		$http.post('/postAnnouncement',{
 			'authorid':$cookieStore.get('userInfo').id,
 			'projectid':$scope.projectid,
-			'message':$scope.message
+			'message':messageToSend
 		}).
 		success(function(data){
 			$scope.announcements = orderBy(data,'time',true);	
@@ -851,6 +871,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}).
 		success(function(data){
 			$scope.notes = orderBy(data,'time',true);
+			$scope.normalizeNotes();
 			if($scope.notes.length < 4){
 				$scope.notesLimit = $scope.notes.length;
 			}
@@ -960,8 +981,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		$scope.currentShotId = currentShot.id;
 
 		$scope.department = department;
-		//$scope.recipient = recipientEmail;
-		//$scope.recipient = ["tcbarrus@gmail.com","eric_ctr_seaman247@yahoo.com"];
 		if(!$scope.popup){
 			$("#shadow").fadeIn(0500);
 			switch(popupType){
@@ -980,13 +999,25 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 						'shotId':currentShot.id
 					}).
 					success(function(data){
-						//$scope.recipient = data;
-						//console.log($scope.recipient);
 						$scope.recipient = [];
 						for(var i = 0; i < data.length; i++){
 							$scope.recipient.push(data[i].email);
 						}
-							//console.log($scope.recipient[i].email);
+					});
+					break;
+				case 3:
+					$("#genericNoteBox").fadeIn(0500);
+					console.log(currentShot);
+					//get all email addresses
+					$http.post('/getUsersByAsset',
+					{
+						'assId':currentShot.id
+					}).
+					success(function(data){
+						$scope.recipient = [];
+						for(var i = 0; i < data.length; i++){
+							$scope.recipient.push(data[i].email);
+						}
 					});
 					break;
 				default:
@@ -994,7 +1025,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 			$scope.popup = true;
 		}
 		$scope.recipient = recipientEmail;
-		// console.log($scope.recipient);
 	}
 
 	$scope.disablePopup = function(){

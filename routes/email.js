@@ -15,7 +15,7 @@ exports.sendEmail = function(req,res){
 		subject: req.body.subject,
 		text: req.body.text
 	}
-	console.log(req.body);
+	// console.log(req.body);
 	smtpTransport.sendMail(mailOptions,function(error,response){
 		if(error){
 			res.end("error");
