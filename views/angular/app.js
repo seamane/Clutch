@@ -120,7 +120,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	$scope.currentShot = null;
 	$scope.shotDelete = false;
 
-	// $scope.announcementsLimit = 5;
+	$scope.announcementsLimit = 5;
 	$scope.postAnnTextBox = false;
 	$scope.announcements = [];
 	$scope.animator = 'animator';
@@ -141,7 +141,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
     $scope.popupEnum = {
     	MESSAGE: 0,
     	ASSIGN: 1,
-    	NOTES: 2
+    	NOTES: 2,
+    	ASSETNOTES: 3
     }
 
     // Popup stuff
@@ -181,6 +182,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.previs = data;
 		 				$scope.setPopupMember($scope.getPrevis($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -197,6 +199,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.animators = data;
 		 				$scope.setPopupMember($scope.getAnimator($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -213,6 +216,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.compositing = data;
 		 				$scope.setPopupMember($scope.getCompositing($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -229,6 +233,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.fx = data;
 		 				$scope.setPopupMember($scope.getFX($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -245,6 +250,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.wranglers = data;
 		 				$scope.setPopupMember($scope.getWrangler($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -261,6 +267,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.lighters = data;
 		 				$scope.setPopupMember($scope.getLighter($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -277,6 +284,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.modeling = data;
 		 				$scope.setPopupMember($scope.getModeling($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -293,6 +301,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.shading = data;
 		 				$scope.setPopupMember($scope.getShading($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -309,6 +318,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					success(function(data){
 						$scope.rigging = data;
 		 				$scope.setPopupMember($scope.getRigging($scope.currentShotId));
+						$scope.recipient = $scope.popupMember.email;
 					});
 		 		});
 		 		break;
@@ -316,6 +326,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		 		console.log("ERROR: assignMember function. Should never get here.");
 		 		break;
 		}
+
 	}
 
 	$scope.addSequence  = function(){
@@ -400,11 +411,29 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		}
 	}
 
+	$scope.insertQuotesAndApostrophes = function(oldString){
+		var withQuotes = oldString.replace(/[?][%][*][&]/g,"\'");
+		var withApostrophes = withQuotes.replace(/[{][*][#][@]/g,"\"");
+		return withApostrophes;
+	}
+
+	$scope.replaceQuotesAndApostrophes = function(oldString){
+		var noQuotes = oldString.replace(/'/g,"?%*&");
+		var noApostrophes = noQuotes.replace(/"/g,"{*#@");
+		return noApostrophes;
+	}
+
+	$scope.normalizeNotes = function(){
+		for(var i = 0; i < $scope.notes.length; ++i){
+			$scope.notes[i].note = $scope.insertQuotesAndApostrophes($scope.notes[i].note);
+		}
+	}
+
 	$scope.addNote = function(){
 		if ($scope.noteField != "" && $scope.noteField != undefined){
-			// console.log($scope.currentShotId);
+			var noteToSend = $scope.replaceQuotesAndApostrophes($scope.noteField);
 			$http.post('createNote',{
-				'note': $scope.noteField,
+				'note': noteToSend,
 				'shotid' : $scope.currentShotId,
 				'type' : $scope.department,
 				'userid' : $cookieStore.get("userInfo").id
@@ -414,7 +443,6 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				$scope.emailBody = $scope.noteField;
 				$scope.emailSubject = "CLUTCH | "; //TODO make a better subject line and who the email is from
 				$scope.sendMessage();
-				//console.log($scope.noteField+"\r"+"-"+cookieStore.get('userInfo').fname+" "+$cookieStore.get('userInfo').lname);
 		  		//TODO append new note rather than query db again
 				$http.post('/getNotes',{
 				'shotid':$scope.currentShotId,
@@ -422,15 +450,14 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				}).
 				success(function(data){
 					$scope.notes = orderBy(data,'time',true);
+					$scope.normalizeNotes();
 				});
 				$scope.noteField = undefined;
-				//$scope.disablePopup();
 			});
 		}
 	}
 
 	$scope.deleteNote = function(noteId){
-		//console.log(noteId);
 		if(noteId != undefined){
 			$http.post('/deleteNote',{
 				'id': noteId
@@ -442,6 +469,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 				}).
 				success(function(data){
 					$scope.notes = orderBy(data,'time',true);
+					$scope.normalizeNotes();
 				});
 			});
 		}
@@ -612,13 +640,15 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.postAnnouncement = function(){
+		var messageToSend = $scope.replaceQuotesAndApostrophes($scope.message);
 		$http.post('/postAnnouncement',{
 			'authorid':$cookieStore.get('userInfo').id,
 			'projectid':$scope.projectid,
-			'message':$scope.message
+			'message':messageToSend
 		}).
 		success(function(data){
-			$scope.announcements = orderBy(data,'time',true);
+			$scope.announcements = orderBy(data,'time',true);	
+			$scope.seeMore();
 			$scope.recipient = $scope.getMemberEmails();
   			$scope.emailSubject = "New Announcement From Clutch";
   			$scope.emailBody = $scope.message;
@@ -798,7 +828,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.rigging != undefined){
 			for(var i = 0; i < $scope.rigging.length; ++i){
-				if($scope.rigging[i].assid == assid){
+				if($scope.rigging[i].assetid == assid){
 					label = $scope.rigging[i];//.fname + ' ' + $scope.rigging[i].lname;
 					break;
 				}
@@ -811,7 +841,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.modeling != undefined){
 			for(var i = 0; i < $scope.modeling.length; ++i){
-				if($scope.modeling[i].assid == assid){
+				if($scope.modeling[i].assetid == assid){
 					label = $scope.modeling[i];//.fname + ' ' + $scope.modeling[i].lname;
 					break;
 				}
@@ -824,7 +854,7 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 		var label = {"fname":"+ Assign","lname":" ","email":""};
 		if($scope.shading != undefined){
 			for(var i = 0; i < $scope.shading.length; ++i){
-				if($scope.shading[i].assid == assid){
+				if($scope.shading[i].assetid == assid){
 					label = $scope.shading[i];//.fname + ' ' + $scope.shading[i].lname;
 					break;
 				}
@@ -834,12 +864,19 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.getNotes = function(shot,type){
+		$scope.notes = [];
 		$http.post('/getNotes',{
 			'shotid':shot.id,
 			'type':type
 		}).
 		success(function(data){
 			$scope.notes = orderBy(data,'time',true);
+			$scope.normalizeNotes();
+			if($scope.notes.length < 4){
+				$scope.notesLimit = $scope.notes.length;
+			}
+			else
+				$scope.notesLimit = 4;
 		});
 	}
 
@@ -941,8 +978,8 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 	}
 
 	$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
-		// console.log("HERE");
-		$scope.currentShotId = currentShot;
+		$scope.currentShotId = currentShot.id;
+
 		$scope.department = department;
 		if(!$scope.popup){
 			$("#shadow").fadeIn(0500);
@@ -955,21 +992,44 @@ app.controller('taskController', function($filter, $scope, $http, $cookieStore, 
 					break;
 				case 2:
 					$("#genericNoteBox").fadeIn(0500);
+					console.log(currentShot);
+					//get all email addresses
+					$http.post('/getUsersByShot',
+					{
+						'shotId':currentShot.id
+					}).
+					success(function(data){
+						$scope.recipient = [];
+						for(var i = 0; i < data.length; i++){
+							$scope.recipient.push(data[i].email);
+						}
+					});
+					break;
+				case 3:
+					$("#genericNoteBox").fadeIn(0500);
+					console.log(currentShot);
+					//get all email addresses
+					$http.post('/getUsersByAsset',
+					{
+						'assId':currentShot.id
+					}).
+					success(function(data){
+						$scope.recipient = [];
+						for(var i = 0; i < data.length; i++){
+							$scope.recipient.push(data[i].email);
+						}
+					});
 					break;
 				default:
 			}
 			$scope.popup = true;
 		}
 		$scope.recipient = recipientEmail;
-		// console.log($scope.recipient);
 	}
 
 	$scope.disablePopup = function(){
 		if($scope.popup){
-			$("#shadow").fadeOut(0500);
-			$("#shadowBox").fadeOut(0500);
-			$("#noteBox").fadeOut(0500);
-			$("#genericNoteBox").fadeOut(0500);
+			$(".popup").fadeOut(0500);
 			$scope.popup = false;
 			$scope.popupMember = undefined;
 		}

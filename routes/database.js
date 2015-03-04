@@ -80,7 +80,7 @@ createTables = function()
 		+ 'PRIMARY KEY(id),'
 		+ 'authorid INT,'
 		+ 'projectid INT,'
-		+ 'message VARCHAR(500),'
+		+ 'message VARCHAR(5000),'
 		+ 'time DATETIME'
 		+ ');',function (err){
 		if(err){
@@ -117,7 +117,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS notes('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
-		+ 'note VARCHAR(500),'
+		+ 'note VARCHAR(5000),'
 		+ 'shotid INT,'
 		+ 'type VARCHAR(20),'
 		+ 'userid INT,'
@@ -759,10 +759,12 @@ exports.deleteAsset = function(req,res){
 	);
 }
 
-exports.createNote = function(req,res){
+exports.createNote = function(req,res){	
+	var note = req.body.note;
+	note = note.replace("'","\'");
 	connection.query(
-		'INSERT INTO notes (note, shotid, type, userid,time)' +
-		'VALUES (\''+req.body.note+'\', \''+req.body.shotid+'\', \''+req.body.type+'\', \''+req.body.userid+'\',NOW());',
+		'INSERT INTO notes (note, shotid, type, userid,time) ' +
+		'VALUES (\''+note+'\','+req.body.shotid+', \''+req.body.type+'\', '+req.body.userid+',NOW());',
 		function (err,rows,fields){
 			if(err){
 				console.log('error createNote query');
@@ -943,7 +945,7 @@ exports.addModeler = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO modeling(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO modeling(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
 				function(err){
 					if(err){
 						console.log('error addModeler query2');
@@ -965,7 +967,7 @@ exports.addShader = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO shading(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO shading(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
 				function(err){
 					if(err){
 						console.log('error addShader query2');
@@ -987,7 +989,7 @@ exports.addRigger = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO rigging(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO rigging(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
 				function(err){
 					if(err){
 						console.log('error addRigger query2');
@@ -999,3 +1001,38 @@ exports.addRigger = function(req,res){
 		}
 	);
 }
+
+exports.getUsersByShot = function(req,res){
+	connection.query(
+		'(SELECT U.email FROM users U INNER JOIN animators A ON U.id=A.userid INNER JOIN shots S ON S.id=A.shotid WHERE S.id='+req.body.shotId+') UNION '
+		+'(SELECT U.email FROM users U INNER JOIN compositing C ON U.id=C.userid INNER JOIN shots S ON s.id=C.shotid WHERE S.id='+req.body.shotId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN lighters L ON U.id=L.userid INNER JOIN shots S ON s.id=L.shotid WHERE S.id='+req.body.shotId+') UNION  '
+		+ '(SELECT U.email FROM users U INNER JOIN previs P ON U.id=P.userid INNER JOIN shots S ON s.id=P.shotid WHERE S.id='+req.body.shotId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN renderwranglers R ON U.id=R.userid INNER JOIN shots S ON s.id=R.shotid WHERE S.id='+req.body.shotId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN vfx V ON U.id=V.userid INNER JOIN shots S ON s.id=V.shotid WHERE S.id='+req.body.shotId+');',
+		 function(err,users){
+		 	if(err){
+		 		console.log('error getUsersByShot query');
+		 		throw err;
+		 	}
+		 	res.end(JSON.stringify(users));
+		 }
+	);
+}
+
+exports.getUsersByAsset = function(req,res){
+	console.log(JSON.stringify(req.body));
+	connection.query(
+		'(SELECT U.email FROM users U INNER JOIN modeling M ON U.id=M.userid INNER JOIN assets A ON A.id=M.assetid WHERE A.id='+req.body.assId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN shading S ON U.id=S.userid INNER JOIN assets A ON A.id=S.assetid WHERE A.id='+req.body.assId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN rigging R ON U.id=R.userid INNER JOIN assets A ON A.id=R.assetid WHERE A.id='+req.body.assId+');',
+		 function(err,users){
+		 	if(err){
+		 		console.log('error getUsersByAsset query');
+		 		throw err;
+		 	}
+		 	res.end(JSON.stringify(users));
+		 }
+	);
+}
+
