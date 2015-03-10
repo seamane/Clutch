@@ -39,7 +39,14 @@ app.get('/js/foundation.min.js',function(req,res){res.sendFile(__dirname + '/js/
 app.get('/angular/angular.min.js.map',function(req,res){res.sendFile(__dirname+'/views/angular/angular.min.js.map');})
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js');});
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js');});
+app.get('/angular/editProfileController.js',function(req,res){res.sendFile(__dirname+'/views/angular/editProfileController.js');});
+app.get('/angular/indexController.js',function(req,res){res.sendFile(__dirname+'/views/angular/indexController.js');});
+app.get('/angular/homeController.js',function(req,res){res.sendFile(__dirname+'/views/angular/homeController.js');});
+app.get('/angular/navbarController.js',function(req,res){res.sendFile(__dirname+'/views/angular/navbarController.js');});
+app.get('/angular/createUserController.js',function(req,res){res.sendFile(__dirname+'/views/angular/createUserController.js');});
+app.get('/angular/taskController.js',function(req,res){res.sendFile(__dirname+'/views/angular/taskController.js');});
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname+'/views/navbar.html');});
+app.get('/editProfile.html',function(req,res){res.sendFile(__dirname+'/views/editProfile.html');});
 app.get('/chicken.jpg',function(req,res){res.sendFile(__dirname+'/views/images/chicken.jpg');});
 app.get('/chickens.png',function(req,res){res.sendFile(__dirname+'/views/images/chickens.png');});
 app.get('/favicon.ico',function(req,res){res.sendFile(__dirname+'/views/images/favicon.ico');});
@@ -97,10 +104,10 @@ app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/a
 app.get('/home',function(req,res){res.sendFile(__dirname + '/views/project.html');});
 app.get('/loginpage',function(req,res){res.sendFile(__dirname + '/views/index.html');});
 app.get('/project',function(req,res){res.sendFile(__dirname + '/views/tasks.html');});
-app.get('/navbar.html',function(req,res){res.sendFile(__dirname + '/views/navbar.html');});
 app.get('/shotInfo.html',function(req,res){res.sendFile(__dirname + '/views/shotInfo.html');});
 app.get('/createUser',function(req,res){res.sendFile(__dirname+'/views/createUser.html');});
 app.get('/trash.png',function(req,res){res.sendFile(__dirname+'/views/images/trash.png');});
+app.get('/editProfile',function(req,res){res.sendFile(__dirname+'/views/editProfile.html');});
 
 //testing stuff
 app.get('/test',function(req,res){res.sendFile(__dirname+'/views/test.html');});

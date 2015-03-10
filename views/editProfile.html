@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clutch - Sign-Up</title>
+    <title>Clutch - Edit Profile</title>
     <link rel="stylesheet" href="../css/foundation.css" />
     <!-- Do not change name of this file (app.css) -->
     <link rel="stylesheet" href="../css/app.css">
@@ -13,18 +13,19 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script type = 'text/javascript' src="angular/autocomplete.js"></script> 
     <script type = 'text/javascript' src="angular/app.js"></script>
-    <script type = 'text/javascript' src="angular/createUserController.js"></script>
+    <script type = 'text/javascript' src="angular/editProfileController.js"></script>
+    <script type = 'text/javascript' src="angular/navbarController.js"></script>
 
   </head>
-  <body ng-controller="createUserController" class="offwhite-background">
+  <body ng-controller="editProfileController" class="offwhite-background">
   <!-- Include Navbar -->
-  <!-- <div loadnavbar></div>   -->
+  <div loadnavbar></div>  
   <!-- Center everything but navbar -->
   <div class="">
   
     <div class="row">
       <div class="large-12 columns">
-        <h1>Join the Clutch</h1>
+        <h1>Personal Information</h1>
       </div>
     </div>
     
@@ -58,15 +59,21 @@
 
             <!-- password field -->
             <div class="row">
-                <label class="login-label">Password</label>
-                <input class="blue-input" type="password" name='pass' ng-model='password' ng-pattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/' placeholder="Choose a password" />
+                <label class="login-label">Current Password</label>
+                <input class="blue-input" type="password" name='pass' ng-model='currentpassword' ng-pattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/' placeholder="Enter current password" />
+            </div>
+
+            <!-- password field -->
+            <div class="row">
+                <label class="login-label">New Password</label>
+                <input class="blue-input" type="password" name='pass' ng-model='newpassword' ng-pattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/' placeholder="Choose a new password" />
                 <span ng-show='myForm.pass.$error.pattern' style='color:red;font-size:10pt'>* Password must be at least 8 characters in length and contain at least 1 number</span>
             </div>
 
             <!-- confirm password field -->
             <div class="row">
-                <label class="login-label">Confirm Password</label>
-                <input class="blue-input" type="password" ng-model='passwordconfirm' placeholder="Re-enter password"  required/>
+                <label class="login-label">Confirm New Password</label>
+                <input class="blue-input" type="password" ng-model='newpasswordconfirm' placeholder="Re-enter new password"  required/>
                 <span ng-show='password!=passwordconfirm' style='color:red; font-size:10pt'>* Passwords don't match</span>
             </div>
 
@@ -78,24 +85,17 @@
             </div>
 
 
-             <!-- login button -->
+             <!-- update button -->
              <div class="row ">
-                <br><a href="#" ng-click='createUser()' class="button right login-button ">Create</a>
+                <br><a href="#" ng-click='updateUser()' class="button right login-button ">Update</a>
             </div>
-        <!-- <div class="right"> -->
-          
-        <!-- </div> -->
-
-          <!-- </div> -->
+        
         </form>
-      </div>
-      <div class="large-8 columns">
-          <img class='right' src="chickens.png" style="width:450px;height:300px"></img>
       </div>
     </div>
 
 <!-- End centering -->
-   </div> 
+    </div> 
     <script src="../js/vendor/jquery.js"></script>
     <script src="../js/foundation.min.js"></script>
     <script>
