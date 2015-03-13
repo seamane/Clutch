@@ -18,7 +18,6 @@
 		    		$scope.password = '';
 		    	}
 		    	else{
-		    		// alert("cookie:"+JSON.stringify(data[0]));
 		    		$cookieStore.put('userInfo',data[0]);
 		    		$scope.failLogin = false;
 		    		window.location.href = '/home';
@@ -37,6 +36,10 @@
 	    	if(event.which == 13){
 	    		$scope.loginButton();
 	    	}
+	    }
+
+	    $scope.forgotPassword = function(){
+	    	window.location.href = '/forgotPassword'
 	    }
 	});
 }());

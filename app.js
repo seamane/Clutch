@@ -39,6 +39,7 @@ app.get('/js/foundation.min.js',function(req,res){res.sendFile(__dirname + '/js/
 app.get('/angular/angular.min.js.map',function(req,res){res.sendFile(__dirname+'/views/angular/angular.min.js.map');})
 app.get('/angular/app.js',function(req,res){res.sendFile(__dirname+'/views/angular/app.js');});
 app.get('/angular/angular.js',function(req,res){res.sendFile(__dirname+'/views/angular/angular.js');});
+app.get('/angular/forgotPasswordController.js',function(req,res){res.sendFile(__dirname+'/views/angular/forgotPasswordController.js');});
 app.get('/angular/editProfileController.js',function(req,res){res.sendFile(__dirname+'/views/angular/editProfileController.js');});
 app.get('/angular/indexController.js',function(req,res){res.sendFile(__dirname+'/views/angular/indexController.js');});
 app.get('/angular/homeController.js',function(req,res){res.sendFile(__dirname+'/views/angular/homeController.js');});
@@ -47,9 +48,12 @@ app.get('/angular/createUserController.js',function(req,res){res.sendFile(__dirn
 app.get('/angular/taskController.js',function(req,res){res.sendFile(__dirname+'/views/angular/taskController.js');});
 app.get('/navbar.html',function(req,res){res.sendFile(__dirname+'/views/navbar.html');});
 app.get('/editProfile.html',function(req,res){res.sendFile(__dirname+'/views/editProfile.html');});
+app.get('/forgotPassword',function(req,res){res.sendFile(__dirname+'/views/forgotPassword.html');});
 app.get('/chicken.jpg',function(req,res){res.sendFile(__dirname+'/views/images/chicken.jpg');});
 app.get('/chickens.png',function(req,res){res.sendFile(__dirname+'/views/images/chickens.png');});
 app.get('/favicon.ico',function(req,res){res.sendFile(__dirname+'/views/images/favicon.ico');});
+app.get('/byuAnimationLogo.jpg',function(req,res){res.sendFile(__dirname+'/views/images/byuAnimationLogo.jpg');});
+app.get('/baby.jpg',function(req,res){res.sendFile(__dirname+'/views/images/baby.jpg');});
 
 app.post('/validateUser',database.validateUser);
 app.post('/createUser',database.createUser);

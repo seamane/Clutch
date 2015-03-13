@@ -22,49 +22,45 @@
       <h1 class="text-center welcome">Welcome to the Clutch </h1>
     </div>
 
-
-      <img class='center' src="chicken.jpg" style="width:200px;height:200px"></img>
-         
+    <img class='center' src="byuAnimationLogo.jpg" style="width:400px;height:200px"></img>
     
     <!-- username field -->
     <div class="inside-ghost">
-    <form ng-keypress="keypress($event);">
-      <div class="" id='log'>
-        <div class="row">
-
-          <div class="large-4 medium-centered columns">
-            <label class="login-label">Username</label>
-            <input class="blue-input" type="text" ng-model='username' placeholder="" />
+      <form ng-keypress="keypress($event);">
+        <div class="" id='log'>
+          <div class="row">
+            <div class="large-4 medium-centered columns">
+              <label class="login-label">Username</label>
+              <input class="blue-input" type="text" ng-model='username' placeholder="" />
+            </div>
           </div>
-        </div>
-        <!-- password field -->
-        <div class="row">
-          <div class="large-4 medium-centered columns">
-            <label class="login-label">Password</label>
-            <input class="blue-input" type="password" ng-model='password' placeholder="" />
+          <!-- password field -->
+          <div class="row">
+            <div class="large-4 medium-centered columns">
+              <label class="login-label">Password</label>
+              <input class="blue-input" type="password" ng-model='password' placeholder="" />
 
+            </div>
           </div>
-        </div>
-        <!-- error message -->
-        <div class="row">
-          <div class="large-4 medium-centered columns has-error-text" ng-show="failLogin">
+          <!-- error message -->
+          <div class="row">
+            <div class="large-4 medium-centered columns has-error-text" ng-show="failLogin">
               <p>{{message}}</p>
+            </div>
           </div>
-        </div>
-        <!-- login button -->
-         <div class="row">
-          <div class="large-4 medium-centered columns">
-            <a href="#" ng-click='loginButton()' class=" button left login-button">Login</a>
-            <a href="#" ng-click='signUp()' class=" button right signUp-button">Sign Up</a>
+          <!-- login button -->
+           <div class="row">
+            <div class="large-4 medium-centered columns">
+              <a href="#" ng-click='loginButton()' class="button left login-button">Login</a>
+              <a href="#" ng-click='signUp()' class="button right signUp-button">Sign Up</a>
+            </div>
           </div>
+          <!-- Forgot Password Link-->
+          <a href="" class="forgot-password" ng-click='forgotPassword()'>Forgot Password</a>
         </div>
-      </div>
-    </form>
+      </form>
     </div>
     
-
-
-
     <script src="../js/vendor/jquery.js"></script>
     <script src="../js/foundation.min.js"></script>
     <script>

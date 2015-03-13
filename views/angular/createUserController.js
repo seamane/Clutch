@@ -4,8 +4,7 @@
 	var app = angular.module('clutchApp');
 	app.controller('createUserController', function($scope, $http, $cookieStore){
 		$scope.createUser = function(){
-			if($scope.password == $scope.passwordconfirm)
-			{
+			if($scope.password == $scope.passwordconfirm){
 				if($scope.username==undefined || $scope.fname==undefined 		//this all just makes sure all the fields have values
 				|| $scope.lname==undefined || $scope.password==undefined 		//
 				|| $scope.email==undefined || $scope.passwordconfirm==undefined

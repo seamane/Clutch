@@ -1,3 +1,18 @@
+.forgot-password{
+	margin-left: 54.5%;
+	font-size: 9pt;
+}
+
+.forgot-password-center{
+	margin-left:50%;
+	margin-right:50%;
+}
+
+
+.default-size{
+	width: 960px;
+	margin: 0px auto;
+}
 
 .button.small{
 	background-color: #333;
