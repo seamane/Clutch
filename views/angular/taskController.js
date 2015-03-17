@@ -57,6 +57,9 @@
 	    $scope.currentAssetId = undefined;
 	    $scope.department = undefined;
 
+	    // Shot Status dropdown
+	    $scope.shotStatus = ["Previs","Animation","Lighting","Compositing","Final","Polish","Done"];
+
 	    $scope.updateSuggestions = function(typedthings){
 		    // console.log("Do something like reload data with this: " + typedthings );
 		    $scope.newAssignMembers = AssignMember.getmembers(typedthings);
@@ -991,7 +994,7 @@
 	  		$scope.disablePopup();
 		}
 	})
-	.directive('showinfo', function($compile) {
+	/*.directive('showinfo', function($compile) {
 	    return {
 		    restrict: 'AE',
 		    templateUrl: 'shotInfo.html',
@@ -999,5 +1002,20 @@
 				$(document).foundation();
 			}
 	    }
+	})*/
+	.animation('.slide', function() {
+		var NG_HIDE_CLASS = 'ng-hide';
+		return {
+			beforeAddClass: function(element, className, done) {
+				if(className === NG_HIDE_CLASS) {
+					jQuery(element).slideUp(done);
+				}
+			},
+			removeClass: function(element, className, done) {
+				if(className === NG_HIDE_CLASS) {
+					jQuery(element).hide().slideDown(done);
+				}
+			}
+		}
 	});
 }());

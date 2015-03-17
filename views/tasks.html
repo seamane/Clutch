@@ -11,6 +11,7 @@
     <script src="../js/vendor/modernizr.js"></script>    
     <script src="angular/angular.js"></script>  
     <script type = 'text/javascript' src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.js"></script>
     <script src="../js/vendor/jquery.js"></script>
     <script src="../js/foundation.min.js"></script>
     <script>
@@ -117,9 +118,8 @@
             <ul>
               <div ng-repeat="shot in getShots(seq)" ng-click='toggleSeq($parent.$index)'>
                 <button ng-show='showSeq($parent.$index)' 
-                  class="small round button shot-button dropdown" 
-                  ng-click='getShotById(shot.id)' 
-                  data-dropdown="shotinfo">{{shot.name}}</button>
+                  class="small round button shot-button" 
+                  ng-click='getShotById(shot.id);expand = !expand'>{{shot.name}}</button>
                 <button ng-show='showSeq($parent.$index)' 
                 class="notes-button" 
                 ng-click="getNotes(shot,'generic');enablePopup(previsName.email,popupEnum.NOTES,shot,'generic');">Notes</button>
@@ -153,6 +153,27 @@
                   class="shot-button-others button" 
                   ng-click="getNotes(shot,'compositing');enablePopup(compositingName.email,popupEnum.ASSIGN,shot,'compositing');setPopupMember(compositingName);" 
                   ng-init="compositingName=getCompositing(shot.id)">{{getCompositing(shot.id).fname}} {{getCompositing(shot.id).lname[0]}}</button>
+                <div id="shotinfo"class="slide" ng-show="expand">
+                  <table>
+                    <tr><div class="large-12 columns black-background" style="margin:2px">Frames:{{shot.frames}}</div></tr>
+                    <tr>
+                        <td><input type="text" style="margin:0px; border:0px; padding:0px" ng-model="frameCt" placeholder="Frames"></td>
+                        <td><button style="margin:0px; border:0px; padding:2px" ng-click="frameCt=setFrameCt(frameCt)">+</button></td>
+                    </tr>
+                  </table>
+                  <div class="large-12 columns black-background" style="margin:2px">Status:{{shot.status}}</div>
+                  <select ng-model="newStatus" ng-options="option for option in shotStatus" ng-change="setNewStatus(newStatus)">
+                    <option value=""></option>
+                    <!-- <option ng-model="newStatus" value="Previs" ng-change="setNewStatus(newStatus)">Previs<br>
+                    <option ng-model="newStatus" value="Animation" ng-change="setNewStatus(newStatus)">Animation<br>
+                    <option ng-model="newStatus" value="Lighting" ng-change="setNewStatus(newStatus)">Lighting<br>
+                    <option ng-model="newStatus" value="Compositing" ng-change="setNewStatus(newStatus)">Compositing<br>
+                    <option ng-model="newStatus" value="Final" ng-change="setNewStatus(newStatus)">Final<br>
+                    <option ng-model="newStatus" value="Polish" ng-change="setNewStatus(newStatus)">Polish<br>
+                    <option ng-model="newStatus" value="Done" ng-change="setNewStatus(newStatus)">Done<br> -->
+                  </select>
+                  <div class="large-12 columns black-background" style="margin:2px">{{shot.description}}</div>
+                </div>
               </div>
             </ul>
             <div ng-show='showSeq($index)' class="row">
@@ -500,7 +521,7 @@
       </div>
     </ul> -->
 
-    <div id="shotinfo" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
+   <!--  <div id="shotinfo" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
       <table>
         <tr><div class="large-12 columns black-background" style="margin:2px">Frames:{{currentShot.frames}}</div></tr>
         <tr>
@@ -519,7 +540,7 @@
           <input type="radio" name="status" ng-model="newStatus" value="Done" ng-change="setNewStatus(newStatus)">Done<br>
       </form>
       <div class="large-12 columns black-background" style="margin:2px">{{currentShot.description}}</div>
-    </div>
+    </div> -->
 
     <ul id="notesDrop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false">
       <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>
