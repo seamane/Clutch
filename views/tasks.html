@@ -157,20 +157,19 @@
                   <table>
                     <tr><div class="large-12 columns black-background" style="margin:2px">Frames:{{shot.frames}}</div></tr>
                     <tr>
-                        <td><input type="text" style="margin:0px; border:0px; padding:0px" ng-model="frameCt" placeholder="Frames"></td>
+                        <td><input type="text" style="margin:0px; border:0px; padding:0px" ng-model="frameCt" placeholder="Frames" ng-disabled="shot.frames != 0"></td>
                         <td><button style="margin:0px; border:0px; padding:2px" ng-click="frameCt=setFrameCt(frameCt)">+</button></td>
                     </tr>
                   </table>
+                  <div class="large-12 columns" ng-init="shotEdit = (shot.status == null)">Status: {{shot.status}}
+                    <select ng-model="newStatus" ng-options="option for option in shotStatus" ng-change="setNewStatus(newStatus)" ng-show="shotEdit">
+                      <option value="">-</option>
+                    </select>
+                    <div ng-click="shotEdit = !shotEdit" ng-show="!shotEdit">Edit</div>
+                  </div>
                   <div class="large-12 columns black-background" style="margin:2px">Status:{{shot.status}}</div>
                   <select ng-model="newStatus" ng-options="option for option in shotStatus" ng-change="setNewStatus(newStatus)">
-                    <option value=""></option>
-                    <!-- <option ng-model="newStatus" value="Previs" ng-change="setNewStatus(newStatus)">Previs<br>
-                    <option ng-model="newStatus" value="Animation" ng-change="setNewStatus(newStatus)">Animation<br>
-                    <option ng-model="newStatus" value="Lighting" ng-change="setNewStatus(newStatus)">Lighting<br>
-                    <option ng-model="newStatus" value="Compositing" ng-change="setNewStatus(newStatus)">Compositing<br>
-                    <option ng-model="newStatus" value="Final" ng-change="setNewStatus(newStatus)">Final<br>
-                    <option ng-model="newStatus" value="Polish" ng-change="setNewStatus(newStatus)">Polish<br>
-                    <option ng-model="newStatus" value="Done" ng-change="setNewStatus(newStatus)">Done<br> -->
+                    <option value="">-</option>
                   </select>
                   <div class="large-12 columns black-background" style="margin:2px">{{shot.description}}</div>
                 </div>
@@ -503,44 +502,6 @@
           </table>
         </div>
       </div>
-
- <!--    <ul id="drop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
-
-
-
-      <li> -->
-        <!-- <input type="text" placeholder="Assign to"> -->
-      <!--   <autocomplete ng-model="result" attr-placeholder="type to assign member..." click-activation="true" data="assignMembers" on-type="updateSuggestions" on-select="doSomethingElse"></autocomplete>
-
-        <a href="" class="button postfix black-button" ng-click='assign()'>Assign</a>
-      </li>
-      <div class='panel' ng-repeat="note in notes">
-        <p>{{note.note}}</p>
-        <p class="right">~{{note.fname}} {{note.lname}}</p>
-        <p class="right">{{note.time}}</p>
-      </div>
-    </ul> -->
-
-   <!--  <div id="shotinfo" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false" >
-      <table>
-        <tr><div class="large-12 columns black-background" style="margin:2px">Frames:{{currentShot.frames}}</div></tr>
-        <tr>
-            <td><input type="text" style="margin:0px; border:0px; padding:0px" ng-model="frameCt" placeholder="Frames"></td>
-            <td><button style="margin:0px; border:0px; padding:2px" ng-click="frameCt=setFrameCt(frameCt)">+</button></td>
-        </tr>
-      </table>
-      <div class="large-12 columns black-background" style="margin:2px">Status:{{currentShot.status}}</div>
-      <form>
-          <input type="radio" name="status" ng-model="newStatus" value="Previs" ng-change="setNewStatus(newStatus)">Previs<br>
-          <input type="radio" name="status" ng-model="newStatus" value="Animation" ng-change="setNewStatus(newStatus)">Animation<br>
-          <input type="radio" name="status" ng-model="newStatus" value="Lighting" ng-change="setNewStatus(newStatus)">Lighting<br>
-          <input type="radio" name="status" ng-model="newStatus" value="Compositing" ng-change="setNewStatus(newStatus)">Compositing<br>
-          <input type="radio" name="status" ng-model="newStatus" value="Final" ng-change="setNewStatus(newStatus)">Final<br>
-          <input type="radio" name="status" ng-model="newStatus" value="Polish" ng-change="setNewStatus(newStatus)">Polish<br>
-          <input type="radio" name="status" ng-model="newStatus" value="Done" ng-change="setNewStatus(newStatus)">Done<br>
-      </form>
-      <div class="large-12 columns black-background" style="margin:2px">{{currentShot.description}}</div>
-    </div> -->
 
     <ul id="notesDrop" data-dropdown-content class="f-dropdown" role="menu", aria-hidden="false">
       <li><input type="text" placeholder="Assign to"><a href="" class="button postfix black-button">Assign</a></li>

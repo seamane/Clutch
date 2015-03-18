@@ -33,6 +33,7 @@
 	   	}
 
 	    $scope.keypress = function(event){
+	    	console.log("HERE");
 	    	if(event.which == 13){
 	    		$scope.loginButton();
 	    	}
