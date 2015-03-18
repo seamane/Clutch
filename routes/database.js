@@ -28,6 +28,19 @@ exports.initDatabase = function(req,res)
 createTables = function()
 {
 	connection.query(
+		'CREATE TABLE IF NOT EXISTS codes('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'code1 VARCHAR(4),'
+		+ 'code2 VARCHAR(4),'
+		+ 'code3 VARCHAR(4),'
+		+ 'code4 VARCHAR(4)'
+		+ ');',function(err){
+		if(err){
+			throw err;
+		}
+	});
+	connection.query(
 		'CREATE TABLE IF NOT EXISTS projects('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
@@ -36,7 +49,6 @@ createTables = function()
 		+ 'passkey VARCHAR(50)'
 		+ ');',function(err){
 		if(err){
-			console.log('query1 error: ' + err);
 			throw err;
 		}
 	});
@@ -1028,7 +1040,6 @@ exports.getUsersByShot = function(req,res){
 }
 
 exports.getUsersByAsset = function(req,res){
-	console.log(JSON.stringify(req.body));
 	connection.query(
 		'(SELECT U.email FROM users U INNER JOIN modeling M ON U.id=M.userid INNER JOIN assets A ON A.id=M.assetid WHERE A.id='+req.body.assId+') UNION '
 		+ '(SELECT U.email FROM users U INNER JOIN shading S ON U.id=S.userid INNER JOIN assets A ON A.id=S.assetid WHERE A.id='+req.body.assId+') UNION '
@@ -1043,3 +1054,16 @@ exports.getUsersByAsset = function(req,res){
 	);
 }
 
+exports.addCode = function(req,res){
+	connection.query(
+		'INSERT INTO codes(username,code1,code2,code3,code4) VALUES(\"' + 
+			req.body.username + '\",\"' + req.body.code1 + '\",\"' + req.body.code2 + '\",\"' + req.body.code3 + '\",\"' + req.body.code4 + '\";',
+		function(err){
+			if(err){
+				console.log('error addCode query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}

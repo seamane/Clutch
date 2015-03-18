@@ -18,8 +18,7 @@
 					}).
 				    success(function(data){
 				    	if(JSON.stringify(data) === '[]'){		//if that username doesn't exist, make a new user
-				    		$http.post('/sendEmail',
-					  		{
+				    		$http.post('/sendEmail',{
 					  			'to': $scope.email,
 					  			'subject': 'Welcome to the Clutch!',
 					  			'text': 'Welcome ' + $scope.fname + '!\n\nWe are happy for you to be a part '
@@ -27,8 +26,7 @@
 					  		}).
 					  		success(function(data){
 					  			if(data == "sent"){
-					  				$http.post("/createUser",				
-									{
+					  				$http.post("/createUser",{
 										'username': $scope.username,
 										'password': $scope.password,
 										'fname': $scope.fname,
