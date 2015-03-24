@@ -31,6 +31,7 @@ createTables = function()
 		'CREATE TABLE IF NOT EXISTS codes('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
+		+ 'username VARCHAR(20),'
 		+ 'code1 VARCHAR(4),'
 		+ 'code2 VARCHAR(4),'
 		+ 'code3 VARCHAR(4),'
@@ -239,6 +240,18 @@ createTables = function()
 
 	connection.query(
 		'CREATE TABLE IF NOT EXISTS modeling('
+		+ 'id INT NOT NULL AUTO_INCREMENT,'
+		+ 'PRIMARY KEY(id),'
+		+ 'assetid INT,'
+		+ 'userid INT'
+		+ ');',function (err){
+		if(err){
+			throw err;
+		}
+	});
+
+	connection.query(
+		'CREATE TABLE IF NOT EXISTS concept('
 		+ 'id INT NOT NULL AUTO_INCREMENT,'
 		+ 'PRIMARY KEY(id),'
 		+ 'assetid INT,'
@@ -624,6 +637,20 @@ exports.getModeling = function(req,res){
 	);
 }
 
+exports.getConcept = function(req,res){
+	connection.query(
+		'select concept.assetid,users.fname,users.lname,users.id,users.email from users inner join concept inner join assets '
+		+ 'on concept.assetid=assets.id and users.id=concept.userid and assets.projectid='+ req.body.projectid +';',
+		function(err,concept){
+			if(err){
+				console.log('error getConcept query:'+JSON.stringify(concept));
+				throw err;
+			}
+			res.end(JSON.stringify(concept));
+		}
+	);
+}
+
 exports.getShading = function(req,res){
 	connection.query(
 		'select shading.assetid,users.fname,users.lname,users.id,users.email from users inner join shading inner join assets '
@@ -977,6 +1004,28 @@ exports.addModeler = function(req,res){
 	);
 }
 
+exports.addConcept = function(req,res){
+	connection.query(
+		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
+		function(err,userid){
+			if(err){
+				console.log('error addConcept query');
+				throw err;
+			}
+			connection.query(
+				'INSERT INTO concept(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				function(err){
+					if(err){
+						console.log('error addConcept query2');
+						throw err;
+					}
+					res.end("success");
+				}
+			);
+		}
+	);
+}
+
 exports.addShader = function(req,res){
 	connection.query(
 		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
@@ -1057,10 +1106,66 @@ exports.getUsersByAsset = function(req,res){
 exports.addCode = function(req,res){
 	connection.query(
 		'INSERT INTO codes(username,code1,code2,code3,code4) VALUES(\"' + 
-			req.body.username + '\",\"' + req.body.code1 + '\",\"' + req.body.code2 + '\",\"' + req.body.code3 + '\",\"' + req.body.code4 + '\";',
+			req.body.username + '\",\"' + req.body.code1 + '\",\"' + req.body.code2 + '\",\"' + req.body.code3 + '\",\"' + req.body.code4 + '\");',
 		function(err){
 			if(err){
 				console.log('error addCode query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
+exports.verifyCode = function(req,res){
+	connection.query(
+		'SELECT id FROM codes WHERE username=\"' + req.body.username + '\"AND code1=\"' + req.body.code1 + 
+			'\"AND code2=\"' + req.body.code2 + '\"AND code3=\"' + req.body.code3 + '\"AND code4=\"' + req.body.code4 + '\";',
+		function(err,data){
+			if(err){
+				console.log('error verifyCode query');
+				throw err;
+			}
+			if(data.length > 0){
+				connection.query(
+					'DELETE FROM codes WHERE username=\"' + req.body.username + '\"AND code1=\"' + req.body.code1 + 
+						'\"AND code2=\"' + req.body.code2 + '\"AND code3=\"' + req.body.code3 + '\"AND code4=\"' + req.body.code4 + '\";',
+					function(err){
+						if(err){
+							console.log('erro verifyCode query2');
+							throw err;
+						}
+					}
+				);
+			}
+			res.end(JSON.stringify(data));
+		}
+	);
+}
+
+exports.getUserEmail = function(req,res){
+	connection.query(
+		'SELECT email FROM users WHERE username=\"' + req.body.username + '\";',
+		function(err,email){
+			if(err){
+				console.log("error getUserEmail query");
+				throw err;
+			}
+			res.end(JSON.stringify(email));
+		}
+	);
+}
+
+exports.updateUserPassword = function(req,res){
+	var salt=randomstring.generate(4);
+	var newstring = req.body.password + salt;
+	var hash = sha1(newstring);
+
+	connection.query(
+		'UPDATE users SET salt=\"' + salt + '\", hashe=\"' + hash + '\" WHERE username=\"' + req.body.username + '\";',
+		function(err){
+			if(err){
+				console.log("error updateUserPassword query");
 				throw err;
 			}
 			res.end("success");

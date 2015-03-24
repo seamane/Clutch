@@ -198,6 +198,23 @@
 						});
 			 		});
 			 		break;
+			 	case "concept":
+			 		$http.post('/addConcept',{
+			 			"fname":fname,
+			 			"lname":lname,
+			 			"id":$scope.currentShotId
+			 		}).
+			 		success(function(data){
+			 			$http.post('/getConcept',{
+			 				'projectid':$scope.projectid
+						}).
+						success(function(data){
+							$scope.concept = data;
+			 				$scope.setPopupMember($scope.getConcept($scope.currentShotId));
+							$scope.recipient = $scope.popupMember.email;
+						});
+			 		});
+			 		break;
 			 	case "shader":
 			 		$http.post('/addShader',{
 			 			"fname":fname,
@@ -439,8 +456,9 @@
 					$scope.deleteVisible = !$scope.deleteVisible;
 					break;
 			}
-			
+					console.log("showForm("+form);
 		}
+
 		$scope.getProjectName = function(){
 			return $cookieStore.get('projectInfo').name;
 		}
@@ -546,6 +564,13 @@
 			}).
 			success(function(data){
 				$scope.shading = data;
+			});
+
+			$http.post('/getConcept',{
+				'projectid':$scope.projectid
+			}).
+			success(function(data){
+				$scope.concept = data;
 			});
 
 			$http.post('/getUsers',{
@@ -759,7 +784,20 @@
 			if($scope.modeling != undefined){
 				for(var i = 0; i < $scope.modeling.length; ++i){
 					if($scope.modeling[i].assetid == assid){
-						label = $scope.modeling[i];//.fname + ' ' + $scope.modeling[i].lname;
+						label = $scope.modeling[i];
+						break;
+					}
+				}
+			}
+			return label;
+		}
+
+		$scope.getConcept = function(assid){
+			var label = {"fname":"+ Assign","lname":" ","email":""};
+			if($scope.concept != undefined){
+				for(var i = 0; i < $scope.concept.length; ++i){
+					if($scope.concept[i].assetid == assid){
+						label = $scope.concept[i];
 						break;
 					}
 				}
