@@ -153,25 +153,37 @@
                   class="shot-button-others button" 
                   ng-click="getNotes(shot,'compositing');enablePopup(compositingName.email,popupEnum.ASSIGN,shot,'compositing');setPopupMember(compositingName);" 
                   ng-init="compositingName=getCompositing(shot.id)">{{getCompositing(shot.id).fname}} {{getCompositing(shot.id).lname[0]}}</button>
-                <div id="shotinfo"class="slide" ng-show="expand">
-                  <table>
+                <div class="slide shotinfo" ng-show="expand">
+                  <div ng-init="edit=true" ng-show="edit" class="shotSpec">
+                    <div class="shotField">Frames: {{shot.frames}}</div>
+                    <div class="shotField">Status: {{shot.status}}</div>
+                    <div>Description: {{shot.description}}</div>
+                    <div ng-click="edit=!edit">Edit</div>
+                  </div>
+                  <div ng-show="!edit" class="shotEdit">
+                    <div class="shotField"><input type="text" ng-model="frameCount" placeholder="Frame Count"/></div>
+                    <div class="shotField">
+                      <select ng-model="newStatus" ng-options="option for option in shotStatus">
+                        <option value="">Set Status</option>
+                      </select>
+                    </div>
+                    <div><textarea>{{shot.description}}</textarea></div>
+                    <div ng-click="edit=!edit">Cancel</div><div>Save</div>
+                  </div>
+                  <!--<table>
                     <tr><div class="large-12 columns black-background" style="margin:2px">Frames:{{shot.frames}}</div></tr>
                     <tr>
-                        <td><input type="text" style="margin:0px; border:0px; padding:0px" ng-model="frameCt" placeholder="Frames" ng-disabled="shot.frames != 0"></td>
+                        <td><input type="text" style="margin:0px; border:0px; padding:0px" ng-init="framesEdit = shot.frames!= 0" ng-model="frameCt" placeholder="Frames" ng-disabled="shot.frames != 0"></td>
                         <td><button style="margin:0px; border:0px; padding:2px" ng-click="frameCt=setFrameCt(frameCt)">+</button></td>
                     </tr>
                   </table>
-                  <div class="large-12 columns" ng-init="shotEdit = (shot.status == null)">Status: {{shot.status}}
-                    <select ng-model="newStatus" ng-options="option for option in shotStatus" ng-change="setNewStatus(newStatus)" ng-show="shotEdit">
+                  <div class="large-12 columns" ng-init="statusEdit = (shot.status == null)">Status: {{shot.status}}
+                    <select ng-model="newStatus" ng-options="option for option in shotStatus" ng-change="setNewStatus(newStatus)" ng-show="statusEdit">
                       <option value="">-</option>
                     </select>
-                    <div ng-click="shotEdit = !shotEdit" ng-show="!shotEdit">Edit</div>
+                    <div ng-click="statusEdit = !statusEdit" ng-show="!statusEdit">Edit</div>
                   </div>
-                  <div class="large-12 columns black-background" style="margin:2px">Status:{{shot.status}}</div>
-                  <select ng-model="newStatus" ng-options="option for option in shotStatus" ng-change="setNewStatus(newStatus)">
-                    <option value="">-</option>
-                  </select>
-                  <div class="large-12 columns black-background" style="margin:2px">{{shot.description}}</div>
+                  <div class="large-12 columns black-background" style="margin:2px">{{shot.description}}</div>-->
                 </div>
               </div>
             </ul>

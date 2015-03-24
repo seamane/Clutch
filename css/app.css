@@ -273,3 +273,13 @@ form .row{
 	margin-bottom:-8px;
 	font-size: 1.37rem;
 }
+
+.asset-types-props{
+	margin-bottom:-8px;
+	margin-left:3%;
+}
+
+.shotinfo .shotField{
+	width: 30%;
+	display: inline-block;
+}
