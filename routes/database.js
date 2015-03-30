@@ -1049,6 +1049,7 @@ exports.addShader = function(req,res){
 }
 
 exports.addRigger = function(req,res){
+	console.log(JSON.stringify(req.body));
 	connection.query(
 		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
 		function(err,userid){

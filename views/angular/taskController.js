@@ -87,6 +87,7 @@
 		// }
 
 		$scope.assignMember = function(assignedMember){
+			console.log("currentShotId:"+$scope.currentShotId);
 			if(assignedMember == undefined){
 				return;
 			}
@@ -473,7 +474,6 @@
 					$scope.deleteVisible = !$scope.deleteVisible;
 					break;
 			}
-					console.log("showForm("+form);
 		}
 
 		$scope.getProjectName = function(){
@@ -951,6 +951,7 @@
 
 		$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
 			$scope.currentShotId = currentShot.id;
+			console.log("enablePopup currentShotId:"+$scope.currentShotId);
 
 			$scope.department = department;
 			if(!$scope.popup){

@@ -495,13 +495,13 @@
                   ng-click="getNotes(ass,'concept');setPopupMember(envPropConcept);enablePopup(envPropConcept.email,popupEnum.ASSIGN,ass,'concept');">{{getConcept(ass.id).fname}} {{getConcept(ass.id).lname[0]}}</button>
                 <button class="asset-other-button button" 
                   ng-init="envPropModel=getModeling(ass.id)" 
-                  ng-click="getNotes(ass,'modeler');setPopupMember(envPropModel);enablePopup(envPropModel.email,popupEnum.ASSIGN,ass.id,'modeler');">{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
+                  ng-click="getNotes(ass,'modeler');setPopupMember(envPropModel);enablePopup(envPropModel.email,popupEnum.ASSIGN,ass,'modeler');">{{getModeling(ass.id).fname}} {{getModeling(ass.id).lname[0]}}</button>
                 <button class="asset-other-button button"
                   ng-init="envPropShading=getShading(ass.id)" 
-                  ng-click="getNotes(ass,'shader');setPopupMember(envPropShading);enablePopup(envPropShading.email,popupEnum.ASSIGN,ass.id,'shader');">{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
+                  ng-click="getNotes(ass,'shader');setPopupMember(envPropShading);enablePopup(envPropShading.email,popupEnum.ASSIGN,ass,'shader');">{{getShading(ass.id).fname}} {{getShading(ass.id).lname[0]}}</button>
                 <button class="asset-other-button button" 
                 ng-init="envPropRigging=getRigging(ass.id)" 
-                ng-click="getNotes(ass,'rigger');setPopupMember(envPropRigging);enablePopup(envPropRigging.email,popupEnum.ASSIGN,ass.id,'rigger');">{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
+                ng-click="getNotes(ass,'rigger');setPopupMember(envPropRigging);enablePopup(envPropRigging.email,popupEnum.ASSIGN,ass,'rigger');">{{getRigging(ass.id).fname}} {{getRigging(ass.id).lname[0]}}</button>
               </div>
             </ul>
           </a>
