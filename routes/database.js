@@ -1104,9 +1104,11 @@ exports.getUsersByShot = function(req,res){
 }
 
 exports.getUsersByAsset = function(req,res){
+	console.log(JSON.stringify(req.body));
 	connection.query(
 		'(SELECT U.email FROM users U INNER JOIN modeling M ON U.id=M.userid INNER JOIN assets A ON A.id=M.assetid WHERE A.id='+req.body.assId+') UNION '
 		+ '(SELECT U.email FROM users U INNER JOIN shading S ON U.id=S.userid INNER JOIN assets A ON A.id=S.assetid WHERE A.id='+req.body.assId+') UNION '
+		+ '(SELECT U.email FROM users U INNER JOIN concept S ON U.id=S.userid INNER JOIN assets A ON A.id=S.assetid WHERE A.id='+req.body.assId+') UNION '
 		+ '(SELECT U.email FROM users U INNER JOIN rigging R ON U.id=R.userid INNER JOIN assets A ON A.id=R.assetid WHERE A.id='+req.body.assId+');',
 		 function(err,users){
 		 	if(err){

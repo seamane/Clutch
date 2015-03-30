@@ -489,7 +489,7 @@
               <div ng-click='toggleAsset($index,3)'>
                 <button 
                   class="asset-note-button"
-                  ng-click="getNotes(ass,'ageneric');enablePopup(envPropModel.email,popupEnum.ASSETNOTES,ass.id,'ageneric');">Notes</button>
+                  ng-click="getNotes(ass,'ageneric');enablePopup(envPropModel.email,popupEnum.ASSETNOTES,ass,'ageneric');">Notes</button>
                 <button class="asset-other-button button" 
                   ng-init="envPropConcept=getConcept(ass.id)" 
                   ng-click="getNotes(ass,'concept');setPopupMember(envPropConcept);enablePopup(envPropConcept.email,popupEnum.ASSIGN,ass,'concept');">{{getConcept(ass.id).fname}} {{getConcept(ass.id).lname[0]}}</button>
