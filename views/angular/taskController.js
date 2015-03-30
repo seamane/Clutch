@@ -27,6 +27,20 @@
 		$scope.currentShot = null;
 		$scope.shotDelete = false;
 
+		//asset stuff
+		$scope.addVisibleChar = false;
+		$scope.addVisibleEnv = false;
+		$scope.addVisibleCharProp = false;
+		$scope.addVisibleEnvProp = false;
+		$scope.deleteVisibleChar = false;
+		$scope.deleteVisibleCharProp = false;
+		$scope.deleteVisibleEnv = false;
+		$scope.deleteVisibleEnvProp = false;
+		$scope.charAttempted = false;
+		$scope.charPropAttempted = false;
+		$scope.envAttempted = false;
+		$scope.envPropAttempted = false;
+
 		$scope.announcementsLimit = 5;
 		$scope.postAnnTextBox = false;
 		$scope.announcements = [];
@@ -409,39 +423,43 @@
 		}
 
 		$scope.showForm = function(form){
+			if($scope.addVisibleChar == undefined || $scope.attempted == undefined)// || $scope.title == null)// || $scope.assetTitle == undefined)
+			{
+				alert("undefined");
+			}
 			switch(form){
 				case 1:
 					$scope.addVisibleChar = !$scope.addVisibleChar;
-					$scope.attempted = false;
-					$scope.title = null;
-					$scope.assetTitle = null;
+					$scope.charAttempted = false;
+					// $scope.title = null;
+					$scope.charAssetTitle = null;
 					break;
 				case 2:
 					$scope.deleteVisibleChar = !$scope.deleteVisibleChar;
 					break;
 				case 3:
 					$scope.addVisibleCharProp = !$scope.addVisibleCharProp;
-					$scope.attempted = false;
-					$scope.title = null;
-					$scope.assetTitle = null;
+					$scope.charPropAttempted = false;
+					// $scope.title = null;
+					$scope.charPropAssetTitle = null;
 					break;
 				case 4:
 					$scope.deleteVisibleCharProp = !$scope.deleteVisibleCharProp;
 					break;
 				case 5:
 					$scope.addVisibleEnv = !$scope.addVisibleEnv;
-					$scope.attempted = false;
-					$scope.title = null;
-					$scope.assetTitle = null;
+					$scope.envAttempted = false;
+					// $scope.title = null;
+					$scope.envAssetTitle = null;
 					break;
 				case 6:
 					$scope.deleteVisibleEnv = !$scope.deleteVisibleEnv;
 					break;
 				case 7:
 					$scope.addVisibleEnvProp = !$scope.addVisibleEnvProp;
-					$scope.attempted = false;
-					$scope.title = null;
-					$scope.assetTitle = null;
+					$scope.envPropAttempted = false;
+					// $scope.title = null;
+					$scope.envPropAssetTitle = null;
 					break;
 				case 8:
 					$scope.deleteVisibleEnvProp = !$scope.deleteVisibleEnvProp;
@@ -450,7 +468,6 @@
 					$scope.addVisible = !$scope.addVisible;
 					$scope.attempted = false;
 					$scope.title = null;
-					$scope.assetTitle = null;
 					break;
 				case 10://delete Sequence Button
 					$scope.deleteVisible = !$scope.deleteVisible;

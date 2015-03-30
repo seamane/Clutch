@@ -1,6 +1,6 @@
 (function(){
 	'use strict';
-	var app = angular.module('clutchApp',['ngCookies','autocomplete', 'ngAnimate']);
+	var app = angular.module('clutchApp',['ngCookies','autocomplete']);
 
 	app.directive('loadnavbar', function($compile) {
 	    return {
