@@ -32,6 +32,7 @@ database.initDatabase();
 //index requests
 app.get('/',function(req,res){res.sendFile(__dirname + '/views/index.html');});
 app.get('/css/foundation.css',function(req,res){res.sendFile(__dirname + '/css/foundation.css');});
+app.get('/js/less/dist/less.min.js',function(req,res){res.sendFile(__dirname + '/js/less/dist/less.min.js');})
 app.get('/css/app.css',function(req,res){res.sendFile(__dirname + '/css/app.css');});
 app.get('/js/vendor/modernizr.js',function(req,res){res.sendFile(__dirname + '/js/vendor/modernizr.js');});
 app.get('/js/vendor/jquery.js',function(req,res){res.sendFile(__dirname + '/js/vendor/jquery.js');});
