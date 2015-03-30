@@ -167,8 +167,8 @@
                         <option value="">Set Status</option>
                       </select>
                     </div>
-                    <div><textarea>{{shot.description}}</textarea></div>
-                    <div ng-click="edit=!edit">Cancel</div><div>Save</div>
+                    <div><textarea ng-model="description" placeholder="Description">{{shot.description}}</textarea></div>
+                    <div ng-click="edit=!edit">Cancel</div><div ng-click="editShotInfo(shot, newStatus, frameCount, description); edit=!edit">Save</div>
                   </div>
                   <!--<table>
                     <tr><div class="large-12 columns black-background" style="margin:2px">Frames:{{shot.frames}}</div></tr>

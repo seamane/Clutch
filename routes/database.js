@@ -777,6 +777,20 @@ exports.setStatus = function(req,res){
 	);
 }
 
+exports.setShotDescription = function(req,res){
+	connection.query
+	(
+		'UPDATE shots SET description='+'\''+req.body.description+'\''+' WHERE id='+req.body.shotid+';',
+		function(err){
+			if(err){
+				console.log("Error setShotDescription query");
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
 exports.createAsset = function(req,res){
 	connection.query
 	(

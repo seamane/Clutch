@@ -84,6 +84,7 @@ app.post('/getAssets',database.getAssets);
 app.post('/createShot',database.createShot);
 app.post('/deleteShot',database.deleteShot);
 app.post('/setFrames',database.setFrames);
+app.post('/setShotDescription',database.setShotDescription);
 app.post('/setStatus',database.setStatus);
 app.post('/createAsset',database.createAsset);
 app.post('/deleteAsset',database.deleteAsset);

@@ -949,6 +949,16 @@
 			});
 		}
 
+		$scope.setShotDescription = function(description){
+			$http.post("/setShotDescription",{
+				'shotid':$scope.currentShot.id,
+				'description':description
+			}).
+			success(function(data){
+				$scope.currentShot.description = description;
+			});
+		}
+
 		$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
 			$scope.currentShotId = currentShot.id;
 			// console.log("enablePopup currentShotId:"+$scope.currentShotId);
@@ -1048,6 +1058,20 @@
 	  			alert("An error occurred and your message was not successfully delivered.");
 	  		});
 	  		$scope.disablePopup();
+		}
+
+		$scope.editShotInfo = function(shot, newStatus, frameCount, description){
+			$scope.currentShot = shot;
+			if(newStatus != null){
+				$scope.setNewStatus(newStatus);
+			}
+			if(frameCount != null && frameCount != undefined && frameCount != $scope.currentShot.frames){
+				$scope.setFrameCt(frameCount);
+			}
+			if(description != undefined && $scope.currentShot.description != description){
+				console.log("SETTING DESCRIPTION");
+				$scope.setShotDescription(description);
+			}
 		}
 	})
 	/*.directive('showinfo', function($compile) {
