@@ -358,7 +358,7 @@ exports.createSequence = function(req, res){
 
 exports.deleteSequence = function(req, res){
 
-	console.log(JSON.stringify(req.body.name));
+	// console.log(JSON.stringify(req.body.name));
 	connection.query(
 		'select id FROM sequences WHERE name =\"' + req.body.name + '\";\n'
 		+ 'delete from sequences where name=\"'+ req.body.name + '\";',
@@ -368,7 +368,7 @@ exports.deleteSequence = function(req, res){
 				throw err;
 			}
 			var s = seqid[0];
-			console.log(JSON.stringify(s[0].id));
+			// console.log(JSON.stringify(s[0].id));
 			connection.query(
 				'select id from shots where sequenceid='+s[0].id+';\n'
 				+ 'delete from shots where sequenceid='+s[0].id+';',
@@ -485,7 +485,7 @@ exports.getSequences = function (req,res) {
 				console.log('error getSequences query');
 				throw err;
 			}
-			console.log("getSequences:"+JSON.stringify(sequences));
+			// console.log("getSequences:"+JSON.stringify(sequences));
 	 		res.end(JSON.stringify(sequences));
 		}
 	);
@@ -1049,7 +1049,7 @@ exports.addShader = function(req,res){
 }
 
 exports.addRigger = function(req,res){
-	console.log(JSON.stringify(req.body));
+	// console.log(JSON.stringify(req.body));
 	connection.query(
 		'select users.id from users where fname=\"'+req.body.fname+'\" and lname=\"'+req.body.lname+'\";',
 		function(err,userid){
@@ -1133,7 +1133,7 @@ exports.verifyCode = function(req,res){
 						'\"AND code2=\"' + req.body.code2 + '\"AND code3=\"' + req.body.code3 + '\"AND code4=\"' + req.body.code4 + '\";',
 					function(err){
 						if(err){
-							console.log('erro verifyCode query2');
+							console.log('error verifyCode query2');
 							throw err;
 						}
 					}

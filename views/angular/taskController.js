@@ -87,7 +87,7 @@
 		// }
 
 		$scope.assignMember = function(assignedMember){
-			console.log("currentShotId:"+$scope.currentShotId);
+			// console.log("currentShotId:"+$scope.currentShotId);
 			if(assignedMember == undefined){
 				return;
 			}
@@ -951,7 +951,7 @@
 
 		$scope.enablePopup = function(recipientEmail, popupType, currentShot, department){
 			$scope.currentShotId = currentShot.id;
-			console.log("enablePopup currentShotId:"+$scope.currentShotId);
+			// console.log("enablePopup currentShotId:"+$scope.currentShotId);
 
 			$scope.department = department;
 			if(!$scope.popup){
@@ -965,7 +965,7 @@
 						break;
 					case 2:
 						$("#genericNoteBox").fadeIn(0500);
-						console.log(currentShot);
+						// console.log(currentShot);
 						//get all email addresses
 						$http.post('/getUsersByShot',
 						{
@@ -980,7 +980,7 @@
 						break;
 					case 3:
 						$("#genericNoteBox").fadeIn(0500);
-						console.log(currentShot);
+						// console.log(currentShot);
 						//get all email addresses
 						$http.post('/getUsersByAsset',
 						{
