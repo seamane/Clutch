@@ -87,8 +87,9 @@
 		// }
 
 		$scope.assignMember = function(assignedMember){
-			// console.log("currentShotId:"+$scope.currentShotId);
+			console.log("department:"+$scope.department);
 			if(assignedMember == undefined){
+				console.log("assignedMember == undefined");
 				return;
 			}
 			var fname = assignedMember.split(" ")[0];
@@ -101,10 +102,12 @@
 			 			"id":$scope.currentShotId
 			 		}).
 			 		success(function(data){
+			 			console.log("/addPrevis success");
 			 			$http.post('/getPrevis',{
 			 				'projectid':$scope.projectid
 						}).
 						success(function(data){
+							console.log("/getPrevis success");
 							$scope.previs = data;
 			 				$scope.setPopupMember($scope.getPrevis($scope.currentShotId));
 							$scope.recipient = $scope.popupMember.email;
@@ -122,6 +125,7 @@
 			 				'projectid':$scope.projectid
 						}).
 						success(function(data){
+							console.log("animator query data:"+JSON.stringify(data));
 							$scope.animators = data;
 			 				$scope.setPopupMember($scope.getAnimator($scope.currentShotId));
 							$scope.recipient = $scope.popupMember.email;
@@ -268,7 +272,7 @@
 			 		console.log("ERROR: assignMember function. Should never get here.");
 			 		break;
 			}
-
+			$scope.editAssignment = false;
 		}
 
 		$scope.addSequence  = function(){
@@ -1028,11 +1032,11 @@
 			if($scope.popupMember == undefined){
 				return true;
 			}
-			return $scope.popupMember.fname == "+ Assign" || $scope.edit;
+			return $scope.popupMember.fname == "+ Assign" || $scope.editAssignment;
 		}
 
 		$scope.setEdit = function(bool){
-			$scope.edit = bool
+			$scope.editAssignment = bool;
 		}
 
 		$scope.sendMessage = function(){

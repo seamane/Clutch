@@ -274,6 +274,24 @@ createTables = function()
 		}
 	});
 
+	connection.query(
+		'ALTER TABLE animators ADD UNIQUE(shotid);' +
+		'ALTER TABLE previs ADD UNIQUE(shotid);' +
+		'ALTER TABLE lighters ADD UNIQUE(shotid);' +
+		'ALTER TABLE vfx ADD UNIQUE(shotid);' +
+		'ALTER TABLE renderwranglers ADD UNIQUE(shotid);' +
+		'ALTER TABLE compositing ADD UNIQUE(shotid);' +
+		'ALTER TABLE concept ADD UNIQUE(assetid);' +
+		'ALTER TABLE rigging ADD UNIQUE(assetid);' +
+		'ALTER TABLE shading ADD UNIQUE(assetid);' +
+		'ALTER TABLE modeling ADD UNIQUE(assetid);',
+		function(err){
+			if(err){
+				throw err;
+			}
+		}
+	);
+
 	console.log("all tables created");
 }
 
@@ -529,12 +547,12 @@ exports.getPrevis = function(req,res){
 	connection.query(
 		'select previs.shotid,users.fname,users.lname,users.id,users.email from users inner join previs inner join shots inner join sequences '
 		+ 'on previs.shotid=shots.id and users.id=previs.userid and shots.sequenceid=sequences.id and sequences.projectid='+ req.body.projectid +';',
-		function(err,animators){
+		function(err,previs){
 			if(err){
-				console.log('error getAnimator query:'+JSON.stringify(animators));
+				console.log('error getPrevis query:'+JSON.stringify(previs));
 				throw err;
 			}
-			res.end(JSON.stringify(animators));
+			res.end(JSON.stringify(previs));
 		}
 	);
 }
@@ -895,7 +913,8 @@ exports.addAnimator = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO animators(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO animators(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addAnimator query2');
@@ -917,7 +936,8 @@ exports.addLighter = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO lighters(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO lighters(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addLighter query2');
@@ -939,7 +959,8 @@ exports.addFX = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO vfx(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO vfx(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addFX query2');
@@ -961,7 +982,8 @@ exports.addCompositing = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO compositing(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO compositing(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addCompositing query2');
@@ -983,7 +1005,8 @@ exports.addWrangler = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO renderwranglers(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO renderwranglers(userid,shotid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addWrangler query2');
@@ -1005,7 +1028,8 @@ exports.addModeler = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO modeling(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO modeling(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addModeler query2');
@@ -1027,7 +1051,8 @@ exports.addConcept = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO concept(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO concept(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addConcept query2');
@@ -1049,7 +1074,8 @@ exports.addShader = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO shading(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO shading(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addShader query2');
@@ -1072,7 +1098,8 @@ exports.addRigger = function(req,res){
 				throw err;
 			}
 			connection.query(
-				'INSERT INTO rigging(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ');',
+				'INSERT INTO rigging(userid,assetid) VALUES(' + userid[0].id +',' + req.body.id + ')'+
+					'ON DUPLICATE KEY UPDATE userid='+userid[0].id+';',
 				function(err){
 					if(err){
 						console.log('error addRigger query2');

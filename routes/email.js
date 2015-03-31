@@ -4,7 +4,7 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
 	service: "Gmail",
 	auth: {
 		user: "byuclutch@gmail.com",
-		pass: "7zXA53Ii4"
+		pass: "IK54s12fQi"
 	}
 });
 
