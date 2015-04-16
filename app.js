@@ -59,6 +59,9 @@ app.get('/baby.jpg',function(req,res){res.sendFile(__dirname+'/views/images/baby
 app.post('/validateUser',database.validateUser);
 app.post('/createUser',database.createUser);
 app.post('/validateUser', database.validateUser);
+app.post('/setEmail', database.setEmail);
+app.post('/setPassword', database.setPassword);
+app.post('/setPhone', database.setPhone);
 app.post('/validateProject', database.validateProject);
 app.post('/createProject', database.createProject);
 app.post('/addProject', database.addProject);

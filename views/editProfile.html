@@ -31,64 +31,52 @@
     </div>
     
     <div class="row ">
-      <div class="large-4 columns">
+      <div class="large-4 columns edit-profile-form-width">
 
         <form id="newUserForm" name="myForm" ng-submit="onSubmit()" style="margin-top:4%">
-          <!-- first name field -->
+          <!--name label -->
             <div class="row">
-                <label class="login-label">First Name</label>
-                <input class="blue-input" type="text" ng-model='fname' placeholder="Johny" required />
+                <label float="left" class="login-label edit-profile-labels">{{getFName()}} {{getLName()}}</label>
             </div>
 
-          <!-- last name field -->
+          <!-- username label -->
             <div class="row">
-                <label class="login-label">Last Name</label>
-                <input class="blue-input" type="text" ng-model='lname' placeholder="Appleseed" required />
+                <label class="login-label">Username: {{getUsername()}}</label>
             </div>
 
-          <!-- username field -->
+            <!-- email label/field -->
             <div class="row">
-                <label class="login-label">Username</label>
-                <input class="blue-input" type="text" ng-minlength='6' name='uname' ng-model='username' placeholder="jsqueezy" /><span ng-show='myForm.uname.$error.minlength' style='color:red;font-size:10pt'>* Username must be at least 6 characters in length</span>
+                <label class="login-label edit-profile-labels">{{getEmail()}}</label>
+                <a ng-click="showForm(1)" class="tiny edit-profile-edit-buttons">EDIT</a><br/>
+            </div>
+            <div ng-class="{'fadein':emailFieldVisible , 'fadeout':!emailFieldVisible}">
+                <input class="blue-input edit-profile-fields" type="email" ng-model='newEmail' placeholder="newemail@address.com" />
+                <a ng-click="setEmail()" class="tiny button navbar-button edit-profile-edit-buttons">Save Changes</a><br/>
             </div>
 
-            <!-- email field -->
-            <div class="row">
-                <label class="login-label">Email</label>
-                <input class="blue-input" type="email" ng-model='email' placeholder="youremail@address.com" />
+            <!-- password label -->
+            <div class ="row">
+                <a ng-click="showForm(2)" class="tiny edit-profile-edit-buttons">CHANGE PASSWORD</a><br/>
             </div>
 
-            <!-- password field -->
-            <div class="row">
-                <label class="login-label">Current Password</label>
-                <input class="blue-input" type="password" name='pass' ng-model='currentpassword' ng-pattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/' placeholder="Enter current password" />
-            </div>
-
-            <!-- password field -->
-            <div class="row">
-                <label class="login-label">New Password</label>
-                <input class="blue-input" type="password" name='pass' ng-model='newpassword' ng-pattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/' placeholder="Choose a new password" />
-                <span ng-show='myForm.pass.$error.pattern' style='color:red;font-size:10pt'>* Password must be at least 8 characters in length and contain at least 1 number</span>
-            </div>
-
-            <!-- confirm password field -->
-            <div class="row">
-                <label class="login-label">Confirm New Password</label>
-                <input class="blue-input" type="password" ng-model='newpasswordconfirm' placeholder="Re-enter new password"  required/>
-                <span ng-show='password!=passwordconfirm' style='color:red; font-size:10pt'>* Passwords don't match</span>
+            <!-- change password fields -->
+            <div class ="row" ng-class="{'fadein':passwordFieldVisible , 'fadeout':!passwordFieldVisible}">
+                <input class="blue-input" type="password" name='pass1' ng-model='new_password' ng-pattern='/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/' placeholder="Choose a new password" required/>
+                <input class="blue-input" type="password" name='pass2' ng-model='passwordconfirm' placeholder="Confirm Password" required/>
+                <a ng-click="setPassword()" class="tiny button navbar-button edit-profile-edit-buttons">Save Changes</a><br/>
+                <span ng-show='myForm.pass1.$error.pattern' style='color:red;font-size:10pt'>* Password must be at least 8 characters in length and contain at least 1 number</span>
+                <span ng-show='new_password!=passwordconfirm' style='color:red; font-size:10pt'>* Passwords don't match</span>
             </div>
 
             <!-- phone number field -->
             <div class="row">
-                <label class="login-label">Phone Number (with hyphens)</label>
-                <input class="blue-input" type="text" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/" placeholder="555-555-5555" ng-model='phoneNum' name="phone" required/>
-                <span ng-show="myForm.phone.$error.pattern" style='color:red; font-size:10pt'>* Invalid Phone Number</span>
+                <label class="login-label edit-profile-labels">Phone: {{getPhone()}}</label>
+                <a ng-click="showForm(3)" class="tiny edit-profile-edit-buttons">EDIT</a><br/>
             </div>
-
-
-             <!-- update button -->
-             <div class="row ">
-                <br><a href="#" ng-click='updateUser()' class="button right login-button ">Update</a>
+            <div ng-class="{'fadein':phoneNumberFieldVisible , 'fadeout':!phoneNumberFieldVisible}">
+                <input class="blue-input" type="text" ng-pattern="/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/" placeholder="555-555-5555" ng-model='newPhone' name="phone" required/>
+                <span ng-show="myForm.phone.$error.pattern" style='color:red; font-size:10pt'>* Invalid Phone Number</span>
+                <a ng-click="setPhone()" class="tiny button navbar-button edit-profile-edit-buttons">Save Changes</a><br/>
             </div>
         
         </form>

@@ -359,6 +359,52 @@ exports.createUser = function(req, res){
 	);
 }
 
+exports.setEmail = function(req, res){
+	connection.query
+	(
+		'UPDATE users SET email="'+req.body.email+'" WHERE id='+req.body.userid+';',
+		function (err,rows,fields){
+			if(err){
+				console.log('error setEmail query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
+exports.setPassword = function(req, res){
+	var salt=randomstring.generate(4);
+	var newstring = req.body.password + salt;
+	var hashe = sha1(newstring);
+
+	connection.query
+	(
+		'UPDATE users SET salt="'+salt+'" , hashe="'+hashe+'" WHERE id='+req.body.userid+';',
+		function (err,rows,fields){
+			if(err){
+				console.log('error setPassword query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
+exports.setPhone = function(req, res){
+	connection.query
+	(
+		'UPDATE users SET phone="'+req.body.phone+'" WHERE id='+req.body.userid+';',
+		function (err,rows,fields){
+			if(err){
+				console.log('error setPhone query');
+				throw err;
+			}
+			res.end("success");
+		}
+	);
+}
+
 exports.createSequence = function(req, res){
 	connection.query
 	(
